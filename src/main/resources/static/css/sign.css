@@ -1,0 +1,135 @@
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-form-1{
+    padding: 9%;
+    background:#282726;
+    color:#fff;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3{
+    text-align: center;
+    margin-bottom:12%;
+    color:#fff;
+}
+
+.login-form-1 h2{
+    font-size: 50px;
+    text-align: center;
+    margin-bottom:12%;
+    color:#fff;
+}
+
+
+.btnSubmit{
+    font-weight: 600;
+    width: 50%;
+    color: #282726;
+    background-color: #fff;
+    border: none;
+    margin: auto;
+    border-radius: 1.5rem;
+    padding:2%;
+}
+.btnForgetPwd{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+.btnForgetPwd:hover{
+    text-decoration:none;
+    color:#fff;
+}
+
+.email_blank{
+}
+
+.pwd1_blank{
+}
+
+.pwd2_blank{
+}
+
+.family_name_blank{
+}
+
+.given_name_blank{
+}
+
+.birthday_blank{
+}
+
+.nickname_blank{
+}
+
+/* 중복이메일 존재 X*/
+.email_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 중복이메일 존재 O*/
+.email_check_duplicated{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 이메일 유효성검사 실패*/
+.email_check_fail{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 비밀번호 유효성검사 성공*/
+.pwd1_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 비밀번호 유효성검사 실패*/
+.pwd1_check_fail{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 비밀번호 확인 유효성검사 성공*/
+.pwd2_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 비밀번호 확인 유효성검사 실패*/
+.pwd2_check_fail{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 성 공란*/
+.family_name_check_blank{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 이름 공란*/
+.given_name_check_blank{
+    color: #FFBEB0;
+    display: none;
+}
+/* 생년월일 공란*/
+.birthday_check_blank{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 닉네임 유효성검사 성공*/
+.nickname_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 닉네임 유효성검사 실패*/
+.nickname_check_fail{
+    color: #FFBEB0;
+    display: none;
+}

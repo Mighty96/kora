@@ -35,7 +35,8 @@ public class UserRepositoryTest {
         userRepository.save(User.builder()
                 .email(email)
                 .password(password)
-                .name("mighty")
+                .familyName("abc")
+                .givenName("def")
                 .birthday("123123")
                 .nickname("mighty")
                 .build());
@@ -62,7 +63,8 @@ public class UserRepositoryTest {
                 userRepository.save(User.builder()
                         .email(email)
                         .password(password)
-                        .name("mighty")
+                        .familyName("abc")
+                        .givenName("def")
                         .birthday("123123")
                         .nickname("mighty")
                         .build()));
@@ -82,7 +84,8 @@ public class UserRepositoryTest {
                 userRepository.save(User.builder()
                         .email(email)
                         .password(password)
-                        .name("mighty")
+                        .familyName("abc")
+                        .givenName("def")
                         .birthday("123123")
                         .nickname("mighty")
                         .build()));

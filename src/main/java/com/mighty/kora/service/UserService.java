@@ -2,12 +2,15 @@ package com.mighty.kora.service;
 
 import com.mighty.kora.domain.user.User;
 import com.mighty.kora.domain.user.UserRepository;
+import com.mighty.kora.dto.user.UserEmailRequestDto;
 import com.mighty.kora.dto.user.UserResponseDto;
 import com.mighty.kora.dto.user.UserSaveRequestDto;
 import com.mighty.kora.dto.user.UserUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +21,16 @@ public class UserService {
     @Transactional
     public Long save(UserSaveRequestDto requestDto) {
         return userRepository.save(requestDto.toEntity()).getId();
+    }
+
+    public String emailDuplicateChk(UserEmailRequestDto requestDto) {
+        Optional<User> user = userRepository.findByEmail(requestDto.getEmail());
+
+        if (user.isPresent()) {
+            return "fail";
+        } else {
+            return "success";
+        }
     }
 
     @Transactional

@@ -2,6 +2,7 @@ package com.mighty.kora.dto.post;
 
 import com.mighty.kora.domain.Language;
 import com.mighty.kora.domain.post.Post;
+import com.mighty.kora.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +12,15 @@ import lombok.NoArgsConstructor;
 public class PostSaveRequestDto {
     private String title;
     private String content;
-    private String author;
+    private User user;
     private Language myLanguage;
     private Language yourLanguage;
 
     @Builder
-    public PostSaveRequestDto(String title, String content, String author, Language myLanguage, Language yourLanguage) {
+    public PostSaveRequestDto(String title, String content, User user, Language myLanguage, Language yourLanguage) {
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.user = user;
         this.myLanguage = myLanguage;
         this.yourLanguage = yourLanguage;
     }
@@ -28,7 +29,7 @@ public class PostSaveRequestDto {
         return Post.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .user(user)
                 .myLanguage(myLanguage)
                 .yourLanguage(yourLanguage)
                 .build();

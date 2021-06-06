@@ -1,11 +1,10 @@
 package com.mighty.kora.controller;
 
-import com.mighty.kora.domain.post.PostRepository;
 import com.mighty.kora.domain.user.User;
 import com.mighty.kora.domain.user.UserRepository;
+import com.mighty.kora.dto.user.UserEmailRequestDto;
 import com.mighty.kora.dto.user.UserSaveRequestDto;
 import com.mighty.kora.dto.user.UserUpdateRequestDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +21,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -50,7 +48,8 @@ class UserApiControllerTest {
         UserSaveRequestDto requestDto = UserSaveRequestDto.builder()
                 .email(email)
                 .password(password)
-                .name("mighty")
+                .familyName("abc")
+                .givenName("def")
                 .birthday("birthday")
                 .nickname("mighty")
                 .build();
@@ -78,7 +77,8 @@ class UserApiControllerTest {
         User savedUser = userRepository.save(User.builder()
                 .email("email@email.com")
                 .password("pwdpwd123")
-                .name("mighty")
+                .familyName("abc")
+                .givenName("def")
                 .birthday("birthday")
                 .nickname("nickname")
                 .build());
@@ -107,6 +107,36 @@ class UserApiControllerTest {
         User user = userList.get(0);
         assertThat(user.getPassword()).isEqualTo(newPassword);
         assertThat(user.getNickname()).isEqualTo(newNickname);
+
+    }
+
+    @Test
+    public void User_Email_중복있음() {
+        //given
+        User savedUser = userRepository.save(User.builder()
+                .email("email@email.com")
+                .password("pwdpwd123")
+                .familyName("abc")
+                .givenName("def")
+                .birthday("birthday")
+                .nickname("nickname")
+                .build());
+
+        String newEmail = "email@email.com";
+
+        UserEmailRequestDto requestDto = UserEmailRequestDto.builder()
+                .email(newEmail)
+                .build();
+
+        String url = "http://localhost:" + port + "/api/userEmailChk";
+
+        //when
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestDto, String.class);
+
+        //given
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isEqualTo("fail");
+
 
     }
 }

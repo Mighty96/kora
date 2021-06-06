@@ -1,6 +1,7 @@
 package com.mighty.kora.domain.post;
 
 import com.mighty.kora.domain.Language;
+import com.mighty.kora.domain.user.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class PostRepositoryTest {
         postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
-                .author("korean")
+                .user(null)
                 .myLanguage(Language.KOREAN)
                 .yourLanguage(Language.JAPANESE)
                 .build());

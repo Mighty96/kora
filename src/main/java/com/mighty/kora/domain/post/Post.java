@@ -2,6 +2,7 @@ package com.mighty.kora.domain.post;
 
 import com.mighty.kora.domain.BaseTimeEntity;
 import com.mighty.kora.domain.Language;
+import com.mighty.kora.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,9 @@ public class Post extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column
-    private String author;
+    @ManyToOne
+    @JoinColumn(name="USER_ID")
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private Language myLanguage;
@@ -32,10 +34,10 @@ public class Post extends BaseTimeEntity {
     private Language yourLanguage;
 
     @Builder
-    public Post(String title, String content, String author, Language myLanguage, Language yourLanguage) {
+    public Post(String title, String content, User user, Language myLanguage, Language yourLanguage) {
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.user = user;
         this.myLanguage = myLanguage;
         this.yourLanguage = yourLanguage;
     }

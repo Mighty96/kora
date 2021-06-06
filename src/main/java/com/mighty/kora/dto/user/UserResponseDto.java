@@ -9,7 +9,8 @@ public class UserResponseDto {
     private Long id;
     private String email;
     private String password;
-    private String name;
+    private String familyName;
+    private String givenName;
     private String birthday;
     private String nickname;
 
@@ -17,7 +18,8 @@ public class UserResponseDto {
         this.id = entity.getId();
         this.email = entity.getEmail();
         this.password = entity.getPassword();
-        this.name = entity.getName();
+        this.familyName = entity.getFamilyName();
+        this.givenName = entity.getGivenName();
         this.birthday = entity.getBirthday();
         this.nickname = entity.getNickname();
     }

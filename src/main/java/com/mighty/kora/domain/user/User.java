@@ -26,7 +26,10 @@ public class User {
     private String password;
 
     @Column
-    private String name;
+    private String familyName;
+
+    @Column
+    private String givenName;
 
     @Column
     private String birthday;
@@ -35,10 +38,11 @@ public class User {
     private String nickname;
 
     @Builder
-    public User(String email, String password, String name, String birthday, String nickname) {
+    public User(String email, String password, String familyName, String givenName, String birthday, String nickname) {
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.familyName = familyName;
+        this.givenName = givenName;
         this.birthday = birthday;
         this.nickname = nickname;
     }

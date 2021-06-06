@@ -11,15 +11,17 @@ public class UserSaveRequestDto {
 
     private String email;
     private String password;
-    private String name;
+    private String familyName;
+    private String givenName;
     private String birthday;
     private String nickname;
 
     @Builder
-    public UserSaveRequestDto(String email, String password, String name, String birthday, String nickname) {
+    public UserSaveRequestDto(String email, String password, String familyName, String givenName, String birthday, String nickname) {
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.familyName = familyName;
+        this.givenName = givenName;
         this.birthday = birthday;
         this.nickname = nickname;
     }
@@ -28,7 +30,8 @@ public class UserSaveRequestDto {
         return User.builder()
                 .email(email)
                 .password(password)
-                .name(name)
+                .familyName(familyName)
+                .givenName(givenName)
                 .birthday(birthday)
                 .nickname(nickname)
                 .build();

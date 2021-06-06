@@ -3,6 +3,7 @@ package com.mighty.kora.controller;
 import com.mighty.kora.domain.Language;
 import com.mighty.kora.domain.post.Post;
 import com.mighty.kora.domain.post.PostRepository;
+import com.mighty.kora.domain.user.User;
 import com.mighty.kora.dto.post.PostSaveRequestDto;
 import com.mighty.kora.dto.post.PostUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
@@ -48,7 +49,7 @@ class PostApiControllerTest {
         PostSaveRequestDto requestDto = PostSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .author("mighty")
+                .user(null)
                 .myLanguage(Language.KOREAN)
                 .yourLanguage(Language.JAPANESE)
                 .build();
@@ -73,7 +74,7 @@ class PostApiControllerTest {
         Post savedPost = postRepository.save(Post.builder()
                 .title("title")
                 .content("content")
-                .author("author")
+                .user(null)
                 .myLanguage(Language.KOREAN)
                 .yourLanguage(Language.JAPANESE)
                 .build());

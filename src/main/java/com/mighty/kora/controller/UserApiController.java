@@ -1,5 +1,6 @@
 package com.mighty.kora.controller;
 
+import com.mighty.kora.dto.user.UserEmailRequestDto;
 import com.mighty.kora.dto.user.UserResponseDto;
 import com.mighty.kora.dto.user.UserSaveRequestDto;
 import com.mighty.kora.dto.user.UserUpdateRequestDto;
@@ -16,6 +17,12 @@ public class UserApiController {
     @PostMapping("/api/user")
     public Long save(@RequestBody UserSaveRequestDto requestDto) {
         return userService.save(requestDto);
+    }
+
+    @ResponseBody
+    @PostMapping("/api/userEmailChk")
+    public String emailDuplicateChk(@RequestBody UserEmailRequestDto requestDto) {
+        return userService.emailDuplicateChk(requestDto);
     }
 
     @PutMapping("/api/user/{id}")

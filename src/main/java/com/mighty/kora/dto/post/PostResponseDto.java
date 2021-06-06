@@ -2,6 +2,7 @@ package com.mighty.kora.dto.post;
 
 import com.mighty.kora.domain.Language;
 import com.mighty.kora.domain.post.Post;
+import com.mighty.kora.domain.user.User;
 import lombok.Getter;
 
 @Getter
@@ -10,7 +11,7 @@ public class PostResponseDto {
     private Long id;
     private String title;
     private String content;
-    private String author;
+    private User user;
     private Language myLanguage;
     private Language yourLanguage;
 
@@ -18,7 +19,7 @@ public class PostResponseDto {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.author = entity.getAuthor();
+        this.user = entity.getUser();
         this.myLanguage = entity.getMyLanguage();
         this.yourLanguage = entity.getYourLanguage();
     }
