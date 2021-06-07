@@ -1,9 +1,8 @@
 package com.mighty.kora.controller;
 
-import com.mighty.kora.dto.user.UserEmailRequestDto;
-import com.mighty.kora.dto.user.UserResponseDto;
-import com.mighty.kora.dto.user.UserSaveRequestDto;
-import com.mighty.kora.dto.user.UserUpdateRequestDto;
+import com.mighty.kora.config.auth.LoginUser;
+import com.mighty.kora.config.auth.dto.SessionUser;
+import com.mighty.kora.dto.user.*;
 import com.mighty.kora.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +13,18 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping("/api/user")
+    @PostMapping("/api/signup/user")
     public Long save(@RequestBody UserSaveRequestDto requestDto) {
         return userService.save(requestDto);
     }
 
+    @PostMapping("/api/signup/user_oauth")
+    public Long save(@RequestBody UserOauthSaveRequestDto requestDto, @LoginUser SessionUser user) {
+        return userService.oauthUpdate(user.getEmail(), requestDto);
+    }
+
     @ResponseBody
-    @PostMapping("/api/userEmailChk")
+    @PostMapping("/api/signup/userEmailChk")
     public String emailDuplicateChk(@RequestBody UserEmailRequestDto requestDto) {
         return userService.emailDuplicateChk(requestDto);
     }

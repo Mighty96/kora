@@ -40,7 +40,7 @@ var main = {
             };
             $.ajax({
                 type: 'POST',
-                url: '/api/user',
+                url: '/api/signup/user',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data)
@@ -69,7 +69,7 @@ var main = {
         }
         $.ajax({
             type : 'POST',
-            url : '/api/userEmailChk',
+            url : '/api/signup/userEmailChk',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function(result) {

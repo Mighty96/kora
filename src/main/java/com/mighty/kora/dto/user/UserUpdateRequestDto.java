@@ -10,11 +10,13 @@ public class UserUpdateRequestDto {
 
     private String password;
     private String nickname;
+    private String userImg;
 
     @Builder
-    public UserUpdateRequestDto(String password, String nickname) {
+    public UserUpdateRequestDto(String password, String nickname, String userImg) {
         this.password = password;
         this.nickname = nickname;
+        this.userImg = userImg;
     }
 
 }
