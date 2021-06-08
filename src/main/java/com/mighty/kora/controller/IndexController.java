@@ -16,26 +16,19 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
-
-        log.info("인덱스진입");
-        if (user != null) {
-            log.info(user.getEmail());
-            log.info(user.getNickname());
-            log.info(user.getRole().toString());
+        if (user != null && user.getRole() == Role.GUEST) {
+            return "redirect:/signup_oauth";
         }
         if (user != null) {
             model.addAttribute("userNickname", user.getNickname());
         }
 
-        if (user != null && user.getRole() == Role.GUEST) {
-            return "redirect:/signup_oauth";
-        }
         return "index";
     }
 
     @GetMapping("/signin")
-    public String signin() {
-        return "signin";
+    public String login() {
+        return "login";
     }
 
     @GetMapping("/signup")
@@ -45,7 +38,6 @@ public class IndexController {
 
     @GetMapping("/signup_oauth")
     public String signup_oauth() {
-        log.info("signup_oauth");
         return "signup_oauth";
     }
 }

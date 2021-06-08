@@ -5,13 +5,25 @@ import com.mighty.kora.config.auth.dto.SessionUser;
 import com.mighty.kora.dto.user.*;
 import com.mighty.kora.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class UserApiController {
 
     private final UserService userService;
+
+    @PostMapping("/api/login")
+    public String login(@RequestBody UserLoginRequestDto requestDto) {
+        try {
+            return userService.login(requestDto).toString();
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
 
     @PostMapping("/api/signup/user")
     public Long save(@RequestBody UserSaveRequestDto requestDto) {

@@ -16,8 +16,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "이메일은 필수 입력값입니다.")
-    @Email(message = "올바르지 않은 이메일입니다.")
     @Column(nullable = false)
     private String email;
 
@@ -43,8 +41,12 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private RegistrationId registrationId;
+
     @Builder
-    public User(String email, String password, String familyName, String givenName, String birthday, String nickname, String picture, Role role) {
+    public User(String email, String password, String familyName, String givenName, String birthday, String nickname, String picture, Role role, RegistrationId registrationId) {
         this.email = email;
         this.password = password;
         this.familyName = familyName;
@@ -53,6 +55,7 @@ public class User {
         this.nickname = nickname;
         this.picture = picture;
         this.role = role;
+        this.registrationId = registrationId;
     }
 
     public void update(String password, String nickname, String picture) {
