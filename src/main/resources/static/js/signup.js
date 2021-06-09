@@ -38,6 +38,10 @@ var main = {
                 birthday: $('#birthday').val(),
                 nickname: $('#nickname').val()
             };
+
+            $('#btn-signup').prop('disabled', true);
+            $('#btn-signup').prop('value', "처리중...");
+
             $.ajax({
                 type: 'POST',
                 url: '/api/signup/user',
@@ -45,9 +49,11 @@ var main = {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data)
             }).done(function() {
-                alert('회원가입을 축하합니다!');
+                alert('이메일로 인증메일이 발송되었습니다.');
                 window.location.href = '/';
             }).fail(function (error) {
+                $('#btn-signup').prop('disabled', false);
+                $('#btn-signup').prop('value', "등록");
                 alert(JSON.stringify(error));
             });
         } else {

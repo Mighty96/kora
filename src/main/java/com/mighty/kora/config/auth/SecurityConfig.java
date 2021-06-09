@@ -25,10 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginPage("/signin")
                 .and()
                     .authorizeRequests() // antMatchers를 사용하기 위해 선언
-                        .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/signin", "/signup", "/api/signup/**", "/api/login").permitAll() // 지정 URL들은 전체 열람 권한
-                        .antMatchers("/signup_oauth").hasRole(Role.GUEST.name())
+                        .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/signin", "/signup", "/api/signup/**", "/api/login", "/authConfirm").permitAll() // 지정 URL들은 전체 열람 권한
+                        .antMatchers("/signup_auth").hasRole(Role.GUEST.name())
                         .antMatchers("/api/**").hasRole(Role.USER.name()) // USER권한을 가진 사람만 열람
-                        .anyRequest().authenticated() // 나머지는 인증된 사용자(로그인)
+                        .anyRequest().hasAnyAuthority() // 나머지는 인증된 사용자(로그인)
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .successHandler(new UserLoginSuccessHandler())
                 .and()
                     .exceptionHandling()
-                        .accessDeniedHandler(new UserAccessDeniedHandler());
+                        .accessDeniedHandler(new CustomAccessDeniedHandler())
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
     }
 

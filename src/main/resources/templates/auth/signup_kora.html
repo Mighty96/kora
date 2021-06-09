@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/sign.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 login-form-1">
+                <h2>아직 이메일인증이 완료되지 않았습니다</h2>
+                <span>이메일을 받지 못하셨나요?</span>
+                <div class="form-group">
+                    <a href="/api/signup/resendAuthMail" class="resend">인증메일 재전송</a>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</th:block>
+</html>

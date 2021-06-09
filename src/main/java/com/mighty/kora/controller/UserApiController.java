@@ -6,7 +6,6 @@ import com.mighty.kora.dto.user.*;
 import com.mighty.kora.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -17,12 +16,9 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/api/login")
-    public String login(@RequestBody UserLoginRequestDto requestDto) {
-        try {
-            return userService.login(requestDto).toString();
-        } catch (Exception e) {
-            return e.toString();
-        }
+    public Long login(@RequestBody UserLoginRequestDto requestDto) {
+
+        return userService.login(requestDto);
     }
 
     @PostMapping("/api/signup/user")
@@ -35,10 +31,14 @@ public class UserApiController {
         return userService.oauthUpdate(user.getEmail(), requestDto);
     }
 
-    @ResponseBody
     @PostMapping("/api/signup/userEmailChk")
     public String emailDuplicateChk(@RequestBody UserEmailRequestDto requestDto) {
         return userService.emailDuplicateChk(requestDto);
+    }
+
+    @GetMapping("/api/signup/resendAuthMail")
+    public Long resendAuthMail(@LoginUser SessionUser user) {
+        return userService.resendAuthMail(user);
     }
 
     @PutMapping("/api/user/{id}")

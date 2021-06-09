@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-public class UserAccessDeniedHandler implements AccessDeniedHandler {
-
-
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        log.info("exception : " + accessDeniedException);
-        response.sendRedirect("/signin");
+        log.error("권한없는 사용자의 접근");
+        response.sendRedirect("/signup_auth");
     }
 }

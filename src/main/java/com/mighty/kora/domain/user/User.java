@@ -1,5 +1,6 @@
 package com.mighty.kora.domain.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
+@Builder
 @Entity
 public class User {
 
@@ -45,18 +48,8 @@ public class User {
     @Column
     private RegistrationId registrationId;
 
-    @Builder
-    public User(String email, String password, String familyName, String givenName, String birthday, String nickname, String picture, Role role, RegistrationId registrationId) {
-        this.email = email;
-        this.password = password;
-        this.familyName = familyName;
-        this.givenName = givenName;
-        this.birthday = birthday;
-        this.nickname = nickname;
-        this.picture = picture;
-        this.role = role;
-        this.registrationId = registrationId;
-    }
+    @Column
+    private String authKey;
 
     public void update(String password, String nickname, String picture) {
         this.password = password;
@@ -67,6 +60,14 @@ public class User {
     public void oauthUpdate(String birthday, String nickname) {
         this.birthday = birthday;
         this.nickname = nickname;
+        this.role = Role.USER;
+    }
+
+    public void updateAuthKey(String authKey) {
+        this.authKey = authKey;
+    }
+
+    public void updateRoleToUser() {
         this.role = Role.USER;
     }
 
