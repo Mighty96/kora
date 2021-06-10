@@ -4,6 +4,7 @@ import com.mighty.kora.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,10 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginPage("/signin")
                 .and()
                     .authorizeRequests() // antMatchers를 사용하기 위해 선언
-                        .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/signin", "/signup", "/api/signup/**", "/api/login", "/authConfirm").permitAll() // 지정 URL들은 전체 열람 권한
+                        .antMatchers("/signin", "/signup", "/api/signup/**", "/api/login", "/authConfirm").permitAll() // 지정 URL들은 전체 열람 권한
                         .antMatchers("/signup_auth").hasRole(Role.GUEST.name())
                         .antMatchers("/api/**").hasRole(Role.USER.name()) // USER권한을 가진 사람만 열람
-                        .anyRequest().hasAnyAuthority() // 나머지는 인증된 사용자(로그인)
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
@@ -43,6 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .accessDeniedHandler(new CustomAccessDeniedHandler())
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/", "/css/**", "/js/**", "/images/**", "/h2-console/**");
     }
 
     // 비밀번호 암호화

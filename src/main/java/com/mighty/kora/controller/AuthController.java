@@ -3,7 +3,6 @@ package com.mighty.kora.controller;
 import com.mighty.kora.config.auth.LoginUser;
 import com.mighty.kora.config.auth.dto.SessionUser;
 import com.mighty.kora.domain.user.RegistrationId;
-import com.mighty.kora.domain.user.Role;
 import com.mighty.kora.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +39,6 @@ public class AuthController {
 
     @GetMapping("/signup_auth")
     public String auth(@LoginUser SessionUser user) {
-        if (user == null || user.getRole() != Role.GUEST) {
-            return "redirect:/";
-        }
         if (user.getRegistrationId() == RegistrationId.KORA) {
             return "auth/signup_kora";
         } else {

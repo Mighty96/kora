@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
 @Entity
 public class User {
 
@@ -41,7 +40,7 @@ public class User {
     private String picture;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column
     private Role role;
 
     @Enumerated(EnumType.STRING)
@@ -50,6 +49,21 @@ public class User {
 
     @Column
     private String authKey;
+
+    @Builder
+    public User(String email, String password, String familyName, String givenName, String birthday, String nickname, String picture, Role role, RegistrationId registrationId, String authKey) {
+        this.email = email;
+        this.password = password;
+        this.familyName = familyName;
+        this.givenName = givenName;
+        this.birthday = birthday;
+        this.nickname = nickname;
+        this.picture = picture;
+        this.role = role;
+        this.registrationId = registrationId;
+        this.authKey = authKey;
+    }
+
 
     public void update(String password, String nickname, String picture) {
         this.password = password;

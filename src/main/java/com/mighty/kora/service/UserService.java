@@ -27,10 +27,6 @@ public class UserService {
     @Transactional
     public Long save(UserSaveRequestDto requestDto) {
 
-        if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
-            return 0L;
-        }
-
         //비밀번호 암호화
         User user = UserSaveRequestDto.builder()
                 .email(requestDto.getEmail())
@@ -72,7 +68,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = " + id));
 
-        user.update(requestDto.getPassword(), requestDto.getNickname(), requestDto.getUserImg());
+        user.update(passwordEncoder.encode(requestDto.getPassword()), requestDto.getNickname(), requestDto.getPicture());
 
         return id;
     }
@@ -111,10 +107,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
 
-        if (user == null) {
-            model.addAttribute("message", "유효하지 않은 주소입니다.");
-            return;
-        } else if (!user.getAuthKey().equals(authKey)) {
+        if (!user.getAuthKey().equals(authKey)) {
             model.addAttribute("message", "유효하지 않은 주소입니다.");
             return;
         } else if (user.getRole() == Role.USER) {
@@ -139,5 +132,4 @@ public class UserService {
 
         return user.getId();
     }
-
 }
