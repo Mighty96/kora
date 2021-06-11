@@ -28,19 +28,21 @@ public class UserService {
     public Long save(UserSaveRequestDto requestDto) {
 
         //비밀번호 암호화
-        User user = UserSaveRequestDto.builder()
+        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
+
+        User user = User.builder()
                 .email(requestDto.getEmail())
-                .password(passwordEncoder.encode(requestDto.getPassword()))
-                .birthday(requestDto.getBirthday())
+                .password(requestDto.getPassword())
+                .nickname(requestDto.getNickname())
                 .familyName(requestDto.getFamilyName())
                 .givenName(requestDto.getGivenName())
-                .nickname(requestDto.getNickname())
-                .picture(requestDto.getPicture())
+                .birthday(requestDto.getBirthday())
                 .registrationId(RegistrationId.KORA)
+                .picture(null)
+                .role(Role.GUEST)
                 .authKey(null)
-                .build()
-                .toEntity();
-
+                .build();
+        user.encodePassword(encodedPassword);
         userRepository.save(user);
 
         //인증메일발송
@@ -129,6 +131,22 @@ public class UserService {
 
         String newAuthKey = mailSendService.sendAuthMail(user.getEmail());
         user.updateAuthKey(newAuthKey);
+
+        return user.getId();
+    }
+
+    @Transactional
+    public Long sendNewPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
+
+        if (user.getRegistrationId() != RegistrationId.KORA) {
+            throw new IllegalArgumentException("KORA의 계정이 아닙니다. 가입하신 연동 계정으로 로그인해주세요.");
+        }
+
+        String newPassword = mailSendService.sendNewPassword(email);
+
+        user.update(passwordEncoder.encode(newPassword), user.getNickname(), user.getPicture());
 
         return user.getId();
     }

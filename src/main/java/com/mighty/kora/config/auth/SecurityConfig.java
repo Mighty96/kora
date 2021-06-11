@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginPage("/signin")
                 .and()
                     .authorizeRequests() // antMatchers를 사용하기 위해 선언
-                        .antMatchers("/signin", "/signup", "/api/signup/**", "/api/login", "/authConfirm").permitAll() // 지정 URL들은 전체 열람 권한
+                        .antMatchers("/signin", "/signup", "/api/signup/**", "/api/login", "/authConfirm", "/newPassword", "/api/newPassword").permitAll() // 지정 URL들은 전체 열람 권한
                         .antMatchers("/signup_auth").hasRole(Role.GUEST.name())
                         .antMatchers("/api/**").hasRole(Role.USER.name()) // USER권한을 가진 사람만 열람
                 .and()

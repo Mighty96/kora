@@ -46,6 +46,11 @@ public class UserApiController {
         return userService.update(id, requestDto);
     }
 
+    @PostMapping("/api/newPassword")
+    public Long sendNewPassword(@RequestBody UserEmailRequestDto requestDto) {
+        return userService.sendNewPassword(requestDto.getEmail());
+    }
+
     @GetMapping("/api/user/{id}")
     public UserResponseDto findById(@PathVariable Long id) {
         return userService.findById(id);

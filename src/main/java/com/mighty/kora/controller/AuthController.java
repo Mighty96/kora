@@ -52,4 +52,9 @@ public class AuthController {
         httpSession.removeAttribute("user");
         return "auth/authConfirm";
     }
+
+    @GetMapping("/newPassword")
+    public String newPassword() {
+        return "auth/newPassword";
+    }
 }

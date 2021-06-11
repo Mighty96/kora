@@ -18,12 +18,7 @@ public class MailSendService {
     @Autowired
     private JavaMailSenderImpl mailSender;
 
-    private String getKey(int size) {
-        this.size = size;
-        return getAuthCode();
-    }
-
-    private String getAuthCode() {
+    private String getNumber() {
         Random random = new Random();
         StringBuffer buffer = new StringBuffer();
         int num = 0;
@@ -37,9 +32,9 @@ public class MailSendService {
     }
 
     public String sendAuthMail(String email) {
+        this.size = 10;
 
-        String authKey = getKey(10);
-
+        String authKey = getNumber();
 
         try {
             MimeMessage mail = mailSender.createMimeMessage();
@@ -56,5 +51,25 @@ public class MailSendService {
         }
 
         return authKey;
+    }
+
+    public String sendNewPassword(String email) {
+        this.size = 10;
+
+        String newPassword = "kora" + getNumber();
+
+        try {
+            MimeMessage mail = mailSender.createMimeMessage();
+            String mailContent = "<h1>Kora에서 임시 비밀번호를 보내드립니다.</h1><br><br><p>임시비밀번호: " + newPassword + "</p><br><br><p>꼭 로그인하신 후 비밀번호를 변경해주세요.</p>";
+
+            mail.setSubject("Kora에서 임시 비밀번호를 보내드립니다.", "utf-8");
+            mail.setText(mailContent, "utf-8", "html");
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            mailSender.send(mail);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        return newPassword;
     }
 }

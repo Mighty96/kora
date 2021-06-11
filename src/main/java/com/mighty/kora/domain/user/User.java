@@ -77,6 +77,10 @@ public class User {
         this.role = Role.USER;
     }
 
+    public void encodePassword(String password) {
+        this.password = password;
+    }
+
     public void updateAuthKey(String authKey) {
         this.authKey = authKey;
     }
