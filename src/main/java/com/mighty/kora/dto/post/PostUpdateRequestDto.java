@@ -1,6 +1,5 @@
 package com.mighty.kora.dto.post;
 
-import com.mighty.kora.domain.Language;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,12 +1,15 @@
 package com.mighty.kora.domain.user;
 
+import com.mighty.kora.domain.comment.Comment;
+import com.mighty.kora.domain.comment.OneLineComment;
+import com.mighty.kora.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,47 +19,35 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false)
     private String email;
-
-    @Column
     private String password;
-
-    @Column
-    private String familyName;
-
-    @Column
-    private String givenName;
-
-    @Column
-    private String birthday;
-
-    @Column
     private String nickname;
-
-    @Column
     private String picture;
 
     @Enumerated(EnumType.STRING)
-    @Column
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column
     private RegistrationId registrationId;
 
-    @Column
     private String authKey;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user")
+    private List<OneLineComment> oneLineComments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
     @Builder
-    public User(String email, String password, String familyName, String givenName, String birthday, String nickname, String picture, Role role, RegistrationId registrationId, String authKey) {
+    public User(String email, String password, String nickname, String picture, Role role, RegistrationId registrationId, String authKey) {
         this.email = email;
         this.password = password;
-        this.familyName = familyName;
-        this.givenName = givenName;
-        this.birthday = birthday;
         this.nickname = nickname;
         this.picture = picture;
         this.role = role;
@@ -69,12 +60,6 @@ public class User {
         this.password = password;
         this.picture = picture;
         this.nickname = nickname;
-    }
-
-    public void oauthUpdate(String birthday, String nickname) {
-        this.birthday = birthday;
-        this.nickname = nickname;
-        this.role = Role.USER;
     }
 
     public void encodePassword(String password) {

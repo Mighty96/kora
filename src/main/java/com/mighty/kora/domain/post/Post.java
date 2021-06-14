@@ -1,13 +1,14 @@
 package com.mighty.kora.domain.post;
 
 import com.mighty.kora.domain.BaseTimeEntity;
-import com.mighty.kora.domain.Language;
+import com.mighty.kora.domain.comment.Comment;
 import com.mighty.kora.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -15,31 +16,30 @@ import javax.persistence.*;
 public class Post extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
-    @Column(length = 500, nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="USER_ID")
+    @JoinColumn(name="user_id")
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private Language myLanguage;
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
-    @Enumerated
-    private Language yourLanguage;
+    private int recommended_up;
+    private int recommended_down;
 
     @Builder
-    public Post(String title, String content, User user, Language myLanguage, Language yourLanguage) {
+    public Post(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;
-        this.myLanguage = myLanguage;
-        this.yourLanguage = yourLanguage;
     }
 
     public void update(String title, String content) {

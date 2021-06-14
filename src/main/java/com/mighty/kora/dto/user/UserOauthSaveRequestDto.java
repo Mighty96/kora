@@ -9,18 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserOauthSaveRequestDto {
 
-    private String birthday;
     private String nickname;
 
     @Builder
-    public UserOauthSaveRequestDto(String birthday, String nickname) {
-        this.birthday = birthday;
+    public UserOauthSaveRequestDto(String nickname) {
         this.nickname = nickname;
     }
 
     public User toEntity() {
         return User.builder()
-                .birthday(birthday)
                 .nickname(nickname)
                 .build();
 

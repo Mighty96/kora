@@ -13,9 +13,6 @@ public class UserSaveRequestDto {
 
     private String email;
     private String password;
-    private String familyName;
-    private String givenName;
-    private String birthday;
     private String nickname;
     private String picture;
     private Role role;
@@ -23,12 +20,9 @@ public class UserSaveRequestDto {
     private String authKey;
 
     @Builder
-    public UserSaveRequestDto(String email, String password, String familyName, String givenName, String birthday, String nickname, String picture, RegistrationId registrationId, String authKey) {
+    public UserSaveRequestDto(String email, String password, String nickname, String picture, RegistrationId registrationId, String authKey) {
         this.email = email;
         this.password = password;
-        this.familyName = familyName;
-        this.givenName = givenName;
-        this.birthday = birthday;
         this.nickname = nickname;
         this.picture = picture;
         this.role = Role.GUEST;
@@ -40,9 +34,6 @@ public class UserSaveRequestDto {
         return User.builder()
                 .email(email)
                 .password(password)
-                .familyName(familyName)
-                .givenName(givenName)
-                .birthday(birthday)
                 .nickname(nickname)
                 .picture(picture)
                 .role(role)

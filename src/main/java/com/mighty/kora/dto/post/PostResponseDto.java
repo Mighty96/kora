@@ -1,6 +1,5 @@
 package com.mighty.kora.dto.post;
 
-import com.mighty.kora.domain.Language;
 import com.mighty.kora.domain.post.Post;
 import com.mighty.kora.domain.user.User;
 import lombok.Getter;
@@ -12,15 +11,11 @@ public class PostResponseDto {
     private String title;
     private String content;
     private User user;
-    private Language myLanguage;
-    private Language yourLanguage;
 
     public PostResponseDto(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.user = entity.getUser();
-        this.myLanguage = entity.getMyLanguage();
-        this.yourLanguage = entity.getYourLanguage();
     }
 }

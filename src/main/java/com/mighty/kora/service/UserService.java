@@ -34,9 +34,6 @@ public class UserService {
                 .email(requestDto.getEmail())
                 .password(requestDto.getPassword())
                 .nickname(requestDto.getNickname())
-                .familyName(requestDto.getFamilyName())
-                .givenName(requestDto.getGivenName())
-                .birthday(requestDto.getBirthday())
                 .registrationId(RegistrationId.KORA)
                 .picture(null)
                 .role(Role.GUEST)
@@ -80,7 +77,8 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
 
-        user.oauthUpdate(requestDto.getBirthday(), requestDto.getNickname());
+        user.update(user.getPassword(), requestDto.getNickname(), user.getPicture());
+        user.updateRoleToUser();
         httpSession.setAttribute("user", new SessionUser(user));
         return user.getId();
     }

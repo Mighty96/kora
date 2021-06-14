@@ -6,21 +6,15 @@ import lombok.Getter;
 @Getter
 public class UserResponseDto {
 
-    private Long id;
-    private String email;
-    private String password;
-    private String familyName;
-    private String givenName;
-    private String birthday;
-    private String nickname;
+    private final Long id;
+    private final String email;
+    private final String password;
+    private final String nickname;
 
     public UserResponseDto(User entity) {
         this.id = entity.getId();
         this.email = entity.getEmail();
         this.password = entity.getPassword();
-        this.familyName = entity.getFamilyName();
-        this.givenName = entity.getGivenName();
-        this.birthday = entity.getBirthday();
         this.nickname = entity.getNickname();
     }
 }
