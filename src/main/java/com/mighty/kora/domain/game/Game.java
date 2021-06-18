@@ -17,6 +17,7 @@ public class Game {
     @Column(name = "game_id")
     private Long id;
 
+    @Column(unique = true)
     private String title;
 
     @Column(columnDefinition = "TEXT")
@@ -24,11 +25,15 @@ public class Game {
 
     private float score;
 
+    private int voteCount;
+
     private String imgUrl;
 
     private String pageUrl;
 
     private String price;
+
+    private int viewCount;
 
     private String releasedDate;
 
@@ -36,13 +41,16 @@ public class Game {
     private List<OneLineComment> oneLineComments;
 
     @Builder
-    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate) {
+    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int voteCount, float score) {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
         this.pageUrl = pageUrl;
         this.price = price;
         this.releasedDate = releasedDate;
+        this.viewCount = viewCount;
+        this.voteCount = voteCount;
+        this.score = score;
     }
 
 }

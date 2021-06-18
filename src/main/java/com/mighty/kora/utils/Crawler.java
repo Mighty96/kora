@@ -3,6 +3,7 @@ package com.mighty.kora.utils;
 import com.mighty.kora.domain.game.Game;
 import com.mighty.kora.domain.game.GameRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +11,9 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class Crawler {
@@ -31,13 +34,13 @@ public class Crawler {
             Elements gameList = doc.getElementsByClass("category-product-item");
 
             int cnt = 0;
-
+            List<String> dbGameList = gameRepository.findAllTitle();
             for (Element g : gameList) {
-                if (++cnt > 10 ) {
+                if (++cnt > 7 ) {
                     break;
                 }
                 Elements title = g.getElementsByClass("category-product-item-title");
-                if (gameRepository.findByTitle(title.text()).isPresent()) {
+                if (dbGameList.contains(title.text())) {
                     continue;
                 }
                 Elements price = g.getElementsByClass("price");
@@ -64,6 +67,9 @@ public class Crawler {
                         .imgUrl(imageUrl)
                         .pageUrl(gameUrl)
                         .description(des.toString())
+                        .score(0f)
+                        .viewCount(0)
+                        .voteCount(0)
                         .build();
 
                 gameRepository.save(game);

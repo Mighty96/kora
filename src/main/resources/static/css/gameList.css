@@ -1,0 +1,31 @@
+.link {
+   text-decoration: none;
+   background-color: gray;
+   color: #e8e8e8;
+   font-size: 12pt;
+   line-height: 120%;
+}
+.card {
+    background-color: black;
+}
+.card-body {
+   padding: 5pt 15pt 5pt 5pt;
+}
+
+.link:hover {
+    text-decoration: none;
+    color: #e8e8e8;
+}
+
+.page-link {
+    color: black;
+}
+
+.page-item.active .page-link{
+    background-color: black;
+    border-color: black;
+}
+
+.pagination {
+    justify-content: center;
+}

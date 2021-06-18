@@ -42,10 +42,7 @@ class AuthControllerTest {
 
     private final User user_GUEST_GOOGLE = User.builder()
             .authKey("authKey")
-            .birthday("birthday")
             .email("email@email.com")
-            .familyName("familyName")
-            .givenName("givenName")
             .nickname("nickName")
             .password("password")
             .picture("picture")
@@ -55,10 +52,7 @@ class AuthControllerTest {
 
     private final User user_GUEST_KORA = User.builder()
             .authKey("authKey")
-            .birthday("birthday")
             .email("email@email.com")
-            .familyName("familyName")
-            .givenName("givenName")
             .nickname("nickName")
             .password("password")
             .picture("picture")
@@ -68,10 +62,7 @@ class AuthControllerTest {
 
     private final User user_USER = User.builder()
             .authKey("authKey")
-            .birthday("birthday")
             .email("email@email.com")
-            .familyName("familyName")
-            .givenName("givenName")
             .nickname("nickName")
             .password("password")
             .picture("picture")
