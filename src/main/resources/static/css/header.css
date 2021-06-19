@@ -1,3 +1,8 @@
+.bg-color {
+    background-color: #0e1015;
+    overflow-x: hidden;
+}
+
 #content {
     background-color: #0e1015;
 }
@@ -6,6 +11,7 @@
     font-family: 'GmarketSans', sans-serif;
 }
 .sticky-footer {
+    margin-top: 2%;
     background-color: #0e1015;
     color: white;
     font-family: 'GmarketSans', sans-serif;
@@ -13,8 +19,12 @@
 .navbar {
     font-family: 'GmarketSans', sans-serif;
     background-color: #e60012;
+    margin-top: 1%;
+    margin-bottom: 5pt;
 }
-
+.navbar-nav {
+    line-height: 15pt;
+}
 .nav-link {
     color: white;
 }
