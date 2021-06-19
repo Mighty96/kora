@@ -5,11 +5,10 @@ import com.mighty.ninda.domain.game.GameRepository;
 import com.mighty.ninda.utils.Crawler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,6 +28,12 @@ public class GameService {
     public Page<Game> findAll(Pageable pageable) {
 
         return gameRepository.findAll(pageable);
+    }
+
+    public void viewCountUp(Long id) {
+        Game game = findById(id);
+
+        game.viewCountUp();
     }
 
     public void gameCrawl() {

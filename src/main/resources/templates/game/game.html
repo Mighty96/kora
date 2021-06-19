@@ -3,13 +3,43 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 <head>
-    <link href="/css/gameList.css" rel="stylesheet">
+    <link href="/css/game.css" rel="stylesheet">
 </head>
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-8 row" style="padding-top: 20pt">
-            <a th:text="${game.title}"></a>
+        <div class="col-md-8" style="padding-top: 20pt">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="container p-2 my-2 border">
+                        <p th:text="${game.title}"></p>
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <img class="imgSize" th:src="${game.imgUrl}">
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <p th:text="'발매일: ' + ${game.releasedDate}"></p>
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <p th:text="'가격: ' + ${game.price}"></p>
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <p th:text="'지원언어: ' + ${game.language}"></p>
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <p th:text="'평점: ' + ${game.score}"></p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="container p-2 my-2 border">
+                        <p th:utext="${description}"></p>
+                        <a th:href="${game.pageUrl}">E-Shop으로 이동하기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
         </div>
         <div class="col-md-2"></div>
     </div>

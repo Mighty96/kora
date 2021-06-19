@@ -1,0 +1,20 @@
+#content {
+    background-color: #0e1015;
+}
+.col-md-8 {
+    background-color: #0e1015;
+    font-family: 'GmarketSans', sans-serif;
+}
+.sticky-footer {
+    background-color: #0e1015;
+    color: white;
+    font-family: 'GmarketSans', sans-serif;
+}
+.navbar {
+    font-family: 'GmarketSans', sans-serif;
+    background-color: #e60012;
+}
+
+.nav-link {
+    color: white;
+}

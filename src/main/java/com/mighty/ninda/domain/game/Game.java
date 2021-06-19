@@ -37,11 +37,13 @@ public class Game {
 
     private String releasedDate;
 
+    private String language;
+
     @OneToMany(mappedBy = "game")
     private List<OneLineComment> oneLineComments;
 
     @Builder
-    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int voteCount, float score) {
+    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int voteCount, float score, String language) {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
@@ -51,6 +53,11 @@ public class Game {
         this.viewCount = viewCount;
         this.voteCount = voteCount;
         this.score = score;
+        this.language = language;
+    }
+
+    public void viewCountUp() {
+        this.viewCount++;
     }
 
 }

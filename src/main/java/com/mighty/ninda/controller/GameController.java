@@ -1,5 +1,6 @@
 package com.mighty.ninda.controller;
 
+import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.service.GameService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,10 @@ public class GameController {
 
     @GetMapping("/game/{id}")
     public String game(Model model, @PathVariable Long id) {
-        model.addAttribute("game", gameService.findById(id));
+        Game game = gameService.findById(id);
+        gameService.viewCountUp(id);
+        model.addAttribute("game", game);
+        model.addAttribute("description", game.getDescription().replace("\n", "<br>"));
         return "game/game";
     }
 }

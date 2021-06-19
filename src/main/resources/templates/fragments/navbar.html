@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <th:block th:fragment="navbarFragment">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top row">
+        <nav class="navbar navbar-expand-sm sticky-top row">
             <div class="col-md-2"></div>
             <div class="col-md-4">
                 <ul class="navbar-nav">
@@ -9,7 +9,7 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/game?page=0&size=4&sort=title,asc">게임 전체보기</a>
+                        <a class="nav-link" href="/game?page=0&size=12&sort=title">게임 전체보기</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/api/gameCrawl">게임 업데이트(어드민)</a>

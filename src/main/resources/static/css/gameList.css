@@ -1,12 +1,13 @@
 .link {
    text-decoration: none;
-   background-color: gray;
+   background-color: black;
    color: #e8e8e8;
    font-size: 12pt;
    line-height: 120%;
 }
 .card {
     background-color: black;
+    border: 2px solid #40444f!important
 }
 .card-body {
    padding: 5pt 15pt 5pt 5pt;
