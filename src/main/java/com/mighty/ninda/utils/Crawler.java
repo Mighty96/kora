@@ -37,7 +37,7 @@ public class Crawler {
             int cnt = 0;
             List<String> dbGameList = gameRepository.findAllTitle();
             for (Element g : gameList) {
-                if (++cnt > 30 ) {
+                if (++cnt > 5 ) {
                     break;
                 }
                 Elements title = g.getElementsByClass("category-product-item-title");

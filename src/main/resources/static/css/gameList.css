@@ -13,15 +13,6 @@
    padding: 5pt 15pt 5pt 5pt;
 }
 
-.link:hover {
-    text-decoration: none;
-    color: #e8e8e8;
-}
-
-.page-link {
-    color: black;
-}
-
 .page-item.active .page-link{
     background-color: black;
     border-color: black;
@@ -33,6 +24,6 @@
 
 .white {
     color: white;
-    font-size: 10pt;
+    font-size: 12pt;
 }
 

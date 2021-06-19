@@ -18,3 +18,11 @@
 .nav-link {
     color: white;
 }
+
+.nav-link:hover {
+    color: white;
+}
+
+.my-auto {
+    background-color: #0e1015
+}
