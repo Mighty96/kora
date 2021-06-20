@@ -2,7 +2,6 @@ var main = {
     init : function () {
         var _this = this;
         $('#btn-comment').on('click', function() {
-            console.log('?');
             _this.save();
         });
     },
@@ -27,4 +26,11 @@ var main = {
     }
 };
 
+function  update_mode(_rid) {
+    var html= "";
+    html += '<textarea>' + $('#rid' + _rid).text() + '</textarea>'
+    console.log(html);
+    $('#rid' + _rid).replaceWith(html);
+    $('#rid' + _rid).focus();
+}
 main.init();

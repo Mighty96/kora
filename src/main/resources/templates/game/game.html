@@ -52,17 +52,33 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="container p-2 my-2 border">
+                        <p>커뮤니티영역</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="container p-2 my-2 border">
+                        <p th:text="'한줄평 수: ' + ${#lists.size(comments)}"></p>
+                        <p th:if="${#lists.isEmpty(comments)}">아직 아무도 한줄평을 남기지 않았어요. 첫 한줄평을 남겨주세요!</p>
+                    </div>
+                    <div class="container p-2 my-2 border" th:each="comment: ${comments}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p th:text="@{'작성자 ' + ${comment.user.nickname}}"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <a th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
+                                    수정
+                                </a>
+                            </div>
+                        </div>
+                        <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
+                    </div>
+                    <div class="container p-2 my-2 border">
                         <form>
                             <input type="text" class="form-control" id="context" placeholder="댓글"/>
                             <input type="hidden" id="id" th:value="${game.id}">
                         </form>
                         <button type="button" class="btn btn-success" id="btn-comment">버튼</button>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="container p-2 my-2 border" th:each="comment: ${comments}">
-                        <p th:text="@{'작성자 ' + ${comment.user.nickname}}"></p>
-                        <p th:text="${comment.context}"></p>
                     </div>
                 </div>
             </div>
