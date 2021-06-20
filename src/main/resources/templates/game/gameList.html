@@ -13,13 +13,24 @@
                 <div class="col-md-12">
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='title')}">이름순</a>
+                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='title', q=${q})}">이름순</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='viewCount,desc', sort='title')}">인기순</a>
+                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='viewCount,desc', sort='title', q=${q})}">인기순</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='score,desc', sort='title')}">평점순</a>
+                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='score,desc', sort='title', q=${q})}">평점순</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="game" method="get">
+                                <input class="form-control mr-sm-2" type="text" name="q" placeholder="제목으로 검색하기">
+                                <input type="hidden" name="page" value="0">
+                                <input type="hidden" name="size" value="12">
+                                <input type="hidden" name="sort" value="title">
+                            </form>
+                        </li>
+                        <li>
+                            <button class="btn btn-danger" type="submit">Search</button>
                         </li>
                     </ul>
                 </div>
@@ -34,31 +45,31 @@
                     <nav aria-label="Page">
                         <ul class="pagination center">
                             <li th:if="${page > 0}" class="page-item">
-                                <a class="page-link" th:href="@{/game(page=0, sort=${sort}, size=${size})}"><<</a>
+                                <a class="page-link" th:href="@{/game(page=0, sort=${sort}, size=${size}, q=${q})}"><<</a>
                             </li>
                             <li th:if="${page > 4}" class="page-item">
-                                <a class="page-link" th:href="@{/game(page=${page - 5}, sort=${sort}, size=${size})}"><</a>
+                                <a class="page-link" th:href="@{/game(page=${page - 5}, sort=${sort}, size=${size}, q=${q})}"><</a>
                             </li>
                             <li th:if="${page > 1}" class="page-item">
-                                <a class="page-link" th:href="@{/game(page=${page - 2}, sort=${sort}, size=${size})}" th:text="${page - 1}"></a>
+                                <a class="page-link" th:href="@{/game(page=${page - 2}, sort=${sort}, size=${size}, q=${q})}" th:text="${page - 1}"></a>
                             </li>
                             <li th:if="${page > 0}" class="page-item">
-                                <a class="page-link" th:href="@{/game(page=${page - 1}, sort=${sort}, size=${size})}" th:text="${page}"></a>
+                                <a class="page-link" th:href="@{/game(page=${page - 1}, sort=${sort}, size=${size}, q=${q})}" th:text="${page}"></a>
                             </li>
                             <li class="page-item active">
-                                <a class="page-link" th:href="@{/game(page=${page}, sort=${sort}, size=${size})}" th:text="${page + 1}"></a>
+                                <a class="page-link" th:href="@{/game(page=${page}, sort=${sort}, size=${size}, q=${q})}" th:text="${page + 1}"></a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" th:href="@{/game(page=${page + 1}, sort=${sort}, size=${size})}" th:text="${page + 2}"></a>
+                                <a class="page-link" th:href="@{/game(page=${page + 1}, sort=${sort}, size=${size}, q=${q})}" th:text="${page + 2}"></a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" th:href="@{/game(page=${page + 2}, sort=${sort}, size=${size})}" th:text="${page + 3}"></a>
+                                <a class="page-link" th:href="@{/game(page=${page + 2}, sort=${sort}, size=${size}, q=${q})}" th:text="${page + 3}"></a>
                             </li>
                             <li th:if="${page < 1}" class="page-item">
-                                <a class="page-link" th:href="@{/game(page=4, sort=${sort}, size=${size})}">4</a>
+                                <a class="page-link" th:href="@{/game(page=4, sort=${sort}, size=${size}, q=${q})}">4</a>
                             </li>
                             <li th:if="${page < 2}" class="page-item">
-                                <a class="page-link" th:href="@{/game(page=5, sort=${sort}, size=${size})}">5</a>
+                                <a class="page-link" th:href="@{/game(page=5, sort=${sort}, size=${size}, q=${q})}">5</a>
                             </li>
                         </ul>
                     </nav>

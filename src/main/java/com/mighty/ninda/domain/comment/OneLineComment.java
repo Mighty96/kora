@@ -29,22 +29,20 @@ public class OneLineComment extends BaseTimeEntity {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    private int parent_id;
-    private int depth;
-    private int orders;
     private int recommended_up;
     private int recommended_down;
 
     @Builder
-    public OneLineComment(User user, String context, Game game, int parent_id, int depth, int orders, int recommended_up, int recommended_down) {
+    public OneLineComment(User user, String context, Game game, int recommended_up, int recommended_down) {
         this.user = user;
         this.context = context;
         this.game = game;
-        this.parent_id = parent_id;
-        this.depth = depth;
-        this.orders = orders;
         this.recommended_up = recommended_up;
         this.recommended_down = recommended_down;
+    }
+
+    public void update(String context) {
+        this.context = context;
     }
 
 }

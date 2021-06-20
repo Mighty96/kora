@@ -18,6 +18,10 @@
     border-color: black;
 }
 
+.page-link {
+    color:black;
+}
+
 .pagination {
     justify-content: center;
 }

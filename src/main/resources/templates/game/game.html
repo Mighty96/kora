@@ -45,15 +45,30 @@
                 <div class="col-md-7">
                     <div class="container p-2 my-2 border">
                         <p class="content" th:utext="${description}"></p>
-                        <a class="content" th:href="${game.pageUrl}">E-Shop으로 이동하기</a>
+                        <a class="content" target="_blank" th:href="${game.pageUrl}">E-Shop으로 이동하기</a>
                     </div>
                 </div>
             </div>
             <div class="row">
-
+                <div class="col-md-4">
+                    <div class="container p-2 my-2 border">
+                        <form>
+                            <input type="text" class="form-control" id="context" placeholder="댓글"/>
+                            <input type="hidden" id="id" th:value="${game.id}">
+                        </form>
+                        <button type="button" class="btn btn-success" id="btn-comment">버튼</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="container p-2 my-2 border" th:each="comment: ${comments}">
+                        <p th:text="@{'작성자 ' + ${comment.user.nickname}}"></p>
+                        <p th:text="${comment.context}"></p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-2"></div>
     </div>
+    <script src="/js/game.js"></script>
 </th:block>
 </html>

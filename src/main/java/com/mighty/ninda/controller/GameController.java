@@ -1,7 +1,9 @@
 package com.mighty.ninda.controller;
 
+import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.service.GameService;
+import com.mighty.ninda.service.OneLineCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -19,16 +21,23 @@ import java.util.List;
 public class GameController {
 
     private final GameService gameService;
+    private final OneLineCommentService oneLineCommentService;
 
     @GetMapping("/game")
     public String gameList(Model model, Pageable pageable,
                            @RequestParam int page,
                            @RequestParam int size,
-                           @RequestParam List<String> sort) {
-        model.addAttribute("gameList", gameService.findAll(pageable));
+                           @RequestParam List<String> sort,
+                           @RequestParam String q) {
+        if (q.equals("")) {
+            model.addAttribute("gameList", gameService.findAll(pageable));
+        } else {
+            model.addAttribute("gameList", gameService.search(q, pageable));
+        }
         model.addAttribute("page", page);
         model.addAttribute("size", size);
         model.addAttribute("sort", sort);
+        model.addAttribute("q", q);
         return "game/gameList";
     }
 
@@ -38,6 +47,7 @@ public class GameController {
         gameService.viewCountUp(id);
         model.addAttribute("game", game);
         model.addAttribute("description", game.getDescription().replace("\n", "<br>"));
+        model.addAttribute("comments", oneLineCommentService.findAllOneLineCommentByGameId(game.getId()));
         return "game/game";
     }
 }

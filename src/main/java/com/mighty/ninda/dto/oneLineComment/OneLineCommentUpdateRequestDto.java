@@ -1,18 +1,17 @@
 package com.mighty.ninda.dto.oneLineComment;
 
-import com.mighty.ninda.domain.game.Game;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class OneLineCommentSaveRequestDto {
+public class OneLineCommentUpdateRequestDto {
 
     private String context;
 
     @Builder
-    public OneLineCommentSaveRequestDto(String context) {
+    public OneLineCommentUpdateRequestDto(String context) {
         this.context = context;
     }
 }
