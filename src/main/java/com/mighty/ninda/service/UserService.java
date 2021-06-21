@@ -90,6 +90,7 @@ public class UserService {
         return new UserResponseDto(user);
     }
 
+    @Transactional
     public Long login(UserLoginRequestDto requestDto) {
         User user = userRepository.findByEmail(requestDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + requestDto.getEmail()));

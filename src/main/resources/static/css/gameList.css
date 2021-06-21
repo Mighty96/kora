@@ -31,3 +31,7 @@
     font-size: 12pt;
 }
 
+.btn-danger {
+    background-color: #e60012;
+    border-color: #e60012;
+}

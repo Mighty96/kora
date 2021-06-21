@@ -23,27 +23,27 @@ public class Game {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private float score;
-
+    private int reLike;
+    private int reHate;
     private int voteCount;
-
     private String imgUrl;
-
     private String pageUrl;
-
     private String price;
-
     private int viewCount;
-
     private String releasedDate;
-
     private String language;
+
+    @Column(length= 100000)
+    private String likeList;
+
+    @Column(length = 100000)
+    private String hateList;
 
     @OneToMany(mappedBy = "game")
     private List<OneLineComment> oneLineComments;
 
     @Builder
-    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int voteCount, float score, String language) {
+    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int voteCount, int reLike, int reHate, String language, String likeList, String hateList) {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
@@ -52,12 +52,40 @@ public class Game {
         this.releasedDate = releasedDate;
         this.viewCount = viewCount;
         this.voteCount = voteCount;
-        this.score = score;
+        this.reLike = reLike;
+        this.reHate = reHate;
         this.language = language;
+        this.likeList = likeList;
+        this.hateList = hateList;
     }
 
     public void viewCountUp() {
         this.viewCount++;
     }
 
+    public void reLikeUp() {
+        this.reLike++;
+    }
+
+    public void reHateUp() {
+        this.reHate++;
+    }
+
+    public void updateLikeList(String id) {
+
+        if (!this.likeList.equals("")) {
+            this.likeList +=  "," + id;
+        } else {
+            this.likeList += id;
+        }
+    }
+
+    public void updateHateList(String id) {
+
+        if (!this.hateList.equals("")) {
+            this.hateList +=  "," + id;
+        } else {
+            this.hateList += id;
+        }
+    }
 }

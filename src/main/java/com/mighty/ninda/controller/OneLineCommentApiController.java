@@ -16,22 +16,38 @@ public class OneLineCommentApiController {
 
     private final OneLineCommentService oneLineCommentService;
 
-    @PostMapping("/game/{gameId}/comment")
+    @PostMapping("/api/oneLineComment")
     public Long saveOneLineComment(@LoginUser SessionUser sessionUser,
-                                   @RequestBody OneLineCommentSaveRequestDto requestDto,
-                                   @PathVariable Long gameId) {
+                                   @RequestBody OneLineCommentSaveRequestDto requestDto) {
 
         log.info("comment save");
-        return oneLineCommentService.save(sessionUser.getId(), gameId, requestDto);
+        return oneLineCommentService.save(sessionUser.getId(), requestDto);
     }
 
-    @PostMapping("/game/{gameId}/comment/{commentId}")
+    @PostMapping("/api/oneLineComment/{id}")
     public Long updateOneLineComment(@LoginUser SessionUser sessionUser,
                                      @RequestBody OneLineCommentUpdateRequestDto requestDto,
-                                     @PathVariable Long gameId,
-                                     @PathVariable Long commentId) {
+                                     @PathVariable Long id) {
 
 
-        return oneLineCommentService.update(sessionUser.getId(), commentId, requestDto);
+        return oneLineCommentService.update(sessionUser.getId(), id, requestDto);
+    }
+
+    @DeleteMapping("/api/oneLineComment/{id}")
+    public Long deleteOneLineComment(@LoginUser SessionUser sessionUser,
+                                     @PathVariable Long id) {
+        return oneLineCommentService.deleteOneLineComment(id);
+    }
+
+    @GetMapping("/api/oneLineComment/{id}/like")
+    public Long reLikeUp(@LoginUser SessionUser sessionUser,
+                             @PathVariable Long id) {
+        return oneLineCommentService.reLikeUp(sessionUser.getId(), id);
+    }
+
+    @GetMapping("/api/oneLineComment/{id}/hate")
+    public Long reHateUp(@LoginUser SessionUser sessionUser,
+                         @PathVariable Long id) {
+        return oneLineCommentService.reHateUp(sessionUser.getId(), id);
     }
 }

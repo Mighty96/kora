@@ -29,20 +29,54 @@ public class OneLineComment extends BaseTimeEntity {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    private int recommended_up;
-    private int recommended_down;
+    private int reLike;
+    private int reHate;
+
+    @Column(length= 100000)
+    private String likeList;
+
+    @Column(length = 100000)
+    private String hateList;
+
 
     @Builder
-    public OneLineComment(User user, String context, Game game, int recommended_up, int recommended_down) {
+    public OneLineComment(User user, String context, Game game, int reLike, int reHate, String likeList, String hateList) {
         this.user = user;
         this.context = context;
         this.game = game;
-        this.recommended_up = recommended_up;
-        this.recommended_down = recommended_down;
+        this.reLike = reLike;
+        this.reHate = reHate;
+        this.likeList = likeList;
+        this.hateList = hateList;
     }
 
     public void update(String context) {
         this.context = context;
     }
 
+    public void reLikeUp() {
+        this.reLike++;
+    }
+
+    public void reHateUp() {
+        this.reHate++;
+    }
+
+    public void updateLikeList(String id) {
+
+        if (!this.likeList.equals("")) {
+            this.likeList +=  "," + id;
+        } else {
+            this.likeList += id;
+        }
+    }
+
+    public void updateHateList(String id) {
+
+        if (!this.hateList.equals("")) {
+            this.hateList +=  "," + id;
+        } else {
+            this.hateList += id;
+        }
+    }
 }

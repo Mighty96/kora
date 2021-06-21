@@ -32,3 +32,8 @@
 p {
     margin-bottom: 0;
 }
+
+.btn-danger {
+    background-color: #e60012;
+    border-color: #e60012;
+}

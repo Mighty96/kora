@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
 public class OneLineCommentSaveRequestDto {
 
     private String context;
+    private Long gameId;
 
     @Builder
-    public OneLineCommentSaveRequestDto(String context) {
+    public OneLineCommentSaveRequestDto(String context, Long gameId) {
         this.context = context;
+        this.gameId = gameId;
     }
 }

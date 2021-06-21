@@ -19,18 +19,18 @@
                             <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='viewCount,desc', sort='title', q=${q})}">인기순</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='score,desc', sort='title', q=${q})}">평점순</a>
+                            <a class="nav-link white" th:href="@{/game(page=0, size=12, sort='reLike,desc', sort='title', q=${q})}">추천순</a>
                         </li>
                         <li class="nav-item">
-                            <form action="game" method="get">
+                            <form id="search" action="game">
                                 <input class="form-control mr-sm-2" type="text" name="q" placeholder="제목으로 검색하기">
                                 <input type="hidden" name="page" value="0">
                                 <input type="hidden" name="size" value="12">
                                 <input type="hidden" name="sort" value="title">
                             </form>
                         </li>
-                        <li>
-                            <button class="btn btn-danger" type="submit">Search</button>
+                        <li class="nav-item">
+                            <button form="search" class="btn btn-danger" type="submit">Search</button>
                         </li>
                     </ul>
                 </div>

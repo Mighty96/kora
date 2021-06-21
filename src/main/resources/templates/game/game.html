@@ -37,7 +37,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="container p-2 my-2 border">
-                                <p th:text="'평점: ' + ${game.score}"></p>
+                                <button th:onclick="'gameLikeUp()'" type="button" class="btn btn-success" id="btn-like" th:text="'추천 ' + ${game.reLike}"></button>
+                                <button th:onclick="'gameHateUp()'" type="button" class="btn btn-warning" id="btn-hate" th:text="'비추천 ' + ${game.reHate}"></button>
                             </div>
                         </div>
                     </div>
@@ -56,6 +57,7 @@
                     </div>
                 </div>
                 <div class="col-md-8">
+                    <input type="hidden" id="id" th:value="${game.id}">
                     <div class="container p-2 my-2 border">
                         <p th:text="'한줄평 수: ' + ${#lists.size(comments)}"></p>
                         <p th:if="${#lists.isEmpty(comments)}">아직 아무도 한줄평을 남기지 않았어요. 첫 한줄평을 남겨주세요!</p>
@@ -66,19 +68,33 @@
                                 <p th:text="@{'작성자 ' + ${comment.user.nickname}}"></p>
                             </div>
                             <div class="col-md-4">
-                                <a th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
+                                <a style="cursor: pointer;" th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
                                     수정
+                                </a>
+                                <a style="cursor: pointer;" th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
+                                    삭제
                                 </a>
                             </div>
                         </div>
-                        <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <button th:onclick="'reLikeUp(' + ${comment.id} + ')'" type="button" class="btn btn-success" id="btn-comment-like" th:text="'추천 ' + ${comment.reLike}"></button>
+                                    <button th:onclick="'reHateUp(' + ${comment.id} + ')'" type="button" class="btn btn-warning" id="btn-comment-hate" th:text="'비추천 ' + ${comment.reHate}"></button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="container p-2 my-2 border">
                         <form>
-                            <input type="text" class="form-control" id="context" placeholder="댓글"/>
-                            <input type="hidden" id="id" th:value="${game.id}">
+                            <textarea class="form-control" id="context" placeholder="한줄평"></textarea>
                         </form>
-                        <button type="button" class="btn btn-success" id="btn-comment">버튼</button>
+                        <p><br></p>
+                        <button type="button" class="btn btn-danger" id="btn-comment">한줄평 남기기</button>
                     </div>
                 </div>
             </div>
@@ -86,5 +102,6 @@
         <div class="col-md-2"></div>
     </div>
     <script src="/js/game.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </th:block>
 </html>
