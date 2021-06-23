@@ -39,8 +39,8 @@ public class AuthController {
 
     @GetMapping("/signup_auth")
     public String auth(@LoginUser SessionUser user) {
-        if (user.getRegistrationId() == RegistrationId.KORA) {
-            return "auth/signup_kora";
+        if (user.getRegistrationId() == RegistrationId.NINDA) {
+            return "auth/signup_ninda";
         } else {
             return "auth/signup_oauth";
         }
