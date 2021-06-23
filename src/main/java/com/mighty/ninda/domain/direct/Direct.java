@@ -1,6 +1,6 @@
-package com.mighty.ninda.domain.game;
+package com.mighty.ninda.domain.direct;
 
-import com.mighty.ninda.domain.comment.OneLineComment;
+import com.mighty.ninda.domain.comment.Impression;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,26 +11,22 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Game {
+public class Direct {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "game_id")
+    @Column(name = "direct_id")
     private Long id;
 
-    @Column(unique = true)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+    private String japanUrl;
+    private String americaUrl;
+
+    @OneToMany(mappedBy = "direct")
+    private List<Impression> impression;
 
     private int reLike;
     private int reHate;
-    private String imgUrl;
-    private String pageUrl;
-    private String price;
-    private int viewCount;
-    private String releasedDate;
-    private String language;
 
     @Column(length= 100000)
     private String likeList;
@@ -38,27 +34,15 @@ public class Game {
     @Column(length = 100000)
     private String hateList;
 
-    @OneToMany(mappedBy = "game")
-    private List<OneLineComment> oneLineComments;
-
     @Builder
-    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int reLike, int reHate, String language, String likeList, String hateList) {
+    public Direct(String title, String japanUrl, String americaUrl, int reLike, int reHate, String likeList, String hateList) {
         this.title = title;
-        this.description = description;
-        this.imgUrl = imgUrl;
-        this.pageUrl = pageUrl;
-        this.price = price;
-        this.releasedDate = releasedDate;
-        this.viewCount = viewCount;
-        this.reLike = reLike;
+        this.japanUrl = japanUrl;
+        this.americaUrl = americaUrl;
         this.reHate = reHate;
-        this.language = language;
+        this. reLike = reLike;
         this.likeList = likeList;
         this.hateList = hateList;
-    }
-
-    public void viewCountUp() {
-        this.viewCount++;
     }
 
     public void reLikeUp() {
@@ -86,4 +70,5 @@ public class Game {
             this.hateList += id;
         }
     }
+
 }

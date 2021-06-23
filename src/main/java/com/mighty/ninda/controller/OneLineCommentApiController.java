@@ -20,7 +20,6 @@ public class OneLineCommentApiController {
     public Long saveOneLineComment(@LoginUser SessionUser sessionUser,
                                    @RequestBody OneLineCommentSaveRequestDto requestDto) {
 
-        log.info("comment save");
         return oneLineCommentService.save(sessionUser.getId(), requestDto);
     }
 

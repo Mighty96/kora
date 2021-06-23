@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/gameList.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="padding-top: 10pt">
+            <div class="row">
+                <label for="title">타이틀</label>
+                <input type="text" id="title">
+                <label for="japanUrl">일본주소</label>
+                <input type="text" id="japanUrl">
+                <label for="americaUrl">북미주소</label>
+                <input type="text" id="americaUrl">
+                <input type="button" id="btn-create" value="등록">
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <script src="/js/directForm.js"></script>
+</th:block>
+</html>

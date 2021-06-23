@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/direct.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="padding-top: 20pt">
+            <p class="title" th:text="${direct.title}"></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="container p-2 my-2 border">
+                        <div class="videoContainer">
+                            <iframe class="videoSize" th:src="${direct.japanUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="container p-2 my-2 border">
+                        <div class="videoContainer">
+                            <iframe class="videoSize" th:src="${direct.americaUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p><br></p>
+            <div class="btn-wrap">
+                <button th:onclick="'directLikeUp()'" type="button" class="btn btn-success" id="btn-like" th:text="'추천 ' + ${direct.reLike}"></button>
+                <button th:onclick="'directHateUp()'" type="button" class="btn btn-warning" id="btn-hate" th:text="'비추천 ' + ${direct.reHate}"></button>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="container p-2 my-2 border">
+                        <p>커뮤니티영역</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <input type="hidden" id="id" th:value="${direct.id}">
+                    <div class="container p-2 my-2 border">
+                        <p th:text="'코멘트 수: ' + ${#lists.size(impressions)}"></p>
+                        <p th:if="${#lists.isEmpty(impressions)}">아직 아무도 소감을 남기지 않았어요. 이번 닌텐도 다이렉트에 대한 소감을 남겨주세요!</p>
+                    </div>
+                    <div class="container p-2 my-2 border" th:each="impression: ${impressions}">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p th:text="@{'작성자 ' + ${impression.user.nickname}}"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <a style="cursor: pointer;" th:onclick="'update_mode(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.user.id} == ${session.user.id}" id="btn-update-mode">
+                                    수정
+                                </a>
+                                <a style="cursor: pointer;" th:onclick="'del(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.user.id} == ${session.user.id}">
+                                    삭제
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p th:text="${impression.context}" th:id="'rid' + ${impression.id}"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+                                    <button th:onclick="'reLikeUp(' + ${impression.id} + ')'" type="button" class="btn btn-success" id="btn-impression-like" th:text="'추천 ' + ${impression.reLike}"></button>
+                                    <button th:onclick="'reHateUp(' + ${impression.id} + ')'" type="button" class="btn btn-warning" id="btn-impression-hate" th:text="'비추천 ' + ${impression.reHate}"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <form>
+                            <textarea class="form-control" id="context" placeholder="소감"></textarea>
+                        </form>
+                        <p><br></p>
+                        <button type="button" class="btn btn-danger" id="btn-impression">소감 남기기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <script src="/js/direct.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</th:block>
+</html>

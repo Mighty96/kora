@@ -71,7 +71,7 @@
                                 <a style="cursor: pointer;" th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
                                     수정
                                 </a>
-                                <a style="cursor: pointer;" th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
+                                <a style="cursor: pointer;" th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}">
                                     삭제
                                 </a>
                             </div>

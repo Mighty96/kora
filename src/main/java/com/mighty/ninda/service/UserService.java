@@ -34,7 +34,7 @@ public class UserService {
                 .email(requestDto.getEmail())
                 .password(requestDto.getPassword())
                 .nickname(requestDto.getNickname())
-                .registrationId(RegistrationId.KORA)
+                .registrationId(RegistrationId.NINDA)
                 .picture(null)
                 .role(Role.GUEST)
                 .authKey(null)
@@ -139,8 +139,8 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
 
-        if (user.getRegistrationId() != RegistrationId.KORA) {
-            throw new IllegalArgumentException("KORA의 계정이 아닙니다. 가입하신 연동 계정으로 로그인해주세요.");
+        if (user.getRegistrationId() != RegistrationId.NINDA) {
+            throw new IllegalArgumentException("Ninda의 계정이 아닙니다. 가입하신 연동 계정으로 로그인해주세요.");
         }
 
         String newPassword = mailSendService.sendNewPassword(email);

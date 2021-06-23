@@ -26,11 +26,8 @@ public class Crawler {
         Game game = new Game();
 
         try {
-            // 1. URL 선언
             String connUrl = "https://store.nintendo.co.kr/games";
-            // 2. HTML 가져오기
             Document doc = Jsoup.connect(connUrl).get();
-            // 3. 가져온 HTML Document 를 확인하기
 
             Elements gameList = doc.getElementsByClass("category-product-item");
 
@@ -80,7 +77,6 @@ public class Crawler {
                         .likeList("")
                         .hateList("")
                         .viewCount(0)
-                        .voteCount(0)
                         .language(supported_languages.text())
                         .build();
 

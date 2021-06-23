@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/gameList.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="padding-top: 10pt">
+            <div class="row">
+                <a href="/direct/directForm">등록</a>
+                <div class="col-md-6" th:each="direct: ${directList}">
+                    <div class="card mb-4">
+                        <a th:href="@{'/direct/' + ${direct.id}}">
+                            <p th:text="${direct.title}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</th:block>
+</html>

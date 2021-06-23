@@ -33,5 +33,9 @@
 }
 
 .my-auto {
-    background-color: #0e1015
+    background-color: #0e1015;
+}
+
+p {
+    word-break: break-all;
 }

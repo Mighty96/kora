@@ -1,24 +1,24 @@
 var main = {
     init : function () {
         var _this = this;
-        $('#btn-comment').on('click', function() {
+        $('#btn-impression').on('click', function() {
             _this.save();
         });
     },
     save : function () {
         var data = {
             context: $('#context').val(),
-            gameId: $('#id').val()
+            directId: $('#id').val()
         };
         $.ajax({
             type: 'POST',
-            url: '/api/oneLineComment',
+            url: '/api/impression',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
                 swal({
-                    title: "한줄평을 등록했어요!",
+                    title: "소감을 등록했어요!",
                     icon: "success"
                 })
                 .then(() =>{
@@ -37,7 +37,6 @@ function update_mode(_rid) {
     html += '<textarea class="form-control" id="update" placeholder="댓글">' + $('#rid' + _rid).text() + '</textarea>'
     html += '<button onclick="update(' + _rid + ')" type="button" class="btn btn-success" id="btn-update">완료</button>'
     html += '<button onclick="window.location.reload()" type="button" class="btn btn-danger" id="btn-update-cancel">취소</button>'
-    console.log(html);
     $('#rid' + _rid).replaceWith(html);
     $('#rid' + _rid).focus();
 }
@@ -48,13 +47,13 @@ function update(_rid) {
     }
     $.ajax({
         type: 'POST',
-        url: '/api/oneLineComment/' + _rid,
+        url: '/api/impression/' + _rid,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {
             swal({
-                title: "한줄평을 수정했어요!",
+                title: "소감을 수정했어요!",
                 icon: "success"
             })
             .then(() =>{
@@ -70,10 +69,10 @@ function update(_rid) {
 function del(_rid) {
     $.ajax({
         type: 'DELETE',
-        url: '/api/oneLineComment/' + _rid,
+        url: '/api/impression/' + _rid,
         success: function() {
             swal({
-                title: "한줄평을 삭제했어요!",
+                title: "소감을 삭제했어요!",
                 icon: "success"
             })
             .then(() =>{
@@ -86,13 +85,13 @@ function del(_rid) {
     });
 }
 
-function gameLikeUp() {
+function directLikeUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/game/' + $('#id').val() + '/like',
+        url: '/api/direct/' + $('#id').val() + '/like',
         success: function() {
             swal({
-                title: "게임을 추천했어요!",
+                title: "닌텐도 다이렉트를 추천했어요!",
                 icon: "success"
             }).then(() =>{
                 window.location.reload();
@@ -108,13 +107,13 @@ function gameLikeUp() {
     });
 }
 
-function gameHateUp() {
+function directHateUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/game/' + $('#id').val() + '/hate',
+        url: '/api/direct/' + $('#id').val() + '/hate',
         success: function() {
             swal({
-                title: "게임을 비추천했어요!",
+                title: "닌텐도 다이렉트를 비추천했어요!",
                 icon: "success"
             }).then(() =>{
                 window.location.reload();
@@ -130,13 +129,13 @@ function gameHateUp() {
     });
 }
 
-function reLikeUp(commentId) {
+function reLikeUp(impressionId) {
     $.ajax({
         type: 'GET',
-        url: '/api/oneLineComment/' + commentId + '/like',
+        url: '/api/impression/' + impressionId + '/like',
         success: function() {
             swal({
-                title: "한줄평을 추천했어요!",
+                title: "소감을 추천했어요!",
                 icon: "success"
             }).then(() =>{
                 window.location.reload();
@@ -152,13 +151,13 @@ function reLikeUp(commentId) {
     });
 }
 
-function reHateUp(commentId) {
+function reHateUp(impressionId) {
     $.ajax({
         type: 'GET',
-        url: '/api/oneLineComment/' + commentId + '/hate',
+        url: '/api/impression/' + impressionId + '/hate',
         success: function() {
             swal({
-                title: "한줄평을 비추천했어요!",
+                title: "소감을 비추천했어요!",
                 icon: "success"
             })
             .then(() =>{

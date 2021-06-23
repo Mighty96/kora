@@ -1,0 +1,60 @@
+.videoSize {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+}
+
+.btn-wrap {
+   margin: auto;
+   width: 20%;
+}
+
+.btn-wrap button {
+    padding: 5px;
+    width: 47%;
+}
+.container {
+    color: #dddddd;
+    background-color: black;
+    border-color: black;
+}
+
+.videoContainer {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 56.25%;
+}
+
+.border {
+    border: 1px solid #40444f!important
+    border-radius: 3px
+}
+
+.title {
+    font-size: 17pt;
+    text-align: center;
+    margin-top: 5pt;
+    margin-bottom: 5pt;
+    color: white;
+}
+
+.content {
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    margin-left: 10pt;
+    margin-right: 20pt;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.btn-danger {
+    background-color: #e60012;
+    border-color: #e60012;
+}
