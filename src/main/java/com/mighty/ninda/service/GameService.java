@@ -6,13 +6,16 @@ import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateExcept
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import com.mighty.ninda.utils.Crawler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class GameService {
@@ -37,6 +40,12 @@ public class GameService {
     @Transactional
     public List<Game> search(String q, Pageable pageable) {
         return gameRepository.findByTitleContainingIgnoreCase(q, pageable);
+    }
+
+    @Transactional
+    public List<Game> findNewGame() {
+        List<Game> list = gameRepository.findTop5ByReleasedDateGreaterThanOrderByReleasedDate(LocalDate.now());
+        return list;
     }
 
 

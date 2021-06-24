@@ -9,21 +9,114 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div class="container p-2 my-2 border">
-                <div class="row">
-<!--                    <div class="col-md-6">-->
-<!--                        <p class="title">  닌텐도 다이렉트 E3 2021</p>-->
-<!--                        <p>북미</p>-->
-<!--                        <iframe width="560" height="315" src="https://www.youtube.com/embed/IH7QtiX1I7Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-<!--                        <p><br>일본</p>-->
-<!--                        <iframe width="560" height="315" src="https://www.youtube.com/embed/CD9y3cNJI1k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
-<!--                    </div>-->
-                </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="title">
+                        <a>출시 임박 타이틀</a>
+                    </div>
+                    <div th:if="${#lists.size(newGameList) > 0}" id="demo" class="carousel slide" data-ride="carousel">
 
+                        <!-- Indicators -->
+                        <ul class="carousel-indicators">
+                            <li th:if="${#lists.size(newGameList) > 0}" data-target="#demo" data-slide-to="0" class="active"></li>
+                            <li th:if="${#lists.size(newGameList) > 1}" data-target="#demo" data-slide-to="1"></li>
+                            <li th:if="${#lists.size(newGameList) > 2}" data-target="#demo" data-slide-to="2"></li>
+                            <li th:if="${#lists.size(newGameList) > 3}" data-target="#demo" data-slide-to="3"></li>
+                            <li th:if="${#lists.size(newGameList) > 4}" data-target="#demo" data-slide-to="4"></li>
+                        </ul>
+
+                        <!-- The slideshow -->
+                        <div class="carousel-inner">
+                            <div th:if="${#lists.size(newGameList) > 0}" class="carousel-item active center">
+                                <a th:href="@{'/game/' + ${newGameList[0].id}}">
+                                    <img th:src="${newGameList[0].imgUrl}" th:alt="${newGameList[0].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[0].title}"></h3>
+                                        <p th:text="${newGameList[0].releasedDate} + ' 발매예정'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 1}" class="carousel-item center">
+                                <a th:href="@{'/game/' + ${newGameList[1].id}}">
+                                    <img th:src="${newGameList[1].imgUrl}" th:alt="${newGameList[1].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[1].title}"></h3>
+                                        <p th:text="${newGameList[1].releasedDate} + ' 발매예정'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 2}" class="carousel-item center">
+                                <a th:href="@{'/game/' + ${newGameList[2].id}}">
+                                    <img th:src="${newGameList[2].imgUrl}" th:alt="${newGameList[2].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[2].title}"></h3>
+                                        <p th:text="${newGameList[2].releasedDate} + ' 발매예정'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 3}" class="carousel-item center">
+                                <a th:href="@{'/game/' + ${newGameList[3].id}}">
+                                    <img th:src="${newGameList[3].imgUrl}" th:alt="${newGameList[3].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[3].title}"></h3>
+                                        <p th:text="${newGameList[3].releasedDate} + ' 발매예정'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 4}" class="carousel-item center">
+                                <a th:href="@{'/game/' + ${newGameList[4].id}}">
+                                    <img th:src="${newGameList[4].imgUrl}" th:alt="${newGameList[4].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[4].title}"></h3>
+                                        <p th:text="${newGameList[4].releasedDate} + ' 발매예정'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="title">
+                        <a>Hot 타이틀</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="container p-2 my-2 border">
+                        <div class="title">
+                            <p>최근 작성된 한줄평</p>
+                        </div>
+                        <div th:each="comment : ${commentList}">
+                            <a style="color: #77b9ff" th:text="${comment.game.title}" th:href="@{'/game/' + ${comment.game.id}}"></a>
+                            <p th:text="'한줄평: ' + ${comment.context}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="container p-2 my-2 border">
+                        <div class="title">
+                            <p>최근 작성된 한줄평</p>
+                        </div>
+                        <div th:each="comment : ${commentList}">
+                            <a style="color: #77b9ff" th:text="${comment.game.title}" th:href="@{'/game/' + ${comment.game.id}}"></a>
+                            <p th:text="${comment.context}"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-2"></div>
-
     </div>
 </th:block>
 </html>

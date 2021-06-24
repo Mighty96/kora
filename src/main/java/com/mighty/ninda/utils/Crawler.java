@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,7 +43,9 @@ public class Crawler {
                     continue;
                 }
                 Elements price = g.getElementsByClass("price");
-                Elements releasedDate = g.getElementsByClass("category-product-item-released");
+                Elements tempDate = g.getElementsByClass("category-product-item-released");
+                LocalDate releasedDate = LocalDate.of(Integer.parseInt("20" + tempDate.text().split("\\.")[0].split(" ")[1]),
+                        Integer.parseInt(tempDate.text().split("\\.")[1]), Integer.parseInt(tempDate.text().split("\\.")[2]));
                 String imageUrl = g.select(".product-image-photo").attr("data-src");
 
                 String gameUrl = g.select("a[href]").attr("href");
@@ -64,11 +67,10 @@ public class Crawler {
                 }
 
                 Elements supported_languages = gameDoc.getElementsByClass("supported_languages").select(".product-attribute-val");
-
                 game = Game.builder()
                         .title(title.text())
                         .price(price.text())
-                        .releasedDate(releasedDate.text().replace("발매 ", ""))
+                        .releasedDate(releasedDate)
                         .imgUrl(imageUrl)
                         .pageUrl(gameUrl)
                         .description(des.toString())

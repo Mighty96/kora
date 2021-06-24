@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -29,7 +30,7 @@ public class Game {
     private String pageUrl;
     private String price;
     private int viewCount;
-    private String releasedDate;
+    private LocalDate releasedDate;
     private String language;
 
     @Column(length= 100000)
@@ -42,7 +43,7 @@ public class Game {
     private List<OneLineComment> oneLineComments;
 
     @Builder
-    public Game(String title, String description, String imgUrl, String pageUrl, String price, String releasedDate, int viewCount, int reLike, int reHate, String language, String likeList, String hateList) {
+    public Game(String title, String description, String imgUrl, String pageUrl, String price, LocalDate releasedDate, int viewCount, int reLike, int reHate, String language, String likeList, String hateList) {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;

@@ -8,4 +8,5 @@ import java.util.List;
 public interface OneLineCommentRepository extends JpaRepository<OneLineComment, Long> {
 
     List<OneLineComment> findByGame_Id(@Param(value = "gameId") Long gameId);
+    List<OneLineComment> findTop5ByOrderByCreatedDateDesc();
 }

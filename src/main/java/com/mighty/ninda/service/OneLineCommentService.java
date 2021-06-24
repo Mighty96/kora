@@ -56,6 +56,11 @@ public class OneLineCommentService {
     }
 
     @Transactional
+    public List<OneLineComment> findTop5ByOrderByCreatedDateDesc() {
+        return oneLineCommentRepository.findTop5ByOrderByCreatedDateDesc();
+    }
+
+    @Transactional
     public Long update(Long userId, Long commentId, OneLineCommentUpdateRequestDto requestDto) {
         OneLineComment comment = oneLineCommentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
