@@ -3,14 +3,20 @@ package com.mighty.ninda.controller;
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.comment.OneLineComment;
+import com.mighty.ninda.domain.game.Game;
+import com.mighty.ninda.domain.hot.HotRepository;
 import com.mighty.ninda.service.GameService;
 import com.mighty.ninda.service.OneLineCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,12 +26,19 @@ public class IndexController {
 
     private final OneLineCommentService oneLineCommentService;
     private final GameService gameService;
+    private final HotRepository hotRepository;
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
 
         model.addAttribute("commentList", oneLineCommentService.findTop5ByOrderByCreatedDateDesc());
         model.addAttribute("newGameList", gameService.findNewGame());
+        List<Long> hotList = hotRepository.findHotGame(LocalDateTime.now().minusHours(1), PageRequest.of(0, 5));
+        List<Game> hotGameList = new ArrayList<>();
+        for (Long id : hotList) {
+            hotGameList.add(gameService.findById(id));
+        }
+        model.addAttribute("hotList", hotGameList);
 
         return "index";
     }

@@ -3,9 +3,10 @@
     border-radius: 3px
 }
 
-.title {
-    font-size: 20pt;
+.mini-title {
+    font-size: 14pt;
 }
+
 .carousel-inner {
     text-align: center;
     margin: 0 auto;
@@ -17,4 +18,8 @@
 
 .carousel-item img {
     height: 300px;
+}
+
+a:hover {
+    text-decoration: none;
 }

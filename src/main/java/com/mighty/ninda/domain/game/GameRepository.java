@@ -20,5 +20,5 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     List<Game> findByTitleContainingIgnoreCase(String q, Pageable pageable);
 
-    List<Game> findTop5ByReleasedDateGreaterThanOrderByReleasedDate(LocalDate localDate);
+    List<Game> findTop5ByReleasedDateLessThanOrderByReleasedDateDesc(LocalDate localDate);
 }

@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="title">
-                        <a>출시 임박 타이틀</a>
+                        <a>NEW 타이틀</a>
                     </div>
                     <div th:if="${#lists.size(newGameList) > 0}" id="demo" class="carousel slide" data-ride="carousel">
 
@@ -85,8 +85,15 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="title">
-                        <a>Hot 타이틀</a>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <p class="title">Hot 타이틀</p>
+                        <a><br></a>
+                    </div>
+                    <div th:each="hot,num : ${hotList}">
+                        <a th:href="@{'/game/' + ${hot.id}}">
+                            <p style="color: #ffcdcd; font-size: 13pt;" th:text="${num.count} + '위 ' + ${hot.title}"></p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -94,7 +101,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="container p-2 my-2 border">
-                        <div class="title">
+                        <div class="title mini-title">
                             <p>최근 작성된 한줄평</p>
                         </div>
                         <div th:each="comment : ${commentList}">
@@ -105,8 +112,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="container p-2 my-2 border">
-                        <div class="title">
-                            <p>최근 작성된 한줄평</p>
+                        <div class="title mini-title">
+                            <p>최근 추천받은 게임</p>
                         </div>
                         <div th:each="comment : ${commentList}">
                             <a style="color: #77b9ff" th:text="${comment.game.title}" th:href="@{'/game/' + ${comment.game.id}}"></a>

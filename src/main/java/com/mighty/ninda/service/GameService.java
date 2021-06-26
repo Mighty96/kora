@@ -2,6 +2,8 @@ package com.mighty.ninda.service;
 
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
+import com.mighty.ninda.domain.hot.Hot;
+import com.mighty.ninda.domain.hot.HotRepository;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import com.mighty.ninda.utils.Crawler;
@@ -21,6 +23,7 @@ import java.util.List;
 public class GameService {
 
     private final GameRepository gameRepository;
+    private final HotRepository hotRepository;
     private final Crawler crawler;
 
     @Transactional
@@ -44,7 +47,7 @@ public class GameService {
 
     @Transactional
     public List<Game> findNewGame() {
-        List<Game> list = gameRepository.findTop5ByReleasedDateGreaterThanOrderByReleasedDate(LocalDate.now());
+        List<Game> list = gameRepository.findTop5ByReleasedDateLessThanOrderByReleasedDateDesc(LocalDate.now());
         return list;
     }
 
@@ -52,6 +55,7 @@ public class GameService {
     @Transactional
     public void viewCountUp(Long id) {
         Game game = findById(id);
+        hotRepository.save(Hot.builder().gameId(id).build());
         game.viewCountUp();
     }
 

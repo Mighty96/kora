@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -84,8 +85,10 @@ public class Crawler {
 
                 gameRepository.save(game);
 
+                Random random = new Random();
+
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(random.nextInt(3000) + 2000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
