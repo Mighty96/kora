@@ -1,0 +1,70 @@
+.btn-primary {
+    background-color: #f0f0f0;
+    border-color: #b5b5b5;
+    color: black;
+}
+
+.btn-primary:hover {
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.btn-group-vertical {
+    width: 100%;
+}
+
+#content {
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.name {
+    color: white;
+    font-size: 14pt;
+}
+
+input {
+    background-color: #0e1015;
+    border-color: white;
+    color: white;
+}
+
+textarea {
+    background-color: #0e1015;
+    border-color: white;
+    color: white;
+    width: 100%;
+}
+
+.nickname_blank{
+}
+
+/* 닉네임 유효성검사 성공*/
+.nickname_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 닉네임 유효성검사 실패*/
+.nickname_check_fail{
+    color: #FFBEB0;
+    display: none;
+}
+
+.game_title {
+    color: #77b9ff;
+}
+
+.date {
+    color: #5f5f5f;
+    font-size: 10pt;
+}
+
+.date:hover {
+    color: #5f5f5f;
+}
+
+a:hover {
+    text-decoration: none;
+}
+

@@ -26,6 +26,7 @@ public class User {
     private String password;
     private String nickname;
     private String picture;
+    private String introduction;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -45,24 +46,22 @@ public class User {
     private List<Comment> comments;
 
     @Builder
-    public User(String email, String password, String nickname, String picture, Role role, RegistrationId registrationId, String authKey) {
+    public User(String email, String password, String nickname, String introduction, Role role, RegistrationId registrationId, String authKey) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.picture = picture;
+        this.introduction = introduction;
         this.role = role;
         this.registrationId = registrationId;
         this.authKey = authKey;
     }
 
-
-    public void update(String password, String nickname, String picture) {
-        this.password = password;
-        this.picture = picture;
+    public void update(String nickname, String introduction) {
         this.nickname = nickname;
+        this.introduction = introduction;
     }
 
-    public void encodePassword(String password) {
+    public void updatePassword(String password) {
         this.password = password;
     }
 
@@ -78,6 +77,3 @@ public class User {
         return this.role.getKey();
     }
 }
-
-
-

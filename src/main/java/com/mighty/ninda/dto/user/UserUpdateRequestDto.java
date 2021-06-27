@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserUpdateRequestDto {
 
-    private String password;
     private String nickname;
-    private String picture;
+    private String introduction;
 
     @Builder
-    public UserUpdateRequestDto(String password, String nickname, String picture) {
-        this.password = password;
+    public UserUpdateRequestDto(String nickname, String introduction) {
         this.nickname = nickname;
-        this.picture = picture;
+        this.introduction = introduction;
     }
 
 }

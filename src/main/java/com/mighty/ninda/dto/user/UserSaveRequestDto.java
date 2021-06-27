@@ -20,11 +20,10 @@ public class UserSaveRequestDto {
     private String authKey;
 
     @Builder
-    public UserSaveRequestDto(String email, String password, String nickname, String picture, RegistrationId registrationId, String authKey) {
+    public UserSaveRequestDto(String email, String password, String nickname, RegistrationId registrationId, String authKey) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.picture = picture;
         this.role = Role.GUEST;
         this.registrationId = registrationId;
         this.authKey = authKey;
@@ -35,7 +34,6 @@ public class UserSaveRequestDto {
                 .email(email)
                 .password(password)
                 .nickname(nickname)
-                .picture(picture)
                 .role(role)
                 .registrationId(registrationId)
                 .authKey(authKey)

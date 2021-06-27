@@ -7,14 +7,17 @@ import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
 import com.mighty.ninda.dto.user.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -32,14 +35,13 @@ public class UserService {
 
         User user = User.builder()
                 .email(requestDto.getEmail())
-                .password(requestDto.getPassword())
+                .password(encodedPassword)
                 .nickname(requestDto.getNickname())
                 .registrationId(RegistrationId.NINDA)
-                .picture(null)
+                .introduction("안녕하세요.")
                 .role(Role.GUEST)
                 .authKey(null)
                 .build();
-        user.encodePassword(encodedPassword);
         userRepository.save(user);
 
         //인증메일발송
@@ -67,8 +69,10 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = " + id));
 
-        user.update(passwordEncoder.encode(requestDto.getPassword()), requestDto.getNickname(), requestDto.getPicture());
-
+        log.info(requestDto.getNickname());
+        log.info(requestDto.getIntroduction());
+        user.update(requestDto.getNickname(), requestDto.getIntroduction());
+        httpSession.setAttribute("user", new SessionUser(user));
         return id;
     }
 
@@ -77,7 +81,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
 
-        user.update(user.getPassword(), requestDto.getNickname(), user.getPicture());
+        user.update(requestDto.getNickname(), user.getIntroduction());
         user.updateRoleToUser();
         httpSession.setAttribute("user", new SessionUser(user));
         return user.getId();
@@ -145,7 +149,7 @@ public class UserService {
 
         String newPassword = mailSendService.sendNewPassword(email);
 
-        user.update(passwordEncoder.encode(newPassword), user.getNickname(), user.getPicture());
+        user.updatePassword(passwordEncoder.encode(newPassword));
 
         return user.getId();
     }

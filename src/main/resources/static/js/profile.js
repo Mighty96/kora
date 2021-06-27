@@ -1,37 +1,43 @@
 var main = {
     init : function () {
         var _this = this;
-        $('#btn-signup').on('click', function() {
-            _this.save();
+        $('#btn-update').on('click', function() {
+            _this.update();
         });
         $('#nickname').on('change', function() {
             _this.nicknameChk();
         });
     },
-    save : function () {
+    update : function () {
         var _this = this;
-        if (_this.nicknameChk())
+        if (_this.nicknameChk() )
         {
             var data = {
-                birthday: $('#birthday').val(),
-                nickname: $('#nickname').val()
+                nickname: $('#nickname').val(),
+                introduction: $('#introduction').val()
             };
+
+            $('#btn-update').prop('disabled', true);
+            $('#btn-update').prop('value', "처리중...");
+
             $.ajax({
-                type: 'POST',
-                url: '/api/user/signup/oauth',
+                type: 'PUT',
+                url: '/api/user/update',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
                     swal({
-                        title: "회원가입을 축하합니다!",
+                        title: "회원정보 수정 완료!",
                         icon: "success"
                     })
                     .then(() =>{
-                        window.location.href='/';
+                        window.location.reload();
                     });
                 },
                 error: function(e) {
+                    $('#btn-update').prop('disabled', false);
+                    $('#btn-update').prop('value', "등록");
                     alert(JSON.stringify(error));
                 }
             });

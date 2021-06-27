@@ -17,11 +17,23 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                window.location.href='/';
+                swal({
+                    title: "로그인 성공!",
+                    icon: "success"
+                })
+                .then(() =>{
+                    window.location.href='/';
+                });
             },
             error: function(e) {
-                alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-                window.location.href='/signin';
+                swal({
+                    title: "이메일 또는 비밀번호를 확인해주세요.",
+                    icon: "error"
+                })
+                .then(() =>{
+                    window.location.href='/signin';
+                })
+
             }
         });
     }

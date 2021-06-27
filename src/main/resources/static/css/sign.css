@@ -105,23 +105,6 @@
     display: none;
 }
 
-/* 성 공란*/
-.family_name_check_blank{
-    color: #FFBEB0;
-    display: none;
-}
-
-/* 이름 공란*/
-.given_name_check_blank{
-    color: #FFBEB0;
-    display: none;
-}
-/* 생년월일 공란*/
-.birthday_check_blank{
-    color: #FFBEB0;
-    display: none;
-}
-
 /* 닉네임 유효성검사 성공*/
 .nickname_check_success{
     color: #C0FFB0;

@@ -32,17 +32,24 @@ var main = {
 
             $.ajax({
                 type: 'POST',
-                url: '/api/signup/user',
+                url: '/api/user/signup/ninda',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(data)
-            }).done(function() {
-                alert('이메일로 인증메일이 발송되었습니다.');
-                window.location.href = '/';
-            }).fail(function (error) {
-                $('#btn-signup').prop('disabled', false);
-                $('#btn-signup').prop('value', "등록");
-                alert(JSON.stringify(error));
+                data: JSON.stringify(data),
+                success: function() {
+                    swal({
+                        title: "이메일로 인증메일이 발송되었습니다.",
+                        icon: "success"
+                    })
+                    .then(() =>{
+                        window.location.href='/';
+                    });
+                },
+                error: function(e) {
+                    $('#btn-signup').prop('disabled', false);
+                    $('#btn-signup').prop('value', "등록");
+                    alert(JSON.stringify(error));
+                }
             });
         } else {
             alert('양식에 맞지 않습니다. 다시 작성해주세요.');
@@ -63,7 +70,7 @@ var main = {
         }
         $.ajax({
             type : 'POST',
-            url : '/api/signup/userEmailChk',
+            url : '/api/user/signup/emailChk',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function(result) {
