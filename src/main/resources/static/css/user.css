@@ -1,13 +1,7 @@
-.btn-primary {
+.btn-dark {
     background-color: #f0f0f0;
     border-color: #b5b5b5;
     color: black;
-}
-
-.btn-primary:hover {
-    background-color: black;
-    border-color: black;
-    color: white;
 }
 
 .btn-group-vertical {
