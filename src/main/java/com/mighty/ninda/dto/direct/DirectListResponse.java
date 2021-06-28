@@ -1,12 +1,16 @@
 package com.mighty.ninda.dto.direct;
 
 import com.mighty.ninda.domain.direct.Direct;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DirectListResponse {
 
     private Long id;
@@ -18,11 +22,17 @@ public class DirectListResponse {
         this.title = title;
     }
 
-    public DirectListResponse from(Direct direct) {
-        return DirectListResponse.builder()
-                .id(direct.getId())
-                .title(direct.getTitle())
-                .build();
+    public static List<DirectListResponse> from(List<Direct> directs) {
+
+        List<DirectListResponse> response = new ArrayList<>();
+        for (Direct direct : directs) {
+            response.add(DirectListResponse.builder()
+                    .title(direct.getTitle())
+                    .id(direct.getId())
+                    .build());
+        }
+
+        return response;
     }
 
 }

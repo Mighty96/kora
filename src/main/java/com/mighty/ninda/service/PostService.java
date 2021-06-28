@@ -30,10 +30,10 @@ public class PostService {
         return id;
     }
 
-    public PostResponse findById (Long id) {
+    public Post findById (Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
-        return new PostResponse(post);
+        return post;
     }
 }

@@ -90,9 +90,9 @@
                         <p class="title">Hot 타이틀</p>
                         <a><br></a>
                     </div>
-                    <div th:each="hot,num : ${hotList}">
-                        <a th:href="@{'/games/' + ${hot.id}}">
-                            <p style="color: #ffcdcd; font-size: 13pt;" th:text="${num.count} + '위 ' + ${hot.title}"></p>
+                    <div th:each="hotGame,num : ${hotGameList}">
+                        <a th:href="@{'/games/' + ${hotGame.id}}">
+                            <p style="color: #ffcdcd; font-size: 13pt;" th:text="${num.count} + '위 ' + ${hotGame.title}"></p>
                         </a>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                             <p>최근 작성된 한줄평</p>
                         </div>
                         <div th:each="comment : ${commentList}">
-                            <a style="color: #77b9ff" th:text="${comment.game.title}" th:href="@{'/games/' + ${comment.game.id}}"></a>
+                            <a style="color: #77b9ff" th:text="${comment.gameTitle}" th:href="@{'/games/' + ${comment.gameId}}"></a>
                             <p th:text="'한줄평: ' + ${comment.context}"></p>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                             <p>최근 추천받은 게임</p>
                         </div>
                         <div th:each="comment : ${commentList}">
-                            <a style="color: #77b9ff" th:text="${comment.game.title}" th:href="@{'/games/' + ${comment.game.id}}"></a>
+                            <a style="color: #77b9ff" th:text="${comment.gameTitle}" th:href="@{'/games/' + ${comment.gameId}}"></a>
                             <p th:text="${comment.context}"></p>
                         </div>
                     </div>

@@ -1,6 +1,9 @@
 package com.mighty.ninda.controller;
 
 import com.mighty.ninda.domain.direct.Direct;
+import com.mighty.ninda.dto.direct.DirectListResponse;
+import com.mighty.ninda.dto.direct.DirectResponse;
+import com.mighty.ninda.dto.direct.DirectImpressionListResponse;
 import com.mighty.ninda.service.DirectService;
 import com.mighty.ninda.service.ImpressionService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Controller
@@ -21,15 +23,15 @@ public class DirectController {
 
     @GetMapping("/directs")
     public String directList(Model model) {
-        model.addAttribute("directList", directService.findAll());
+        model.addAttribute("directList", DirectListResponse.from(directService.findAll()));
         return "direct/directList";
     }
 
     @GetMapping("/directs/{id}")
     public String direct(Model model, @PathVariable Long id) {
         Direct direct = directService.findById(id);
-        model.addAttribute("direct", direct);
-        model.addAttribute("impressions", impressionService.findAllImpressionByDirectId(direct.getId()));
+        model.addAttribute("direct", DirectResponse.from(direct));
+        model.addAttribute("impressionList", DirectImpressionListResponse.from(impressionService.findAllImpressionByDirectId(direct.getId())));
         return "direct/direct";
     }
 

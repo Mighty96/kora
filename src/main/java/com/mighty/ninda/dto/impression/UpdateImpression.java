@@ -1,17 +1,13 @@
 package com.mighty.ninda.dto.impression;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateImpression {
 
     private String context;
-
-    @Builder
-    public UpdateImpression(String context) {
-        this.context = context;
-    }
 }

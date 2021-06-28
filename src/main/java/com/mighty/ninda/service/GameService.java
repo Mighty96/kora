@@ -47,8 +47,7 @@ public class GameService {
 
     @Transactional
     public List<Game> findNewGame() {
-        List<Game> list = gameRepository.findTop5ByReleasedDateLessThanOrderByReleasedDateDesc(LocalDate.now());
-        return list;
+        return gameRepository.findTop5ByReleasedDateLessThanOrderByReleasedDateDesc(LocalDate.now());
     }
 
 

@@ -1,6 +1,7 @@
 package com.mighty.ninda.dto.user;
 
 import com.mighty.ninda.domain.comment.OneLineComment;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
-public class UserOneLineComment {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class UserOneLineCommentListResponse {
 
     private Long gameId;
     private String gameTitle;
@@ -21,7 +22,7 @@ public class UserOneLineComment {
     private String createdDate;
 
     @Builder
-    public UserOneLineComment(Long gameId, String gameTitle, Long commentId, String context, LocalDateTime createdDate) {
+    public UserOneLineCommentListResponse(Long gameId, String gameTitle, Long commentId, String context, LocalDateTime createdDate) {
         this.gameId = gameId;
         this.gameTitle = gameTitle;
         this.commentId = commentId;
@@ -31,11 +32,11 @@ public class UserOneLineComment {
 
     }
 
-    public List<UserOneLineComment> toList(List<OneLineComment> oneLineComments) {
-        List<UserOneLineComment> list = new ArrayList<>();
+    public static List<UserOneLineCommentListResponse> from(List<OneLineComment> oneLineComments) {
+        List<UserOneLineCommentListResponse> list = new ArrayList<>();
 
         for (OneLineComment oneLineComment : oneLineComments) {
-            list.add(UserOneLineComment.builder()
+            list.add(UserOneLineCommentListResponse.builder()
                     .gameId(oneLineComment.getGame().getId())
                     .gameTitle(oneLineComment.getGame().getTitle())
                     .commentId(oneLineComment.getId())

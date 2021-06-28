@@ -86,11 +86,11 @@ public class UserService {
         return user.getId();
     }
 
-    public UserResponse findById(Long id) {
+    public User findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id =" + id));
 
-        return new UserResponse(user);
+        return user;
     }
 
     @Transactional

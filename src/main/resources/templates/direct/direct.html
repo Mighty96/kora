@@ -40,19 +40,19 @@
                 <div class="col-md-8">
                     <input type="hidden" id="id" th:value="${direct.id}">
                     <div class="container p-2 my-2 border">
-                        <p th:text="'코멘트 수: ' + ${#lists.size(impressions)}"></p>
-                        <p th:if="${#lists.isEmpty(impressions)}">아직 아무도 소감을 남기지 않았어요. 이번 닌텐도 다이렉트에 대한 소감을 남겨주세요!</p>
+                        <p th:text="'코멘트 수: ' + ${#lists.size(impressionList)}"></p>
+                        <p th:if="${#lists.isEmpty(impressionList)}">아직 아무도 소감을 남기지 않았어요. 이번 닌텐도 다이렉트에 대한 소감을 남겨주세요!</p>
                     </div>
-                    <div class="container p-2 my-2 border" th:each="impression: ${impressions}">
+                    <div class="container p-2 my-2 border" th:each="impression: ${impressionList}">
                         <div class="row">
                             <div class="col-md-8">
-                                <p th:text="@{'작성자 ' + ${impression.user.nickname}}"></p>
+                                <p th:text="@{'작성자 ' + ${impression.userName}}"></p>
                             </div>
                             <div class="col-md-4">
-                                <a style="cursor: pointer;" th:onclick="'update_mode(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.user.id} == ${session.user.id}" id="btn-update-mode">
+                                <a style="cursor: pointer;" th:onclick="'update_mode(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.userId} == ${session.user.id}" id="btn-update-mode">
                                     수정
                                 </a>
-                                <a style="cursor: pointer;" th:onclick="'del(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.user.id} == ${session.user.id}">
+                                <a style="cursor: pointer;" th:onclick="'del(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.userId} == ${session.user.id}">
                                     삭제
                                 </a>
                             </div>

@@ -8,7 +8,6 @@ import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
 import com.mighty.ninda.dto.oneLineComment.SaveOneLineComment;
 import com.mighty.ninda.dto.oneLineComment.UpdateOneLineComment;
-import com.mighty.ninda.dto.user.UserOneLineComment;
 import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
@@ -57,9 +56,9 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public List<UserOneLineComment> findOneLineCommentByUserId(Long userId) {
+    public List<OneLineComment> findOneLineCommentByUserIdDesc(Long userId) {
 
-        return new UserOneLineComment().toList(oneLineCommentRepository.findByUser_IdOrderByIdDesc(userId));
+        return oneLineCommentRepository.findByUser_IdOrderByIdDesc(userId);
     }
 
 

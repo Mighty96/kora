@@ -2,6 +2,8 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.game.Game;
+import com.mighty.ninda.dto.game.GameOneLineCommentListResponse;
+import com.mighty.ninda.dto.game.GameResponse;
 import com.mighty.ninda.service.GameService;
 import com.mighty.ninda.service.OneLineCommentService;
 import lombok.RequiredArgsConstructor;
@@ -72,9 +74,8 @@ public class GameController {
         }
 
 
-        model.addAttribute("game", game);
-        model.addAttribute("description", game.getDescription().replace("\n", "<br>"));
-        model.addAttribute("comments", oneLineCommentService.findAllOneLineCommentByGameId(game.getId()));
+        model.addAttribute("game", GameResponse.from(game));
+        model.addAttribute("commentList", GameOneLineCommentListResponse.from(oneLineCommentService.findAllOneLineCommentByGameId(game.getId())));
         return "game/game";
     }
 }

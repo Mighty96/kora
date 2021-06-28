@@ -2,6 +2,8 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.dto.user.UserOneLineCommentListResponse;
+import com.mighty.ninda.dto.user.UserResponse;
 import com.mighty.ninda.service.OneLineCommentService;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ public class UserController {
 
     @GetMapping("/user/profile")
     public String profile(@LoginUser SessionUser sessionUser, Model model) {
-        model.addAttribute("user", userService.findById(sessionUser.getId()));
+        model.addAttribute("user", UserResponse.from(userService.findById(sessionUser.getId())));
         return "user/profile";
     }
 
@@ -28,7 +30,7 @@ public class UserController {
     public String oneLineComment(@LoginUser SessionUser sessionUser, Model model) {
 
 
-        model.addAttribute("oneLineComments", oneLineCommentService.findOneLineCommentByUserId(sessionUser.getId()));
+        model.addAttribute("oneLineComments", UserOneLineCommentListResponse.from(oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId())));
 
         return "user/oneLineComment";
     }

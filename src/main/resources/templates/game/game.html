@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-7">
                     <div class="container p-2 my-2 border">
-                        <p class="content" th:utext="${description}"></p>
+                        <p class="content" th:utext="${game.description}"></p>
                         <a class="content" target="_blank" th:href="${game.pageUrl}">E-Shop으로 이동하기</a>
                     </div>
                 </div>
@@ -59,19 +59,19 @@
                 <div class="col-md-8">
                     <input type="hidden" id="id" th:value="${game.id}">
                     <div class="container p-2 my-2 border">
-                        <p th:text="'한줄평 수: ' + ${#lists.size(comments)}"></p>
-                        <p th:if="${#lists.isEmpty(comments)}">아직 아무도 한줄평을 남기지 않았어요. 첫 한줄평을 남겨주세요!</p>
+                        <p th:text="'한줄평 수: ' + ${#lists.size(commentList)}"></p>
+                        <p th:if="${#lists.isEmpty(commentList)}">아직 아무도 한줄평을 남기지 않았어요. 첫 한줄평을 남겨주세요!</p>
                     </div>
-                    <div class="container p-2 my-2 border" th:each="comment: ${comments}">
+                    <div class="container p-2 my-2 border" th:each="comment: ${commentList}">
                         <div class="row">
                             <div class="col-md-8">
-                                <p th:text="@{'작성자 ' + ${comment.user.nickname}}"></p>
+                                <p th:text="@{'작성자 ' + ${comment.userName}}"></p>
                             </div>
                             <div class="col-md-4">
-                                <a style="cursor: pointer;" th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}" id="btn-update-mode">
+                                <a style="cursor: pointer;" th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}" id="btn-update-mode">
                                     수정
                                 </a>
-                                <a style="cursor: pointer;" th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.user.id} == ${session.user.id}">
+                                <a style="cursor: pointer;" th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">
                                     삭제
                                 </a>
                             </div>
