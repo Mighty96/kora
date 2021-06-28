@@ -16,15 +16,14 @@ public class ImpressionApiController {
 
     private final ImpressionService impressionService;
 
-    @PostMapping("/api/impression")
+    @PostMapping("/api/impressions")
     public Long saveImpression(@LoginUser SessionUser sessionUser,
                                    @RequestBody SaveImpression requestDto) {
 
-        log.info("comment save");
         return impressionService.save(sessionUser.getId(), requestDto);
     }
 
-    @PostMapping("/api/impression/{id}")
+    @PostMapping("/api/impressions/{id}")
     public Long updateImpression(@LoginUser SessionUser sessionUser,
                                      @RequestBody UpdateImpression requestDto,
                                      @PathVariable Long id) {
@@ -33,19 +32,19 @@ public class ImpressionApiController {
         return impressionService.update(sessionUser.getId(), id, requestDto);
     }
 
-    @DeleteMapping("/api/impression/{id}")
+    @DeleteMapping("/api/impressions/{id}")
     public Long deleteImpression(@LoginUser SessionUser sessionUser,
                                      @PathVariable Long id) {
         return impressionService.deleteImpression(id);
     }
 
-    @GetMapping("/api/impression/{id}/like")
+    @GetMapping("/api/impressions/{id}/like")
     public Long reLikeUp(@LoginUser SessionUser sessionUser,
                              @PathVariable Long id) {
         return impressionService.reLikeUp(sessionUser.getId(), id);
     }
 
-    @GetMapping("/api/impression/{id}/hate")
+    @GetMapping("/api/impressions/{id}/hate")
     public Long reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
         return impressionService.reHateUp(sessionUser.getId(), id);

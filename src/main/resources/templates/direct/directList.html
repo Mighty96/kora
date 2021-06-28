@@ -13,7 +13,7 @@
                 <a href="/direct/directForm">등록</a>
                 <div class="col-md-6" th:each="direct: ${directList}">
                     <div class="card mb-4">
-                        <a th:href="@{'/direct/' + ${direct.id}}">
+                        <a th:href="@{'/directs/' + ${direct.id}}">
                             <p th:text="${direct.title}"></p>
                         </a>
                     </div>

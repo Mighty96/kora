@@ -12,7 +12,7 @@ var main = {
         };
         $.ajax({
             type: 'POST',
-            url: '/api/impression',
+            url: '/api/impressions',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
@@ -47,7 +47,7 @@ function update(_rid) {
     }
     $.ajax({
         type: 'POST',
-        url: '/api/impression/' + _rid,
+        url: '/api/impressions/' + _rid,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
@@ -69,7 +69,7 @@ function update(_rid) {
 function del(_rid) {
     $.ajax({
         type: 'DELETE',
-        url: '/api/impression/' + _rid,
+        url: '/api/impressions/' + _rid,
         success: function() {
             swal({
                 title: "소감을 삭제했어요!",
@@ -88,7 +88,7 @@ function del(_rid) {
 function directLikeUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/direct/' + $('#id').val() + '/like',
+        url: '/api/directs/' + $('#id').val() + '/like',
         success: function() {
             swal({
                 title: "닌텐도 다이렉트를 추천했어요!",
@@ -110,7 +110,7 @@ function directLikeUp() {
 function directHateUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/direct/' + $('#id').val() + '/hate',
+        url: '/api/directs/' + $('#id').val() + '/hate',
         success: function() {
             swal({
                 title: "닌텐도 다이렉트를 비추천했어요!",
@@ -132,7 +132,7 @@ function directHateUp() {
 function reLikeUp(impressionId) {
     $.ajax({
         type: 'GET',
-        url: '/api/impression/' + impressionId + '/like',
+        url: '/api/impressions/' + impressionId + '/like',
         success: function() {
             swal({
                 title: "소감을 추천했어요!",
@@ -154,7 +154,7 @@ function reLikeUp(impressionId) {
 function reHateUp(impressionId) {
     $.ajax({
         type: 'GET',
-        url: '/api/impression/' + impressionId + '/hate',
+        url: '/api/impressions/' + impressionId + '/hate',
         success: function() {
             swal({
                 title: "소감을 비추천했어요!",

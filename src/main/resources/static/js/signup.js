@@ -32,7 +32,7 @@ var main = {
 
             $.ajax({
                 type: 'POST',
-                url: '/api/user/signup/ninda',
+                url: '/api/users/signup/ninda',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
@@ -70,7 +70,7 @@ var main = {
         }
         $.ajax({
             type : 'POST',
-            url : '/api/user/signup/emailChk',
+            url : '/api/users/signup/emailChk',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function(result) {

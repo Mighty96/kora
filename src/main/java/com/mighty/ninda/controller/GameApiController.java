@@ -20,7 +20,7 @@ public class GameApiController {
         gameService.gameCrawl();
     }
 
-    @GetMapping("/api/game/{id}/like")
+    @GetMapping("/api/games/{id}/like")
     public Long reLikeUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
         gameService.reLikeUp(sessionUser.getId(), id);
@@ -28,7 +28,7 @@ public class GameApiController {
         return id;
     }
 
-    @GetMapping("/api/game/{id}/hate")
+    @GetMapping("/api/games/{id}/hate")
     public Long reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
         gameService.reHateUp(sessionUser.getId(), id);

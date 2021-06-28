@@ -21,43 +21,43 @@ public class UserApiController {
         return userService.login(requestDto);
     }
 
-    @PostMapping("/api/user/signup/ninda")
+    @PostMapping("/api/users/signup/ninda")
     public Long save(@RequestBody SaveUser requestDto) {
         return userService.save(requestDto);
     }
 
-    @PostMapping("/api/user/signup/oauth")
+    @PostMapping("/api/users/signup/oauth")
     public Long save(@RequestBody SaveUserOauth requestDto, @LoginUser SessionUser user) {
         return userService.oauthUpdate(user.getEmail(), requestDto);
     }
 
-    @PostMapping("/api/user/signup/emailChk")
+    @PostMapping("/api/users/signup/emailChk")
     public String emailDuplicateChk(@RequestBody UserEmail requestDto) {
         return userService.emailDuplicateChk(requestDto);
     }
 
-    @GetMapping("/api/user/resendAuthMail")
+    @GetMapping("/api/users/resendAuthMail")
     public Long resendAuthMail(@LoginUser SessionUser user) {
         return userService.resendAuthMail(user);
     }
 
-    @PutMapping("/api/user/update")
+    @PutMapping("/api/users")
     public Long update(@LoginUser SessionUser user, @RequestBody UpdateUser requestDto) {
 
         return userService.update(user.getId(), requestDto);
     }
 
-    @PostMapping("/api/user/updatePassword")
+    @PostMapping("/api/users/updatePassword")
     public Long updatePassword(@RequestBody UserEmail requestDto) {
         return userService.sendNewPassword(requestDto.getEmail());
     }
 
-    @PostMapping("/api/user/newPassword")
+    @PostMapping("/api/users/newPassword")
     public Long sendNewPassword(@RequestBody UserEmail requestDto) {
         return userService.sendNewPassword(requestDto.getEmail());
     }
 
-    @GetMapping("/api/user/{id}")
+    @GetMapping("/api/users/{id}")
     public UserResponse findById(@PathVariable Long id) {
         return userService.findById(id);
     }

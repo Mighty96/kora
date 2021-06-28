@@ -22,7 +22,7 @@ var main = {
 
             $.ajax({
                 type: 'PUT',
-                url: '/api/user/update',
+                url: '/api/users',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),

@@ -22,7 +22,7 @@
         <div class="col-md-6">
             <form>
                 <div class="container p-3 border" th:each="oneLineComment: ${oneLineComments}">
-                    <a class="game_title" th:href="@{'/game/' + ${oneLineComment.gameId}}" th:text="${oneLineComment.gameTitle}"></a>
+                    <a class="game_title" th:href="@{'/games/' + ${oneLineComment.gameId}}" th:text="${oneLineComment.gameTitle}"></a>
                     <p class="date" th:text="${oneLineComment.createdDate}"></p>
                     <a th:text="${oneLineComment.context}"></a>
                 </div>

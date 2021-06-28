@@ -16,14 +16,14 @@ public class OneLineCommentApiController {
 
     private final OneLineCommentService oneLineCommentService;
 
-    @PostMapping("/api/oneLineComment")
+    @PostMapping("/api/oneLineComments")
     public Long saveOneLineComment(@LoginUser SessionUser sessionUser,
                                    @RequestBody SaveOneLineComment requestDto) {
 
         return oneLineCommentService.save(sessionUser.getId(), requestDto);
     }
 
-    @PostMapping("/api/oneLineComment/{id}")
+    @PostMapping("/api/oneLineComments/{id}")
     public Long updateOneLineComment(@LoginUser SessionUser sessionUser,
                                      @RequestBody UpdateOneLineComment requestDto,
                                      @PathVariable Long id) {
@@ -32,19 +32,19 @@ public class OneLineCommentApiController {
         return oneLineCommentService.update(sessionUser.getId(), id, requestDto);
     }
 
-    @DeleteMapping("/api/oneLineComment/{id}")
+    @DeleteMapping("/api/oneLineComments/{id}")
     public Long deleteOneLineComment(@LoginUser SessionUser sessionUser,
                                      @PathVariable Long id) {
         return oneLineCommentService.deleteOneLineComment(id);
     }
 
-    @GetMapping("/api/oneLineComment/{id}/like")
+    @GetMapping("/api/oneLineComments/{id}/like")
     public Long reLikeUp(@LoginUser SessionUser sessionUser,
                              @PathVariable Long id) {
         return oneLineCommentService.reLikeUp(sessionUser.getId(), id);
     }
 
-    @GetMapping("/api/oneLineComment/{id}/hate")
+    @GetMapping("/api/oneLineComments/{id}/hate")
     public Long reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
         return oneLineCommentService.reHateUp(sessionUser.getId(), id);

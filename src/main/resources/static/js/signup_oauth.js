@@ -18,7 +18,7 @@ var main = {
             };
             $.ajax({
                 type: 'POST',
-                url: '/api/user/signup/oauth',
+                url: '/api/users/signup/oauth',
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),

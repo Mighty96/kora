@@ -19,13 +19,13 @@ public class DirectController {
     private final DirectService directService;
     private final ImpressionService impressionService;
 
-    @GetMapping("/direct")
+    @GetMapping("/directs")
     public String directList(Model model) {
         model.addAttribute("directList", directService.findAll());
         return "direct/directList";
     }
 
-    @GetMapping("/direct/{id}")
+    @GetMapping("/directs/{id}")
     public String direct(Model model, @PathVariable Long id) {
         Direct direct = directService.findById(id);
         model.addAttribute("direct", direct);
@@ -33,7 +33,7 @@ public class DirectController {
         return "direct/direct";
     }
 
-    @GetMapping("/direct/directForm")
+    @GetMapping("/directs/directForm")
     public String directForm() {
         return "direct/directForm";
     }

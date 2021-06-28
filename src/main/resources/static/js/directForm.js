@@ -13,12 +13,12 @@ var main = {
         };
         $.ajax({
             type: 'POST',
-            url: '/api/direct',
+            url: '/api/directs',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                window.location.href='/direct';
+                window.location.href='/directs';
             }
         });
     }

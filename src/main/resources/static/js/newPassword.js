@@ -14,7 +14,7 @@ var main = {
         $('#btn-newPassword').prop('value', "처리중...");
         $.ajax({
             type: 'POST',
-            url: '/api/user/newPassword',
+            url: '/api/users/newPassword',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),

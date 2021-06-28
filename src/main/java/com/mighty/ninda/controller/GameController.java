@@ -27,7 +27,7 @@ public class GameController {
     private final GameService gameService;
     private final OneLineCommentService oneLineCommentService;
 
-    @GetMapping("/game")
+    @GetMapping("/games")
     public String gameList(Model model, Pageable pageable,
                            @RequestParam int page,
                            @RequestParam int size,
@@ -45,7 +45,7 @@ public class GameController {
         return "game/gameList";
     }
 
-    @GetMapping("/game/{id}")
+    @GetMapping("/games/{id}")
     public String game(Model model,
                        @PathVariable Long id,
                        HttpServletRequest request,

@@ -12,7 +12,7 @@ var main = {
         };
         $.ajax({
             type: 'POST',
-            url: '/api/oneLineComment',
+            url: '/api/oneLineComments',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
@@ -48,7 +48,7 @@ function update(_rid) {
     }
     $.ajax({
         type: 'POST',
-        url: '/api/oneLineComment/' + _rid,
+        url: '/api/oneLineComments/' + _rid,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
@@ -70,7 +70,7 @@ function update(_rid) {
 function del(_rid) {
     $.ajax({
         type: 'DELETE',
-        url: '/api/oneLineComment/' + _rid,
+        url: '/api/oneLineComments/' + _rid,
         success: function() {
             swal({
                 title: "한줄평을 삭제했어요!",
@@ -89,7 +89,7 @@ function del(_rid) {
 function gameLikeUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/game/' + $('#id').val() + '/like',
+        url: '/api/games/' + $('#id').val() + '/like',
         success: function() {
             swal({
                 title: "게임을 추천했어요!",
@@ -111,7 +111,7 @@ function gameLikeUp() {
 function gameHateUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/game/' + $('#id').val() + '/hate',
+        url: '/api/games/' + $('#id').val() + '/hate',
         success: function() {
             swal({
                 title: "게임을 비추천했어요!",
@@ -133,7 +133,7 @@ function gameHateUp() {
 function reLikeUp(commentId) {
     $.ajax({
         type: 'GET',
-        url: '/api/oneLineComment/' + commentId + '/like',
+        url: '/api/oneLineComments/' + commentId + '/like',
         success: function() {
             swal({
                 title: "한줄평을 추천했어요!",
@@ -155,7 +155,7 @@ function reLikeUp(commentId) {
 function reHateUp(commentId) {
     $.ajax({
         type: 'GET',
-        url: '/api/oneLineComment/' + commentId + '/hate',
+        url: '/api/oneLineComments/' + commentId + '/hate',
         success: function() {
             swal({
                 title: "한줄평을 비추천했어요!",

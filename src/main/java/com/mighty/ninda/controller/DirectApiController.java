@@ -13,13 +13,13 @@ public class DirectApiController {
 
     private final DirectService directService;
 
-    @PostMapping("/api/direct")
+    @PostMapping("/api/directs")
     public Long saveDirect(@RequestBody SaveDirect requestDto) {
 
         return directService.save(requestDto);
     }
 
-    @GetMapping("/api/direct/{id}/like")
+    @GetMapping("/api/directs/{id}/like")
     public Long reLikeUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
         directService.reLikeUp(sessionUser.getId(), id);
@@ -27,7 +27,7 @@ public class DirectApiController {
         return id;
     }
 
-    @GetMapping("/api/direct/{id}/hate")
+    @GetMapping("/api/directs/{id}/hate")
     public Long reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
         directService.reHateUp(sessionUser.getId(), id);
