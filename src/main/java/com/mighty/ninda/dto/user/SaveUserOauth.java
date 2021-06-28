@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserOauthSaveRequestDto {
+public class SaveUserOauth {
 
     private String nickname;
 
     @Builder
-    public UserOauthSaveRequestDto(String nickname) {
+    public SaveUserOauth(String nickname) {
         this.nickname = nickname;
     }
 

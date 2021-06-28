@@ -2,12 +2,9 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
-import com.mighty.ninda.dto.impression.ImpressionSaveRequestDto;
-import com.mighty.ninda.dto.impression.ImpressionUpdateRequestDto;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentSaveRequestDto;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentUpdateRequestDto;
+import com.mighty.ninda.dto.impression.SaveImpression;
+import com.mighty.ninda.dto.impression.UpdateImpression;
 import com.mighty.ninda.service.ImpressionService;
-import com.mighty.ninda.service.OneLineCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +18,7 @@ public class ImpressionApiController {
 
     @PostMapping("/api/impression")
     public Long saveImpression(@LoginUser SessionUser sessionUser,
-                                   @RequestBody ImpressionSaveRequestDto requestDto) {
+                                   @RequestBody SaveImpression requestDto) {
 
         log.info("comment save");
         return impressionService.save(sessionUser.getId(), requestDto);
@@ -29,7 +26,7 @@ public class ImpressionApiController {
 
     @PostMapping("/api/impression/{id}")
     public Long updateImpression(@LoginUser SessionUser sessionUser,
-                                     @RequestBody ImpressionUpdateRequestDto requestDto,
+                                     @RequestBody UpdateImpression requestDto,
                                      @PathVariable Long id) {
 
 

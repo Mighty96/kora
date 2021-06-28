@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserSaveRequestDto {
+public class SaveUser {
 
     private String email;
     private String password;
@@ -20,7 +20,7 @@ public class UserSaveRequestDto {
     private String authKey;
 
     @Builder
-    public UserSaveRequestDto(String email, String password, String nickname, RegistrationId registrationId, String authKey) {
+    public SaveUser(String email, String password, String nickname, RegistrationId registrationId, String authKey) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;

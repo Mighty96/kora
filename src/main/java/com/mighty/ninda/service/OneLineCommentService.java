@@ -6,9 +6,9 @@ import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentSaveRequestDto;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentUpdateRequestDto;
-import com.mighty.ninda.dto.user.UserOneLineCommentDto;
+import com.mighty.ninda.dto.oneLineComment.SaveOneLineComment;
+import com.mighty.ninda.dto.oneLineComment.UpdateOneLineComment;
+import com.mighty.ninda.dto.user.UserOneLineComment;
 import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class OneLineCommentService {
     private final GameRepository gameRepository;
 
     @Transactional
-    public Long save(Long userId, OneLineCommentSaveRequestDto requestDto) {
+    public Long save(Long userId, SaveOneLineComment requestDto) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + userId));
@@ -57,9 +57,9 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public List<UserOneLineCommentDto> findOneLineCommentByUserId(Long userId) {
+    public List<UserOneLineComment> findOneLineCommentByUserId(Long userId) {
 
-        return new UserOneLineCommentDto().toList(oneLineCommentRepository.findByUser_IdOrderByIdDesc(userId));
+        return new UserOneLineComment().toList(oneLineCommentRepository.findByUser_IdOrderByIdDesc(userId));
     }
 
 
@@ -69,7 +69,7 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public Long update(Long userId, Long commentId, OneLineCommentUpdateRequestDto requestDto) {
+    public Long update(Long userId, Long commentId, UpdateOneLineComment requestDto) {
         OneLineComment comment = oneLineCommentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
 

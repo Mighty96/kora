@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ImpressionUpdateRequestDto {
+public class UpdateImpression {
 
     private String context;
 
     @Builder
-    public ImpressionUpdateRequestDto(String context) {
+    public UpdateImpression(String context) {
         this.context = context;
     }
 }

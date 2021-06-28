@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserUpdateRequestDto {
+public class UpdateUser {
 
     private String nickname;
     private String introduction;
 
     @Builder
-    public UserUpdateRequestDto(String nickname, String introduction) {
+    public UpdateUser(String nickname, String introduction) {
         this.nickname = nickname;
         this.introduction = introduction;
     }

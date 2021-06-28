@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -28,7 +27,7 @@ public class UserService {
     private final MailSendService mailSendService;
 
     @Transactional
-    public Long save(UserSaveRequestDto requestDto) {
+    public Long save(SaveUser requestDto) {
 
         //비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
@@ -54,7 +53,7 @@ public class UserService {
         return user.getId();
     }
 
-    public String emailDuplicateChk(UserEmailRequestDto requestDto) {
+    public String emailDuplicateChk(UserEmail requestDto) {
         Optional<User> user = userRepository.findByEmail(requestDto.getEmail());
 
         if (user.isPresent()) {
@@ -65,7 +64,7 @@ public class UserService {
     }
 
     @Transactional
-    public Long update(Long id, UserUpdateRequestDto requestDto) {
+    public Long update(Long id, UpdateUser requestDto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = " + id));
 
@@ -77,7 +76,7 @@ public class UserService {
     }
 
     @Transactional
-    public Long oauthUpdate(String email, UserOauthSaveRequestDto requestDto) {
+    public Long oauthUpdate(String email, SaveUserOauth requestDto) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
 
@@ -87,15 +86,15 @@ public class UserService {
         return user.getId();
     }
 
-    public UserResponseDto findById(Long id) {
+    public UserResponse findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id =" + id));
 
-        return new UserResponseDto(user);
+        return new UserResponse(user);
     }
 
     @Transactional
-    public Long login(UserLoginRequestDto requestDto) {
+    public Long login(UserLogin requestDto) {
         User user = userRepository.findByEmail(requestDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + requestDto.getEmail()));
 

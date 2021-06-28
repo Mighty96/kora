@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PostSaveRequestDto {
+public class SavePost {
     private String title;
     private String content;
     private User user;
 
     @Builder
-    public PostSaveRequestDto(String title, String content, User user) {
+    public SavePost(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;

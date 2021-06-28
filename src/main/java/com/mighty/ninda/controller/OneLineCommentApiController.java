@@ -2,8 +2,8 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentSaveRequestDto;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentUpdateRequestDto;
+import com.mighty.ninda.dto.oneLineComment.SaveOneLineComment;
+import com.mighty.ninda.dto.oneLineComment.UpdateOneLineComment;
 import com.mighty.ninda.service.OneLineCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +18,14 @@ public class OneLineCommentApiController {
 
     @PostMapping("/api/oneLineComment")
     public Long saveOneLineComment(@LoginUser SessionUser sessionUser,
-                                   @RequestBody OneLineCommentSaveRequestDto requestDto) {
+                                   @RequestBody SaveOneLineComment requestDto) {
 
         return oneLineCommentService.save(sessionUser.getId(), requestDto);
     }
 
     @PostMapping("/api/oneLineComment/{id}")
     public Long updateOneLineComment(@LoginUser SessionUser sessionUser,
-                                     @RequestBody OneLineCommentUpdateRequestDto requestDto,
+                                     @RequestBody UpdateOneLineComment requestDto,
                                      @PathVariable Long id) {
 
 

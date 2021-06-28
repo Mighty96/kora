@@ -1,7 +1,6 @@
 package com.mighty.ninda.dto.user;
 
 import com.mighty.ninda.domain.comment.OneLineComment;
-import com.mighty.ninda.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class UserOneLineCommentDto {
+public class UserOneLineComment {
 
     private Long gameId;
     private String gameTitle;
@@ -22,7 +21,7 @@ public class UserOneLineCommentDto {
     private String createdDate;
 
     @Builder
-    public UserOneLineCommentDto(Long gameId, String gameTitle, Long commentId, String context, LocalDateTime createdDate) {
+    public UserOneLineComment(Long gameId, String gameTitle, Long commentId, String context, LocalDateTime createdDate) {
         this.gameId = gameId;
         this.gameTitle = gameTitle;
         this.commentId = commentId;
@@ -32,11 +31,11 @@ public class UserOneLineCommentDto {
 
     }
 
-    public List<UserOneLineCommentDto> toList(List<OneLineComment> oneLineComments) {
-        List<UserOneLineCommentDto> list = new ArrayList<>();
+    public List<UserOneLineComment> toList(List<OneLineComment> oneLineComments) {
+        List<UserOneLineComment> list = new ArrayList<>();
 
         for (OneLineComment oneLineComment : oneLineComments) {
-            list.add(UserOneLineCommentDto.builder()
+            list.add(UserOneLineComment.builder()
                     .gameId(oneLineComment.getGame().getId())
                     .gameTitle(oneLineComment.getGame().getTitle())
                     .commentId(oneLineComment.getId())

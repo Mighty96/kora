@@ -2,18 +2,12 @@ package com.mighty.ninda.service;
 
 import com.mighty.ninda.domain.comment.Impression;
 import com.mighty.ninda.domain.comment.ImpressionRepository;
-import com.mighty.ninda.domain.comment.OneLineComment;
-import com.mighty.ninda.domain.comment.OneLineCommentRepository;
 import com.mighty.ninda.domain.direct.Direct;
 import com.mighty.ninda.domain.direct.DirectRepository;
-import com.mighty.ninda.domain.game.Game;
-import com.mighty.ninda.domain.game.GameRepository;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
-import com.mighty.ninda.dto.impression.ImpressionSaveRequestDto;
-import com.mighty.ninda.dto.impression.ImpressionUpdateRequestDto;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentSaveRequestDto;
-import com.mighty.ninda.dto.oneLineComment.OneLineCommentUpdateRequestDto;
+import com.mighty.ninda.dto.impression.SaveImpression;
+import com.mighty.ninda.dto.impression.UpdateImpression;
 import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +25,7 @@ public class ImpressionService {
     private final DirectRepository directRepository;
 
     @Transactional
-    public Long save(Long userId, ImpressionSaveRequestDto requestDto) {
+    public Long save(Long userId, SaveImpression requestDto) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + userId));
@@ -60,7 +54,7 @@ public class ImpressionService {
     }
 
     @Transactional
-    public Long update(Long userId, Long impressionId, ImpressionUpdateRequestDto requestDto) {
+    public Long update(Long userId, Long impressionId, UpdateImpression requestDto) {
         Impression impression = impressionRepository.findById(impressionId)
                 .orElseThrow(() -> new IllegalArgumentException("소감이 존재하지 않습니다. id = " + impressionId));
 

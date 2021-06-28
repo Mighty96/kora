@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class DirectSaveRequestDto {
+public class SaveDirect {
 
     private String title;
     private String japanUrl;
     private String americaUrl;
 
     @Builder
-    public DirectSaveRequestDto(String title, String japanUrl, String americaUrl) {
+    public SaveDirect(String title, String japanUrl, String americaUrl) {
         this.title = title;
         this.japanUrl = japanUrl;
         this.americaUrl = americaUrl;

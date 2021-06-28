@@ -2,7 +2,7 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
-import com.mighty.ninda.dto.direct.DirectSaveRequestDto;
+import com.mighty.ninda.dto.direct.SaveDirect;
 import com.mighty.ninda.service.DirectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class DirectApiController {
     private final DirectService directService;
 
     @PostMapping("/api/direct")
-    public Long saveDirect(@RequestBody DirectSaveRequestDto requestDto) {
+    public Long saveDirect(@RequestBody SaveDirect requestDto) {
 
         return directService.save(requestDto);
     }

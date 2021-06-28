@@ -4,7 +4,7 @@ import com.mighty.ninda.domain.user.User;
 import lombok.Getter;
 
 @Getter
-public class UserResponseDto {
+public class UserResponse {
 
     private final Long id;
     private final String email;
@@ -12,7 +12,7 @@ public class UserResponseDto {
     private final String nickname;
     private final String introduction;
 
-    public UserResponseDto(User entity) {
+    public UserResponse(User entity) {
         this.id = entity.getId();
         this.email = entity.getEmail();
         this.password = entity.getPassword();

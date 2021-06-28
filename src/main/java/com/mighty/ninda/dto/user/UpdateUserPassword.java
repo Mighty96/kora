@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UserPasswordUpdateRequestDto {
+public class UpdateUserPassword {
 
     private String password;
 
     @Builder
-    public UserPasswordUpdateRequestDto(String password) {
+    public UpdateUserPassword(String password) {
         this.password = password;
     }
 }

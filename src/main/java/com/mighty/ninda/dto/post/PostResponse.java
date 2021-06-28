@@ -5,14 +5,14 @@ import com.mighty.ninda.domain.user.User;
 import lombok.Getter;
 
 @Getter
-public class PostResponseDto {
+public class PostResponse {
 
     private Long id;
     private String title;
     private String content;
     private User user;
 
-    public PostResponseDto(Post entity) {
+    public PostResponse(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();

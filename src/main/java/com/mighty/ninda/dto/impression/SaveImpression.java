@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ImpressionSaveRequestDto {
+public class SaveImpression {
 
     private String context;
     private Long directId;
 
     @Builder
-    public ImpressionSaveRequestDto(String context, Long directId) {
+    public SaveImpression(String context, Long directId) {
         this.context = context;
         this.directId = directId;
     }

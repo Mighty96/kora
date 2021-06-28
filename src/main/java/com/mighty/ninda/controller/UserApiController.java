@@ -16,23 +16,23 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/api/login")
-    public Long login(@RequestBody UserLoginRequestDto requestDto) {
+    public Long login(@RequestBody UserLogin requestDto) {
 
         return userService.login(requestDto);
     }
 
     @PostMapping("/api/user/signup/ninda")
-    public Long save(@RequestBody UserSaveRequestDto requestDto) {
+    public Long save(@RequestBody SaveUser requestDto) {
         return userService.save(requestDto);
     }
 
     @PostMapping("/api/user/signup/oauth")
-    public Long save(@RequestBody UserOauthSaveRequestDto requestDto, @LoginUser SessionUser user) {
+    public Long save(@RequestBody SaveUserOauth requestDto, @LoginUser SessionUser user) {
         return userService.oauthUpdate(user.getEmail(), requestDto);
     }
 
     @PostMapping("/api/user/signup/emailChk")
-    public String emailDuplicateChk(@RequestBody UserEmailRequestDto requestDto) {
+    public String emailDuplicateChk(@RequestBody UserEmail requestDto) {
         return userService.emailDuplicateChk(requestDto);
     }
 
@@ -42,23 +42,23 @@ public class UserApiController {
     }
 
     @PutMapping("/api/user/update")
-    public Long update(@LoginUser SessionUser user, @RequestBody UserUpdateRequestDto requestDto) {
+    public Long update(@LoginUser SessionUser user, @RequestBody UpdateUser requestDto) {
 
         return userService.update(user.getId(), requestDto);
     }
 
     @PostMapping("/api/user/updatePassword")
-    public Long updatePassword(@RequestBody UserEmailRequestDto requestDto) {
+    public Long updatePassword(@RequestBody UserEmail requestDto) {
         return userService.sendNewPassword(requestDto.getEmail());
     }
 
     @PostMapping("/api/user/newPassword")
-    public Long sendNewPassword(@RequestBody UserEmailRequestDto requestDto) {
+    public Long sendNewPassword(@RequestBody UserEmail requestDto) {
         return userService.sendNewPassword(requestDto.getEmail());
     }
 
     @GetMapping("/api/user/{id}")
-    public UserResponseDto findById(@PathVariable Long id) {
+    public UserResponse findById(@PathVariable Long id) {
         return userService.findById(id);
     }
 

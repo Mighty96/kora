@@ -2,7 +2,7 @@ package com.mighty.ninda.service;
 
 import com.mighty.ninda.domain.direct.Direct;
 import com.mighty.ninda.domain.direct.DirectRepository;
-import com.mighty.ninda.dto.direct.DirectSaveRequestDto;
+import com.mighty.ninda.dto.direct.SaveDirect;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class DirectService {
     }
 
     @Transactional
-    public Long save(DirectSaveRequestDto requestDto) {
+    public Long save(SaveDirect requestDto) {
         Direct direct = Direct.builder()
                 .title(requestDto.getTitle())
                 .japanUrl(requestDto.getJapanUrl())
