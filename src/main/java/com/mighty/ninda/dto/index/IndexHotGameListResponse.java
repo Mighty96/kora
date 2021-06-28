@@ -22,7 +22,7 @@ public class IndexHotGameListResponse {
         this.title = title;
     }
 
-    public static List<IndexHotGameListResponse> from(List<Game> games) {
+    public static List<IndexHotGameListResponse> of(List<Game> games) {
         List<IndexHotGameListResponse> response = new ArrayList<>();
 
         for (Game game : games) {

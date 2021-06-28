@@ -29,7 +29,7 @@ public class IndexNewGameListResponse {
 
     }
 
-    public static List<IndexNewGameListResponse> from(List<Game> games) {
+    public static List<IndexNewGameListResponse> of(List<Game> games) {
         List<IndexNewGameListResponse> response = new ArrayList<>();
 
         for (Game game : games) {

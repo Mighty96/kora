@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -27,6 +28,7 @@ public class User {
     private String nickname;
     private String picture;
     private String introduction;
+    private LocalDate registrationDate;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -46,7 +48,7 @@ public class User {
     private List<Comment> comments;
 
     @Builder
-    public User(String email, String password, String nickname, String introduction, Role role, RegistrationId registrationId, String authKey) {
+    public User(String email, String password, String nickname, String introduction, Role role, RegistrationId registrationId, String authKey, LocalDate registrationDate) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -54,6 +56,7 @@ public class User {
         this.role = role;
         this.registrationId = registrationId;
         this.authKey = authKey;
+        this.registrationDate = registrationDate;
     }
 
     public void update(String nickname, String introduction) {

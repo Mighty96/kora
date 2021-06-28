@@ -48,12 +48,14 @@ public class UserApiController {
     }
 
     @PostMapping("/api/users/updatePassword")
-    public Long updatePassword(@RequestBody UserEmail requestDto) {
-        return userService.sendNewPassword(requestDto.getEmail());
+    public Long updatePassword(@LoginUser SessionUser sessionUser, @RequestBody UpdateUserPassword requestDto) {
+        return userService.changePassword(sessionUser.getId(), requestDto.getOldPassword(), requestDto.getNewPassword());
     }
 
     @PostMapping("/api/users/newPassword")
     public Long sendNewPassword(@RequestBody UserEmail requestDto) {
         return userService.sendNewPassword(requestDto.getEmail());
     }
+
+
 }

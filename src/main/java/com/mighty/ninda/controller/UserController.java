@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/user/profile")
     public String profile(@LoginUser SessionUser sessionUser, Model model) {
-        model.addAttribute("user", UserResponse.from(userService.findById(sessionUser.getId())));
+        model.addAttribute("user", UserResponse.of(userService.findById(sessionUser.getId())));
         return "user/profile";
     }
 
@@ -30,8 +30,14 @@ public class UserController {
     public String oneLineComment(@LoginUser SessionUser sessionUser, Model model) {
 
 
-        model.addAttribute("oneLineComments", UserOneLineCommentListResponse.from(oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId())));
+        model.addAttribute("oneLineCommentList", UserOneLineCommentListResponse.of(oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId())));
 
         return "user/oneLineComment";
+    }
+
+    @GetMapping("user/password")
+    public String password(@LoginUser SessionUser sessionUser) {
+
+        return "user/password";
     }
 }

@@ -1,6 +1,5 @@
 package com.mighty.ninda.controller;
 
-import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.dto.game.GameOneLineCommentListResponse;
 import com.mighty.ninda.dto.game.GameResponse;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
@@ -74,8 +72,8 @@ public class GameController {
         }
 
 
-        model.addAttribute("game", GameResponse.from(game));
-        model.addAttribute("commentList", GameOneLineCommentListResponse.from(oneLineCommentService.findAllOneLineCommentByGameId(game.getId())));
+        model.addAttribute("game", GameResponse.of(game));
+        model.addAttribute("commentList", GameOneLineCommentListResponse.of(oneLineCommentService.findAllOneLineCommentByGameId(game.getId())));
         return "game/game";
     }
 }

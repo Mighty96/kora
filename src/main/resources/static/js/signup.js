@@ -9,6 +9,7 @@ var main = {
         });
         $('#pwd1').on('change', function() {
             _this.pwd1Chk();
+            _this.pwd2Chk();
         });
         $('#pwd2').on('change', function() {
             _this.pwd2Chk();

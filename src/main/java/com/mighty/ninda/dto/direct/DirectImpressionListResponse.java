@@ -31,7 +31,7 @@ public class DirectImpressionListResponse {
         this.reHate = reHate;
     }
 
-    public static List<DirectImpressionListResponse> from(List<Impression> impressions) {
+    public static List<DirectImpressionListResponse> of(List<Impression> impressions) {
         List<DirectImpressionListResponse> response = new ArrayList<>();
 
         for (Impression impression : impressions) {

@@ -30,7 +30,7 @@ public class GameOneLineCommentListResponse {
         this.reHate = reHate;
     }
 
-    public static List<GameOneLineCommentListResponse> from(List<OneLineComment> oneLineComments) {
+    public static List<GameOneLineCommentListResponse> of(List<OneLineComment> oneLineComments) {
         List<GameOneLineCommentListResponse> response = new ArrayList<>();
 
         for (OneLineComment oneLineComment : oneLineComments) {

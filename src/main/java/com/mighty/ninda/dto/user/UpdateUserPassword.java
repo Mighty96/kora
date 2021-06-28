@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateUserPassword {
 
-    private String password;
+    private String oldPassword;
+    private String newPassword;
 }

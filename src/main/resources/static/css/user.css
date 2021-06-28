@@ -45,6 +45,36 @@ textarea {
     display: none;
 }
 
+.pwd1_blank{
+}
+
+.pwd2_blank{
+}
+
+/* 비밀번호 유효성검사 성공*/
+.pwd1_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 비밀번호 유효성검사 실패*/
+.pwd1_check_fail{
+    color: #FFBEB0;
+    display: none;
+}
+
+/* 비밀번호 확인 유효성검사 성공*/
+.pwd2_check_success{
+    color: #C0FFB0;
+    display: none;
+}
+
+/* 비밀번호 확인 유효성검사 실패*/
+.pwd2_check_fail{
+    color: #FFBEB0;
+    display: none;
+}
+
 .game_title {
     color: #77b9ff;
 }

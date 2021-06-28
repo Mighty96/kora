@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Slf4j
@@ -38,6 +39,7 @@ public class UserService {
                 .nickname(requestDto.getNickname())
                 .registrationId(RegistrationId.NINDA)
                 .introduction("안녕하세요.")
+                .registrationDate(LocalDate.now())
                 .role(Role.GUEST)
                 .authKey(null)
                 .build();
@@ -68,8 +70,6 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = " + id));
 
-        log.info(requestDto.getNickname());
-        log.info(requestDto.getIntroduction());
         user.update(requestDto.getNickname(), requestDto.getIntroduction());
         httpSession.setAttribute("user", new SessionUser(user));
         return id;
@@ -149,6 +149,21 @@ public class UserService {
         String newPassword = mailSendService.sendNewPassword(email);
 
         user.updatePassword(passwordEncoder.encode(newPassword));
+
+        return user.getId();
+    }
+
+    @Transactional
+    public Long changePassword(Long id, String oldPassword, String newPassword) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id =" + id));
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 올바르지 않습니다.");
+        } else {
+            user.updatePassword(passwordEncoder.encode(newPassword));
+            httpSession.removeAttribute("user");
+        }
 
         return user.getId();
     }

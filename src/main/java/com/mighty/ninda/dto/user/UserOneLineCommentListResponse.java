@@ -32,7 +32,7 @@ public class UserOneLineCommentListResponse {
 
     }
 
-    public static List<UserOneLineCommentListResponse> from(List<OneLineComment> oneLineComments) {
+    public static List<UserOneLineCommentListResponse> of(List<OneLineComment> oneLineComments) {
         List<UserOneLineCommentListResponse> list = new ArrayList<>();
 
         for (OneLineComment oneLineComment : oneLineComments) {

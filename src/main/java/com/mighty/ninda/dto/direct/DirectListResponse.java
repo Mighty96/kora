@@ -22,7 +22,7 @@ public class DirectListResponse {
         this.title = title;
     }
 
-    public static List<DirectListResponse> from(List<Direct> directs) {
+    public static List<DirectListResponse> of(List<Direct> directs) {
 
         List<DirectListResponse> response = new ArrayList<>();
         for (Direct direct : directs) {

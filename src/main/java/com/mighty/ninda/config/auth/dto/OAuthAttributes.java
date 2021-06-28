@@ -6,6 +6,7 @@ import com.mighty.ninda.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @Getter
@@ -56,6 +57,7 @@ public class OAuthAttributes {
                 .password(null)
                 .nickname(null)
                 .introduction("안녕하세요.")
+                .registrationDate(LocalDate.now())
                 .role(Role.GUEST)
                 .registrationId(registrationId)
                 .build();

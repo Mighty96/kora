@@ -24,7 +24,7 @@ public class IndexOneLineCommentListResponse {
         this.gameId = gameId;
     }
 
-    public static List<IndexOneLineCommentListResponse> from(List<OneLineComment> oneLineComments) {
+    public static List<IndexOneLineCommentListResponse> of(List<OneLineComment> oneLineComments) {
         List<IndexOneLineCommentListResponse> response = new ArrayList<>();
 
         for (OneLineComment oneLineComment : oneLineComments) {

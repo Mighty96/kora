@@ -38,7 +38,7 @@ public class GameResponse {
         this.reHate = reHate;
     }
 
-    public static GameResponse from(Game game) {
+    public static GameResponse of(Game game) {
         return GameResponse.builder()
                 .id(game.getId())
                 .title(game.getTitle())

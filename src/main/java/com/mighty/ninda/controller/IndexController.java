@@ -2,7 +2,6 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
-import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.hot.HotRepository;
 import com.mighty.ninda.dto.index.IndexHotGameListResponse;
@@ -13,7 +12,6 @@ import com.mighty.ninda.service.OneLineCommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,14 +32,14 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
 
-        model.addAttribute("commentList", IndexOneLineCommentListResponse.from(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
-        model.addAttribute("newGameList", IndexNewGameListResponse.from(gameService.findNewGame()));
+        model.addAttribute("commentList", IndexOneLineCommentListResponse.of(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
+        model.addAttribute("newGameList", IndexNewGameListResponse.of(gameService.findNewGame()));
         List<Long> hotList = hotRepository.findHotGame(LocalDateTime.now().minusHours(1), PageRequest.of(0, 5));
         List<Game> hotGameList = new ArrayList<>();
         for (Long id : hotList) {
             hotGameList.add(gameService.findById(id));
         }
-        model.addAttribute("hotGameList", IndexHotGameListResponse.from(hotGameList));
+        model.addAttribute("hotGameList", IndexHotGameListResponse.of(hotGameList));
 
         return "index";
     }

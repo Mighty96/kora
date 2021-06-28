@@ -25,7 +25,7 @@ public class DirectResponse {
         this.reHate = reHate;
     }
 
-    public static DirectResponse from(Direct direct) {
+    public static DirectResponse of(Direct direct) {
         return DirectResponse.builder()
                 .id(direct.getId())
                 .japanUrl(direct.getJapanUrl())
