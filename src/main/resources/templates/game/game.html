@@ -10,86 +10,78 @@
         <div class="col-md-2"></div>
         <div class="col-md-8" style="padding-top: 20pt">
             <div class="row">
-                <div class="col-md-5">
-                    <div class="container p-2 my-2 border">
-                        <p class="title" th:text="${game.title}"></p>
+                <div style="padding-right: 5px;" class="col-md-5">
+                    <div class="container p-2 my-1 border">
+                        <p style="word-break:keep-all;" class="title" th:text="${game.title}"></p>
                     </div>
-                    <div class="container p-2 my-2 border">
+                    <div class="container p-2 my-1 border">
                         <img class="imgSize" th:src="${game.imgUrl}">
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="container p-2 my-2 border">
-                                <p th:text="'발매일: ' + ${game.releasedDate}"></p>
+                        <div style="padding-right: 3px;" class="col-md-6">
+                            <div class="container p-3 border">
+                                <p>&nbsp;발매일</p>
+                                <a th:text="${game.releasedDate}"></a>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="container p-2 my-2 border">
-                                <p th:text="'가격: ' + ${game.price}"></p>
+                        <div style="padding-left: 3px;" class="col-md-6">
+                            <div class="container p-3 border">
+                                <p>&nbsp;가격</p>
+                                <a th:text="${game.price}"></a>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="container p-2 my-2 border">
-                                <p th:text="'지원언어: ' + ${game.language}"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="container p-2 my-2 border">
-                                <button th:onclick="'gameLikeUp()'" type="button" class="btn btn-success" id="btn-like" th:text="'추천 ' + ${game.reLike}"></button>
-                                <button th:onclick="'gameHateUp()'" type="button" class="btn btn-warning" id="btn-hate" th:text="'비추천 ' + ${game.reHate}"></button>
-                            </div>
-                        </div>
+                    <div class="container p-3 my-1 border">
+                        <p>&nbsp;지원언어</p>
+                        <a th:text="${game.language}"></a>
+                    </div>
+                        <div class="container p-3 my-1 border">
+                            <button th:onclick="'gameLikeUp()'" type="button" class="btn btn-success" id="btn-like" th:text="'추천 ' + ${game.reLike}"></button>
+                            <button th:onclick="'gameHateUp()'" type="button" class="btn btn-warning" id="btn-hate" th:text="'비추천 ' + ${game.reHate}"></button>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="container p-2 my-2 border">
-                        <p class="content" th:utext="${game.description}"></p>
+                <div style="padding-left: 5px;" class="col-md-7">
+                    <div class="container p-3 my-1 border">
+                        <p style="word-break:keep-all;" class="content" th:utext="${game.description}"></p>
                         <a class="content" target="_blank" th:href="${game.pageUrl}">E-Shop으로 이동하기</a>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div style="padding-right: 3px;" class="col-md-3">
                     <div class="container p-2 my-2 border">
                         <p>커뮤니티영역</p>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <input type="hidden" id="id" th:value="${game.id}">
                     <div class="container p-2 my-2 border">
                         <p th:text="'한줄평 수: ' + ${#lists.size(commentList)}"></p>
                         <p th:if="${#lists.isEmpty(commentList)}">아직 아무도 한줄평을 남기지 않았어요. 첫 한줄평을 남겨주세요!</p>
                     </div>
-                    <div class="container p-2 my-2 border" th:each="comment: ${commentList}">
+                    <div class="container p-2 border" th:each="comment: ${commentList}">
                         <div class="row">
-                            <div class="col-md-8">
-                                <p th:text="@{'작성자 ' + ${comment.userName}}"></p>
+                            <div class="col-md-2">
+                                <p th:text="${comment.userName}"></p>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-7">
+                                <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
+                            </div>
+                            <div class="col-md-3">
                                 <a style="cursor: pointer;" th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}" id="btn-update-mode">
                                     수정
                                 </a>
                                 <a style="cursor: pointer;" th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">
                                     삭제
                                 </a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
-                            </div>
-                            <div class="col-md-4">
                                 <div>
                                     <button th:onclick="'reLikeUp(' + ${comment.id} + ')'" type="button" class="btn btn-success" id="btn-comment-like" th:text="'추천 ' + ${comment.reLike}"></button>
                                     <button th:onclick="'reHateUp(' + ${comment.id} + ')'" type="button" class="btn btn-warning" id="btn-comment-hate" th:text="'비추천 ' + ${comment.reHate}"></button>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <div class="container p-2 my-2 border">
+                    <div class="container p-2 border">
                         <form>
                             <textarea class="form-control" id="context" placeholder="한줄평"></textarea>
                         </form>

@@ -9,6 +9,8 @@
 .col-md-8 {
     font-family: 'GmarketSans', sans-serif;
 }
+
+/* navbar */
 .sticky-footer {
     margin-top: 2%;
     background-color: #0e1015;
@@ -32,6 +34,16 @@
     display: inline-block;
     width:100%;
     vertical-align: middle;
+}
+
+.dropdown-menu {
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    background-color: black;
+}
+
+.dropdown-item {
+    color: white;
 }
 
 .left-tap {

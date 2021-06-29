@@ -13,8 +13,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     Optional<Game> findByTitle(String title);
 
-    @Query("select g.title from Game g")
-    List<String> findAllTitle();
+    List<Game> findAll();
 
     Page<Game> findAllByReleasedDateLessThanEqual(LocalDate localDate, Pageable pageable);
 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -34,13 +35,18 @@ public class Crawler {
             Elements gameList = doc.getElementsByClass("category-product-item");
 
             int cnt = 0;
-            List<String> dbGameList = gameRepository.findAllTitle();
+            List<Game> dbGameList = gameRepository.findAll();
+            List<String> dbGameTitle = new ArrayList<>();
+            for (Game game1 : dbGameList) {
+                dbGameTitle.add(game1.getTitle());
+            }
+
             for (Element g : gameList) {
-                if (++cnt > 70 ) {
+                if (++cnt > 6 ) {
                     break;
                 }
                 Elements title = g.getElementsByClass("category-product-item-title");
-                if (dbGameList.contains(title.text())) {
+                if (dbGameTitle.contains(title.text())) {
                     continue;
                 }
                 Elements price = g.getElementsByClass("price");

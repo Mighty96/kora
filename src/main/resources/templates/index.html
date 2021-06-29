@@ -94,7 +94,7 @@
                     </div>
                     <div th:each="hotGame,num : ${hotGameList}">
                         <a th:href="@{'/games/' + ${hotGame.id}}">
-                            <p style="color: #ffcdcd; font-size: 13pt;" th:text="${num.count} + '위 ' + ${hotGame.title}"></p>
+                            <p class="hot-title" th:text="${num.count} + '위 ' + ${hotGame.title}"></p>
                         </a>
                     </div>
                 </div>

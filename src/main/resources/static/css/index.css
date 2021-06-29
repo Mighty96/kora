@@ -23,3 +23,14 @@
 a:hover {
     text-decoration: none;
 }
+
+.hot-title {
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #ffcdcd;
+    font-size: 13pt;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 4px;
+}
