@@ -87,8 +87,10 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-2"></div>
-                        <p class="title">Hot 타이틀</p>
-                        <a><br></a>
+                        <div class="col-md-10">
+                            <p class="title">Hot 타이틀</p>
+                            <a><br></a>
+                        </div>
                     </div>
                     <div th:each="hotGame,num : ${hotGameList}">
                         <a th:href="@{'/games/' + ${hotGame.id}}">
@@ -100,18 +102,18 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="container p-2 my-2 border">
+                    <div class="p-2 my-2">
                         <div class="title mini-title">
                             <p>최근 작성된 한줄평</p>
                         </div>
                         <div th:each="comment : ${commentList}">
                             <a style="color: #77b9ff" th:text="${comment.gameTitle}" th:href="@{'/games/' + ${comment.gameId}}"></a>
-                            <p th:text="'한줄평: ' + ${comment.context}"></p>
+                            <p style="color: #dddddd;" th:text="'한줄평: ' + ${comment.context}"></p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="container p-2 my-2 border">
+                    <div class="p-2 my-2">
                         <div class="title mini-title">
                             <p>최근 추천받은 게임</p>
                         </div>

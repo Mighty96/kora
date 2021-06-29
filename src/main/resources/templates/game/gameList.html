@@ -11,30 +11,42 @@
         <div class="col-md-8" style="padding-top: 10pt">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='title', q=${q})}">이름순</a>
+                    <ul class="nav justify-content">
+                        <li class="nav-item left-tap">
+                            <a style="padding-right:0" class="nav-link white">출시 예정작 제외</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='viewCount,desc', sort='title', q=${q})}">인기순</a>
+                        <li class="nav-item left-tap">
+                            <a style="padding-left:6px" class="nav-link white" th:if="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort='title', q=${q}, list='released')}">
+                                <img src="/images/unchecked_box.png" height="14" weight="14">
+                            </a>
+                            <a style="padding-left:6px" class="nav-link white" th:unless="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort=${sort}, q=${q}, list='all')}">
+                                <img src="/images/checked_box.png" height="14" weight="14">
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${q})}">추천순</a>
+                        <li class="nav-item right-tap">
+                            <button form="search" class="btn btn-danger" type="submit">Search</button>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item right-tap">
                             <form id="search" action="games">
                                 <input class="form-control mr-sm-2" type="text" name="q" placeholder="제목으로 검색하기">
                                 <input type="hidden" name="page" value="0">
                                 <input type="hidden" name="size" value="12">
                                 <input type="hidden" name="sort" value="title">
+                                <input type="hidden" name="list" value="all">
                             </form>
                         </li>
-                        <li class="nav-item">
-                            <button form="search" class="btn btn-danger" type="submit">Search</button>
+                        <li class="nav-item right-tap">
+                            <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${q}, list=${list})}">추천순</a>
+                        </li>
+                        <li class="nav-item right-tap">
+                            <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='viewCount,desc', sort='title', q=${q}, list=${list})}">인기순</a>
+                        </li>
+                        <li class="nav-item right-tap">
+                            <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='title', q=${q}, list=${list})}">이름순</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-3" th:each="game: ${gameList}">
+                <div class="col-md-3" th:each="game: ${info.contents}">
                     <div class="card mb-4">
                         <a th:href="@{'/games/' + ${game.id}}">
                             <img  class="card-img-top" th:src="${game.imgUrl}" alt="Card image">
@@ -44,32 +56,26 @@
                 <div class="col-md-12">
                     <nav aria-label="Page">
                         <ul class="pagination center">
-                            <li th:if="${page > 0}" class="page-item">
-                                <a class="page-link" th:href="@{/games(page=0, sort=${sort}, size=${size}, q=${q})}"><<</a>
-                            </li>
                             <li th:if="${page > 4}" class="page-item">
-                                <a class="page-link" th:href="@{/games(page=${page - 5}, sort=${sort}, size=${size}, q=${q})}"><</a>
+                                <a class="page-link" th:href="@{/games(page=${((page / 5) * 5) - 1}, sort=${sort}, size=${size}, q=${q}, list=${list})}"><<</a>
                             </li>
-                            <li th:if="${page > 1}" class="page-item">
-                                <a class="page-link" th:href="@{/games(page=${page - 2}, sort=${sort}, size=${size}, q=${q})}" th:text="${page - 1}"></a>
+                            <li th:classappend="${(page % 5) == 0} ? active" class="page-item">
+                                <a class="page-link" th:href="@{/games(page=${(page / 5) * 5}, sort=${sort}, size=${size}, q=${q}, list=${list})}" th:text="${((page / 5) * 5) + 1}"></a>
                             </li>
-                            <li th:if="${page > 0}" class="page-item">
-                                <a class="page-link" th:href="@{/games(page=${page - 1}, sort=${sort}, size=${size}, q=${q})}" th:text="${page}"></a>
+                            <li th:classappend="${(page % 5) == 1} ? active" th:if="${(((page / 5) * 5) + 2) <= info.endPage}" class="page-item">
+                                <a class="page-link" th:href="@{/games(page=${((page / 5) * 5) + 1}, sort=${sort}, size=${size}, q=${q}, list=${list})}" th:text="${((page / 5) * 5) + 2}"></a>
                             </li>
-                            <li class="page-item active">
-                                <a class="page-link" th:href="@{/games(page=${page}, sort=${sort}, size=${size}, q=${q})}" th:text="${page + 1}"></a>
+                            <li th:classappend="${(page % 5) == 2} ? active" th:if="${(((page / 5) * 5) + 3) <= info.endPage}" class="page-item">
+                                <a class="page-link" th:href="@{/games(page=${((page / 5) * 5) + 2}, sort=${sort}, size=${size}, q=${q}, list=${list})}" th:text="${((page / 5) * 5) + 3}"></a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/games(page=${page + 1}, sort=${sort}, size=${size}, q=${q})}" th:text="${page + 2}"></a>
+                            <li th:classappend="${(page % 5) == 3} ? active" th:if="${(((page / 5) * 5) + 4) <= info.endPage}" class="page-item">
+                                <a class="page-link" th:href="@{/games(page=${((page / 5) * 5) + 3}, sort=${sort}, size=${size}, q=${q}, list=${list})}" th:text="${((page / 5) * 5) + 4}"></a>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" th:href="@{/games(page=${page + 2}, sort=${sort}, size=${size}, q=${q})}" th:text="${page + 3}"></a>
+                            <li th:classappend="${(page % 5) == 4} ? active" th:if="${(((page / 5) * 5) + 5) <= info.endPage}" class="page-item">
+                                <a class="page-link" th:href="@{/games(page=${((page / 5) * 5) + 4}, sort=${sort}, size=${size}, q=${q}, list=${list})}" th:text="${((page / 5) * 5) + 5}"></a>
                             </li>
-                            <li th:if="${page < 1}" class="page-item">
-                                <a class="page-link" th:href="@{/games(page=4, sort=${sort}, size=${size}, q=${q})}">4</a>
-                            </li>
-                            <li th:if="${page < 2}" class="page-item">
-                                <a class="page-link" th:href="@{/games(page=5, sort=${sort}, size=${size}, q=${q})}">5</a>
+                            <li th:if="${(page / 5) < ((info.endPage - 1) / 5)}" class="page-item">
+                                <a class="page-link" th:href="@{/games(page=${((page / 5) * 5) + 5}, sort=${sort}, size=${size}, q=${q}, list=${list})}">>></a>
                             </li>
                         </ul>
                     </nav>

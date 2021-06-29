@@ -37,17 +37,28 @@ public class GameService {
     @Transactional
     public Page<Game> findAll(Pageable pageable) {
 
-        return gameRepository.findAll(pageable);
+        return gameRepository.findAllByReleasedDateLessThanEqual(LocalDate.now().plusYears(10), pageable);
     }
 
     @Transactional
-    public List<Game> search(String q, Pageable pageable) {
-        return gameRepository.findByTitleContainingIgnoreCase(q, pageable);
+    public Page<Game> findAllBefore(Pageable pageable) {
+
+        return gameRepository.findAllByReleasedDateLessThanEqual(LocalDate.now(), pageable);
+    }
+
+    @Transactional
+    public Page<Game> search(String q, Pageable pageable) {
+        return gameRepository.findByTitleContainingIgnoreCaseAndReleasedDateLessThanEqual(q, LocalDate.now().plusYears(10), pageable);
+    }
+
+    @Transactional
+    public Page<Game> searchBefore(String q, Pageable pageable) {
+        return gameRepository.findByTitleContainingIgnoreCaseAndReleasedDateLessThanEqual(q, LocalDate.now(), pageable);
     }
 
     @Transactional
     public List<Game> findNewGame() {
-        return gameRepository.findTop5ByReleasedDateLessThanOrderByReleasedDateDesc(LocalDate.now());
+        return gameRepository.findTop5ByReleasedDateLessThanEqualOrderByReleasedDateDesc(LocalDate.now());
     }
 
 

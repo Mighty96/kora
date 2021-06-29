@@ -3,40 +3,31 @@
     <th:block th:fragment="navbarFragment">
         <nav class="navbar navbar-expand-sm sticky-top row">
             <div class="col-md-2"></div>
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item left-tap">
                         <a class="nav-link" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/games?page=0&size=12&sort=title&q=">게임 전체보기</a>
+                    <li class="nav-item left-tap">
+                        <a class="nav-link" href="/games?page=0&size=12&sort=title&q=&list=all">게임 전체보기</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item left-tap">
                         <a class="nav-link" href="/directs">닌텐도 다이렉트</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item left-tap">
                         <a class="nav-link" href="/api/gameCrawl">게임 업데이트(어드민)</a>
                     </li>
+                    <li th:if = "${session.user == null}" class="nav-item right-tap">
+                        <a class="nav-link" href="/signin">로그인</a>
+                    </li>
+                    <li th:if = "${session.user != null}" class="nav-item right-tap">
+                        <a class="nav-link" href="/logout">로그아웃</a>
+                    </li>
+                    <li th:if = "${session.user != null}" class="nav-item right-tap">
+                        <a class="nav-link" href="/user/profile" th:text = "${session.user.nickname}"></a>
+                    </li>
                 </ul>
-            </div>
-            <div class="col-md-4">
-                <div th:if = "${session.user == null}" class="collapse navbar-collapse justify-content-end">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/signin">로그인</a>
-                        </li>
-                    </ul>
-                </div>
-                <div th:if = "${session.user != null}" class="collapse navbar-collapse justify-content-end">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/profile" th:text = "${session.user.nickname}"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">로그아웃</a>
-                        </li>
-                    </ul>
-                </div>
+
             </div>
             <div class="col-md-2"></div>
         </nav>

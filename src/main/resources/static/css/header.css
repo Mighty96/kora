@@ -22,8 +22,26 @@
     margin-bottom: 20pt;
 }
 .navbar-nav {
+    display: inline-block;
+    width:100%;
     line-height: 15pt;
+    vertical-align: middle;
 }
+
+.nav {
+    display: inline-block;
+    width:100%;
+    vertical-align: middle;
+}
+
+.left-tap {
+    float: left;
+}
+
+.right-tap {
+    float: right;
+}
+
 .nav-link {
     color: white;
 }

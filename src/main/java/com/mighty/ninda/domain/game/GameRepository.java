@@ -16,9 +16,9 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query("select g.title from Game g")
     List<String> findAllTitle();
 
-    Page<Game> findAll(Pageable pageable);
+    Page<Game> findAllByReleasedDateLessThanEqual(LocalDate localDate, Pageable pageable);
 
-    List<Game> findByTitleContainingIgnoreCase(String q, Pageable pageable);
+    Page<Game> findByTitleContainingIgnoreCaseAndReleasedDateLessThanEqual(String q, LocalDate localDate, Pageable pageable);
 
-    List<Game> findTop5ByReleasedDateLessThanOrderByReleasedDateDesc(LocalDate localDate);
+    List<Game> findTop5ByReleasedDateLessThanEqualOrderByReleasedDateDesc(LocalDate localDate);
 }
