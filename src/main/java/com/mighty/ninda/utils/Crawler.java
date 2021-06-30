@@ -42,9 +42,9 @@ public class Crawler {
             }
 
             for (Element g : gameList) {
-                if (++cnt > 6 ) {
-                    break;
-                }
+//                if (++cnt > 6 ) {
+//                    break;
+//                }
                 Elements title = g.getElementsByClass("category-product-item-title");
                 if (dbGameTitle.contains(title.text())) {
                     continue;
