@@ -30,7 +30,7 @@ public class Crawler {
 
         try {
             String connUrl = "https://store.nintendo.co.kr/games";
-            Document doc = Jsoup.connect(connUrl).timeout(30000).get();
+            Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
 
             Elements gameList = doc.getElementsByClass("category-product-item");
 
@@ -57,7 +57,7 @@ public class Crawler {
 
                 String gameUrl = g.select("a[href]").attr("href");
 
-                Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).get();
+                Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
                 Elements descriptions = gameDoc.getElementsByClass("value").select("p");
 
                 StringBuilder des = new StringBuilder();
