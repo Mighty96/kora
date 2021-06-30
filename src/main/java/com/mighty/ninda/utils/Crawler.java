@@ -30,7 +30,7 @@ public class Crawler {
 
         try {
             String connUrl = "https://store.nintendo.co.kr/games";
-            Document doc = Jsoup.connect(connUrl).timeout(8000).get();
+            Document doc = Jsoup.connect(connUrl).timeout(30000).get();
 
             Elements gameList = doc.getElementsByClass("category-product-item");
 
@@ -57,7 +57,7 @@ public class Crawler {
 
                 String gameUrl = g.select("a[href]").attr("href");
 
-                Document gameDoc = Jsoup.connect(gameUrl).timeout(8000).get();
+                Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).get();
                 Elements descriptions = gameDoc.getElementsByClass("value").select("p");
 
                 StringBuilder des = new StringBuilder();
@@ -94,7 +94,7 @@ public class Crawler {
                 Random random = new Random();
 
                 try {
-                    Thread.sleep(random.nextInt(3000));
+                    Thread.sleep(random.nextInt(3000) + 2000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
