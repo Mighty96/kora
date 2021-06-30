@@ -116,3 +116,9 @@
     color: #FFBEB0;
     display: none;
 }
+
+.smurf{
+    .smurf_01, .smurf_04{
+        background-color: #ffffaa;
+    }
+}
