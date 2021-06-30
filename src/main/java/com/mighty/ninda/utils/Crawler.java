@@ -35,19 +35,12 @@ public class Crawler {
 
             Elements gameList = doc.getElementsByClass("category-product-item");
 
-            int cnt = 0;
-            List<Game> dbGameList = gameRepository.findAll();
-            List<String> dbGameTitle = new ArrayList<>();
-            for (Game game1 : dbGameList) {
-                dbGameTitle.add(game1.getTitle());
-            }
-
             for (Element g : gameList) {
 //                if (++cnt > 6 ) {
 //                    break;
 //                }
                 Elements title = g.getElementsByClass("category-product-item-title");
-                if (dbGameTitle.contains(title.text())) {
+                if (findByTitle(title.text())) {
                     continue;
                 }
                 crawlGame(g, title);
@@ -113,5 +106,14 @@ public class Crawler {
                 .build();
 
         gameRepository.save(game);
+    }
+
+    @Transactional
+    private boolean findByTitle(String title) {
+        if (gameRepository.findByTitle(title).isPresent()) {
+            return true;
+        }
+
+        return false;
     }
 }
