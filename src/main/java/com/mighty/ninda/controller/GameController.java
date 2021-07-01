@@ -58,7 +58,6 @@ public class GameController {
 
         model.addAttribute("info", info);
         model.addAttribute("page", page);
-        model.addAttribute("easyPage", page + 1);
         model.addAttribute("size", size);
         model.addAttribute("sort", sort);
         model.addAttribute("list", list);

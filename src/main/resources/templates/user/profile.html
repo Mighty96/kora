@@ -6,62 +6,62 @@
     <link href="/css/user.css" rel="stylesheet">
 </head>
 <th:block layout:fragment="content">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-2">
-            <div class="p-2 my-2">
-                <div class="btn-group-vertical">
-                    <button type="button" onclick="location.href='http://localhost:8080/user/profile'" class="btn btn-dark">내정보 수정</button>
-                    <button th:if="${session.user.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='http://localhost:8080/user/password'" class="btn btn-dark">비밀번호 변경</button>
-                    <button type="button" onclick="location.href='http://localhost:8080/user/oneLineComment'" class="btn btn-dark">내가 쓴 한줄평</button>
-                    <button type="button" onclick="location.href='http://localhost:8080/user/book'" class="btn btn btn-dark">북마크</button>
+    <div class="main-container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="p-2 my-2">
+                    <div class="btn-group-vertical">
+                        <button type="button" onclick="location.href='http://localhost:8080/user/profile'" class="btn btn-dark">내정보 수정</button>
+                        <button th:if="${session.user.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='http://localhost:8080/user/password'" class="btn btn-dark">비밀번호 변경</button>
+                        <button type="button" onclick="location.href='http://localhost:8080/user/oneLineComment'" class="btn btn-dark">내가 쓴 한줄평</button>
+                        <button type="button" onclick="location.href='http://localhost:8080/user/book'" class="btn btn btn-dark">북마크</button>
+                    </div>
                 </div>
+
             </div>
+            <div class="col-md-9">
+                <form>
+                    <div class="container p-3 border">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="name">닉네임</p>
+                            </div>
+                            <div class="col-md-9">
+                                <input id="nickname" type="text" th:value="${user.nickname}">
+                                <p></p>
+                                <span class="nickname_blank"><br></span>
+                                <span class="nickname_check_success">사용가능한 닉네임입니다.</span>
+                                <span class="nickname_check_fail">닉네임은 2~12자로 이루어져야 합니다.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container p-3 border">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="name">자기소개</p>
+                            </div>
+                            <div class="col-md-9">
+                                <textarea id="introduction" th:text="${user.introduction}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container p-3 border">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="name">가입일</p>
+                            </div>
+                            <div class="col-md-9">
+                                <a id="registrationDate" th:text="${user.registrationDate}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3" style="display:inline-block; text-align:right; width:100%">
+                        <input type="button" class="btn btn-dark" id="btn-update" value="수정">
+                    </div>
 
+                </form>
+            </div>
         </div>
-        <div class="col-md-6">
-            <form>
-                <div class="container p-3 border">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p class="name">닉네임</p>
-                        </div>
-                        <div class="col-md-9">
-                            <input id="nickname" type="text" th:value="${user.nickname}">
-                            <p></p>
-                            <span class="nickname_blank"><br></span>
-                            <span class="nickname_check_success">사용가능한 닉네임입니다.</span>
-                            <span class="nickname_check_fail">닉네임은 2~12자로 이루어져야 합니다.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="container p-3 border">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p class="name">자기소개</p>
-                        </div>
-                        <div class="col-md-9">
-                            <textarea id="introduction" th:text="${user.introduction}"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="container p-3 border">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p class="name">가입일</p>
-                        </div>
-                        <div class="col-md-9">
-                            <a id="registrationDate" th:text="${user.registrationDate}"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3" style="display:inline-block; text-align:right; width:100%">
-                    <input type="button" class="btn btn-dark" id="btn-update" value="수정">
-                </div>
-
-            </form>
-        </div>
-        <div class="col-md-2"></div>
     </div>
     <script src="/js/profile.js"></script>
 </th:block>

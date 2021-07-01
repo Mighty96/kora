@@ -13,18 +13,6 @@
    padding: 5pt 15pt 5pt 5pt;
 }
 
-.page-item.active .page-link{
-    background-color: black;
-    border-color: black;
-}
-
-.page-link {
-    color:black;
-}
-
-.pagination {
-    justify-content: center;
-}
 
 .white {
     color: white;

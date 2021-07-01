@@ -26,9 +26,6 @@ public class Crawler {
     private final GameRepository gameRepository;
 
     public void crawl() {
-
-        Game game = new Game();
-
         try {
             String connUrl = "https://store.nintendo.co.kr/games";
             Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
