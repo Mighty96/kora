@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/post.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="main-container" style="padding-top: 10pt">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <a href="/multi?page=0&size=30">
+                <span class="board-title">멀티-내전게시판</span>
+            </a>
+        </div>
+        <div class="container p-4 my-2 border">
+            <div class="post-head">
+                <div class="post-title">
+                    <a th:text="${post.title}"></a>
+                    <a><br></a>
+                </div>
+
+                <div class="post-user">
+                    <a th:text="${post.userName}"></a>
+                </div>
+                <div class="post-time">
+                    <a th:text="${post.createdDate}"></a>
+                </div>
+            </div>
+            <div class="post-context">
+                <a th:text="${post.context}"></a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

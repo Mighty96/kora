@@ -6,7 +6,7 @@ import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.hot.HotRepository;
 import com.mighty.ninda.dto.index.IndexHotGameListResponse;
 import com.mighty.ninda.dto.index.IndexNewGameListResponse;
-import com.mighty.ninda.dto.index.IndexNewFreeBoardListResponse;
+import com.mighty.ninda.dto.index.IndexNewBoardListResponse;
 import com.mighty.ninda.dto.index.IndexOneLineCommentListResponse;
 import com.mighty.ninda.service.GameService;
 import com.mighty.ninda.service.OneLineCommentService;
@@ -38,7 +38,8 @@ public class IndexController {
 
         model.addAttribute("commentList", IndexOneLineCommentListResponse.of(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
         model.addAttribute("newGameList", IndexNewGameListResponse.of(gameService.findNewGame()));
-        model.addAttribute("freeBoard", IndexNewFreeBoardListResponse.of(postService.findTop10ByOrderByCreatedDateDesc(Constants.FREE_BOARD_NO)));
+        model.addAttribute("freeBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardNoOrderByCreatedDateDesc(Constants.FREE_BOARD_NO)));
+        model.addAttribute("multiBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardNoOrderByCreatedDateDesc(Constants.MULTI_BOARD_NO)));
         List<Long> hotList = hotRepository.findHotGame(LocalDateTime.now().minusHours(1), PageRequest.of(0, 10));
         List<Game> hotGameList = new ArrayList<>();
         for (Long id : hotList) {

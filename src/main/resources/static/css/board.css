@@ -1,0 +1,100 @@
+.post-board {
+    color: #dddddd;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 13pt;
+    font-weight: 500;
+    padding-top: 10px;
+}
+
+.post-top {
+    background-color: #262626;
+    font-size: 14pt;
+    font-weight: 500;
+}
+
+.post-top:hover {
+    background-color: #262626;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+a {
+    color: #dddddd;
+}
+
+a:hover {
+    color: #dddddd;
+    text-decoration: none;
+}
+
+.post-item {
+    width: 100%;
+    display: table;
+    border-bottom: 1px solid #575757;
+    table-layout: fixed;
+    vertical-align: middle;
+    height: 30pt;
+}
+
+.post-item:hover {
+    background-color: #171717;
+}
+
+.post-item > div {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+}
+
+.post-id {
+    width: 80px;
+}
+
+.post-title {
+    padding-left: 10px;
+    text-align: left;
+    padding-right: 100px;
+}
+
+.post-title a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    word-wrap: normal;
+    white-space: nowrap;
+    text-align: left;
+}
+.post-nickname {
+    width: 150px;
+}
+
+.post-nickname a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    word-wrap: normal;
+    white-space: nowrap;
+}
+
+.post-created {
+    width: 80px;
+}
+
+.post-viewCount {
+    width: 80px;
+}
+
+.post-like {
+    width: 50px;
+}
+
+.board-title {
+    color: #5db8ff;
+    font-size: 30pt;
+    font-family: 'BMHANNA_11yrs', sans-serif;
+}

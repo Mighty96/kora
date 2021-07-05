@@ -36,6 +36,7 @@ public class PostService {
         return id;
     }
 
+    @Transactional
     public Post findById (Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
@@ -43,10 +44,12 @@ public class PostService {
         return post;
     }
 
-    public List<Post> findTop10ByOrderByCreatedDateDesc(Long boardNo) {
+    @Transactional
+    public List<Post> findTop10ByBoardNoOrderByCreatedDateDesc(Long boardNo) {
         return postRepository.findTop10ByBoardNoOrderByCreatedDateDesc(boardNo);
     }
 
+    @Transactional
     public Page<Post> findByBoardNo(Long boardNo, Pageable pageable) {
         return postRepository.findByBoardNoOrderByCreatedDateDesc(boardNo, pageable);
     }

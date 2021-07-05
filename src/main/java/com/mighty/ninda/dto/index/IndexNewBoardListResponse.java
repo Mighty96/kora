@@ -11,22 +11,22 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class IndexNewFreeBoardListResponse {
+public class IndexNewBoardListResponse {
 
     private Long postId;
     private String postTitle;
 
     @Builder
-    public IndexNewFreeBoardListResponse(Long postId, String postTitle) {
+    public IndexNewBoardListResponse(Long postId, String postTitle) {
         this.postId = postId;
         this.postTitle = postTitle;
     }
 
-    public static List<IndexNewFreeBoardListResponse> of(List<Post> posts) {
-        List<IndexNewFreeBoardListResponse> response = new ArrayList<>();
+    public static List<IndexNewBoardListResponse> of(List<Post> posts) {
+        List<IndexNewBoardListResponse> response = new ArrayList<>();
 
         for (Post post : posts) {
-            response.add(IndexNewFreeBoardListResponse.builder()
+            response.add(IndexNewBoardListResponse.builder()
                     .postId(post.getId())
                     .postTitle(post.getTitle())
                     .build());

@@ -19,7 +19,7 @@ public class Comment extends BaseTimeEntity {
     private Long id;
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String context;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")

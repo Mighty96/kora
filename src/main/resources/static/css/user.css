@@ -19,14 +19,14 @@
 
 input {
     background-color: #0e1015;
-    border-color: white;
-    color: white;
+    border-color: #dddddd;
+    color: #dddddd;
 }
 
 textarea {
     background-color: #0e1015;
-    border-color: white;
-    color: white;
+    border-color: #dddddd;
+    color: #dddddd;
     width: 100%;
 }
 

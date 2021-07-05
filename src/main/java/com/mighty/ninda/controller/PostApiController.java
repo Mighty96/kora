@@ -3,7 +3,6 @@ package com.mighty.ninda.controller;
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.service.PostService;
-import com.mighty.ninda.dto.post.PostResponse;
 import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
 import com.mighty.ninda.service.UserService;

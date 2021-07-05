@@ -22,8 +22,13 @@
     height: 300px;
 }
 
+a {
+    color: #dddddd;
+}
+
 a:hover {
     text-decoration: none;
+    color: #dddddd;
 }
 
 .post-item {
@@ -42,7 +47,7 @@ a:hover {
     -webkit-box-orient: vertical;
 }
 
-.view-item:hover {
+.post-item:hover {
     color: #838383;
 }
 

@@ -6,6 +6,7 @@ import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.dto.game.GameListResponse;
 import com.mighty.ninda.dto.page.PageResponse;
 import com.mighty.ninda.dto.post.FreeListResponse;
+import com.mighty.ninda.dto.post.PostResponse;
 import com.mighty.ninda.service.PostService;
 import com.mighty.ninda.utils.Constants;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -44,6 +46,15 @@ public class PostController {
         return "post/freeBoard";
     }
 
+    @GetMapping("/free/{id}")
+    public String freePost(Model model,
+                           @PathVariable Long id,
+                           @LoginUser SessionUser sessionUser) {
+        model.addAttribute("post", PostResponse.of(postService.findById(id)));
+
+        return "post/freePost";
+    }
+
     @GetMapping("/multi")
     public String multiBoard(Model model, Pageable pageable,
                             @LoginUser SessionUser sessionUser,
@@ -59,6 +70,15 @@ public class PostController {
         model.addAttribute("size", size);
 
         return "post/multiBoard";
+    }
+
+    @GetMapping("/multi/{id}")
+    public String multiPost(Model model,
+                           @PathVariable Long id,
+                           @LoginUser SessionUser sessionUser) {
+        model.addAttribute("post", PostResponse.of(postService.findById(id)));
+
+        return "post/multiPost";
     }
 
     @GetMapping("/friend")
@@ -78,8 +98,13 @@ public class PostController {
         return "post/friendBoard";
     }
 
-    @GetMapping("/free/freePostForm")
-    public String postForm() {
+    @GetMapping("/free/PostForm")
+    public String freePostForm() {
         return "post/freePostForm";
+    }
+
+    @GetMapping("/multi/PostForm")
+    public String multiPostForm() {
+        return "post/multiPostForm";
     }
 }

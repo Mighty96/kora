@@ -17,7 +17,7 @@
 .sticky-footer {
     margin-top: 2%;
     background-color: #0e1015;
-    color: white;
+    color: #dddddd;
     font-family: 'GmarketSans', sans-serif;
 }
 .navbar {
@@ -46,7 +46,7 @@
 }
 
 .dropdown-item {
-    color: white;
+    color: #dddddd;
 }
 
 .left-tap {
@@ -58,11 +58,11 @@
 }
 
 .nav-link {
-    color: white;
+    color: #dddddd;
 }
 
 .nav-link:hover {
-    color: white;
+    color: #ff9797;
 }
 
 .my-auto {
@@ -89,7 +89,7 @@ p {
     text-align: center;
     margin-top: 5pt;
     margin-bottom: 5pt;
-    color: white;
+    color: #dddddd;
 }
 
 /* 페이징 */
@@ -99,7 +99,7 @@ p {
 }
 
 .page-link {
-    color:black;
+    color: black;
 }
 
 .pagination {

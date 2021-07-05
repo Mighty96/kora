@@ -18,7 +18,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                window.location.href='/free?page=0&size=20';
+                window.location.href='/';
             }
         });
     }
