@@ -14,7 +14,7 @@
                         <a style="padding-right:0" class="nav-link white">출시 예정작 제외</a>
                     </li>
                     <li class="nav-item left-tap">
-                        <a style="padding-left:6px" class="nav-link white" th:if="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort='title', q=${q}, list='released')}">
+                        <a style="padding-left:6px" class="nav-link white" th:if="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${q}, list='released')}">
                             <img src="/images/unchecked_box.png" height="14" weight="14">
                         </a>
                         <a style="padding-left:6px" class="nav-link white" th:unless="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort=${sort}, q=${q}, list='all')}">
@@ -38,6 +38,9 @@
                     </li>
                     <li class="nav-item right-tap">
                         <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='viewCount,desc', sort='title', q=${q}, list=${list})}">인기순</a>
+                    </li>
+                    <li class="nav-item right-tap">
+                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='releasedDate,desc', sort='title', q=${q}, list=${list})}">최신순</a>
                     </li>
                     <li class="nav-item right-tap">
                         <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='title', q=${q}, list=${list})}">이름순</a>

@@ -31,7 +31,7 @@ public class Crawler {
             Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
 
             Elements gameList = doc.getElementsByClass("category-product-item");
-
+//            int cnt = 0;
             for (Element g : gameList) {
 //                if (++cnt > 6 ) {
 //                    break;
