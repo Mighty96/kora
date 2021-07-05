@@ -20,6 +20,8 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
+    private Long boardNo;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -44,7 +46,8 @@ public class Post extends BaseTimeEntity {
     private String hateList;
 
     @Builder
-    public Post(String title, String context, User user, int viewCount, int reLike, int reHate, String likeList, String hateList) {
+    public Post(Long boardNo, String title, String context, User user, int viewCount, int reLike, int reHate, String likeList, String hateList) {
+        this.boardNo = boardNo;
         this.title = title;
         this.context = context;
         this.user = user;

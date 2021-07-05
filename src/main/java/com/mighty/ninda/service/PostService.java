@@ -43,7 +43,11 @@ public class PostService {
         return post;
     }
 
-    public Page<Post> findAll(Pageable pageable) {
-        return postRepository.findAllByOrderByCreatedDateDesc(pageable);
+    public List<Post> findTop10ByOrderByCreatedDateDesc(Long boardNo) {
+        return postRepository.findTop10ByBoardNoOrderByCreatedDateDesc(boardNo);
+    }
+
+    public Page<Post> findByBoardNo(Long boardNo, Pageable pageable) {
+        return postRepository.findByBoardNoOrderByCreatedDateDesc(boardNo, pageable);
     }
 }

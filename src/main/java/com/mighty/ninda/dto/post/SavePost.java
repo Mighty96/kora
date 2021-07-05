@@ -13,9 +13,11 @@ public class SavePost {
 
     private String title;
     private String context;
+    private Long boardNo;
 
     public Post toEntity(User user) {
         return Post.builder()
+                .boardNo(boardNo)
                 .title(title)
                 .context(context)
                 .user(user)

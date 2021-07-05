@@ -29,10 +29,10 @@ public class IndexOneLineCommentListResponse {
 
         for (OneLineComment oneLineComment : oneLineComments) {
             response.add(IndexOneLineCommentListResponse.builder()
-            .gameTitle(oneLineComment.getGame().getTitle())
-            .gameId(oneLineComment.getGame().getId())
-            .context(oneLineComment.getContext())
-            .build());
+                    .gameTitle(oneLineComment.getGame().getTitle())
+                    .gameId(oneLineComment.getGame().getId())
+                    .context(oneLineComment.getContext())
+                    .build());
         }
 
         return response;

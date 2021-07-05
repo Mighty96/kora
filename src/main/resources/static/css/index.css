@@ -5,6 +5,8 @@
 
 .mini-title {
     font-size: 14pt;
+    text-align: left;
+    border-bottom: 1px solid #575757;
 }
 
 .carousel-inner {
@@ -24,13 +26,40 @@ a:hover {
     text-decoration: none;
 }
 
-.hot-title {
+.post-item {
+    color: #dddddd;
+    font-size: 11pt;
+}
+
+.comment-item {
+    color: #dddddd;
+    font-size: 12pt;
+    white-space: break-spaces!important;
+    height: 54px;
+    display: -webkit-box!important;
+    -webkit-line-clamp: 3;
+    line-height: 18px;
+    -webkit-box-orient: vertical;
+}
+
+.view-item:hover {
+    color: #838383;
+}
+
+.textover {
     text-overflow: ellipsis;
     width: 100%;
-    color: #ffcdcd;
-    font-size: 13pt;
     overflow: hidden;
     display: block;
     white-space: nowrap;
-    margin-bottom: 4px;
+}
+
+.hot-title {
+    color: #ffcdcd;
+    font-size: 11pt;
+    margin-bottom: 3px;
+}
+
+.hot-title:hover {
+    color: #ff9b9b;
 }
