@@ -35,25 +35,34 @@ public class PostController {
     private final PostService postService;
     private final CommentService commentService;
 
-    @GetMapping("/free")
+    @GetMapping("/board/{board}")
     public String freeBoard(Model model, Pageable pageable,
-                            @LoginUser SessionUser sessionUser,
+                            @PathVariable String board,
                             @RequestParam int page,
                             @RequestParam int size) {
 
-        Page<Post> pagePostList = postService.findByBoard(Board.FREE, pageable);
+        Page<Post> pagePostList = null;
+
+        if (board.equals("free")) {
+            pagePostList = postService.findByBoard(Board.FREE, pageable);
+        } else {
+            pagePostList = postService.findByBoard(Board.MULTI, pageable);
+        }
+
         List<FreeListResponse> postList = pagePostList.stream().map(FreeListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
 
         model.addAttribute("info", info);
         model.addAttribute("page", page);
         model.addAttribute("size", size);
+        model.addAttribute("board", board);
 
-        return "post/freeBoard";
+        return "post/board";
     }
 
-    @GetMapping("/free/{id}")
+    @GetMapping("/board/{board}/{id}")
     public String freePost(Model model,
+                           @PathVariable String board,
                            @PathVariable Long id,
                            HttpServletRequest request,
                            HttpServletResponse response) {
@@ -61,68 +70,16 @@ public class PostController {
         viewCountUp(id, request, response);
         model.addAttribute("post", PostResponse.of(postService.findById(id)));
         model.addAttribute("commentList", PostCommentListResponse.of(commentService.findAllCommentByPostId(id)));
+        model.addAttribute("board", board);
 
-
-        return "post/freePost";
+        return "post/post";
     }
 
-
-
-    @GetMapping("/multi")
-    public String multiBoard(Model model, Pageable pageable,
-                            @LoginUser SessionUser sessionUser,
-                            @RequestParam int page,
-                            @RequestParam int size) {
-
-        Page<Post> pagePostList = postService.findByBoard(Board.MULTI, pageable);
-        List<FreeListResponse> postList = pagePostList.stream().map(FreeListResponse::of).collect(Collectors.toList());
-        PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
-
-        model.addAttribute("info", info);
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-
-        return "post/multiBoard";
-    }
-
-    @GetMapping("/multi/{id}")
-    public String multiPost(Model model,
-                           @PathVariable Long id,
-                           HttpServletRequest request,
-                            HttpServletResponse response) {
-
-        viewCountUp(id, request, response);
-        model.addAttribute("post", PostResponse.of(postService.findById(id)));
-        model.addAttribute("commentList", PostCommentListResponse.of(commentService.findAllCommentByPostId(id)));
-
-        return "post/multiPost";
-    }
-
-    @GetMapping("/friend")
-    public String friendBoard(Model model, Pageable pageable,
-                             @LoginUser SessionUser sessionUser,
-                             @RequestParam int page,
-                             @RequestParam int size) {
-
-        Page<Post> pagePostList = postService.findByBoard(Board.FRIEND, pageable);
-        List<FreeListResponse> gameList = pagePostList.stream().map(FreeListResponse::of).collect(Collectors.toList());
-        PageResponse<GameListResponse> info = PageResponse.of(pagePostList, gameList);
-
-        model.addAttribute("info", info);
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
-
-        return "post/friendBoard";
-    }
-
-    @GetMapping("/free/PostForm")
-    public String freePostForm() {
-        return "post/freePostForm";
-    }
-
-    @GetMapping("/multi/PostForm")
-    public String multiPostForm() {
-        return "post/multiPostForm";
+    @GetMapping("/board/{board}/postForm")
+    public String freePostForm(Model model,
+                               @PathVariable String board) {
+        model.addAttribute("board", board);
+        return "post/postForm";
     }
 
 

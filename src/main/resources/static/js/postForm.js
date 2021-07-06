@@ -9,7 +9,7 @@ var main = {
         var data = {
             title: $('#title').val(),
             context: $('#context').val(),
-            board: $('#board').val().toUpperCase()
+            board: $('#board-id').val().toUpperCase()
         };
         $.ajax({
             type: 'POST',
@@ -18,7 +18,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function(data) {
-                window.location.href='/' + $('#board').val() + '/' + data;
+                window.location.href='/board/' + $('#board-id').val() + '/' + data;
             }
         });
     }

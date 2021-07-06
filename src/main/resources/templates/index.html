@@ -97,20 +97,20 @@
                     <div class="col-md-4">
                         <div class="container p-3 my-2 border">
                             <div class="title mini-title">
-                                <a href="/free?page=0&size=30">자유게시판</a>
+                                <a href="/board/free?page=0&size=30">자유게시판</a>
                             </div>
                             <div th:each="freePost : ${freeBoard}">
-                                <a th:href="@{'/free/' + ${freePost.postId}}" class="post-item textover" th:text="${freePost.postTitle}"></a>
+                                <a th:href="@{'/board/free/' + ${freePost.postId}}" class="post-item textover" th:text="${freePost.postTitle}"></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="container p-3 my-2 border">
                             <div class="title mini-title">
-                                <a href="/multi?page=0&size=30">멀티/내전게시판</a>
+                                <a href="/board/multi?page=0&size=30">멀티/내전게시판</a>
                             </div>
                             <div th:each="multiPost : ${multiBoard}">
-                                    <a th:href="@{'/multi/' + ${multiPost.postId}}" class="post-item textover" th:text="${multiPost.postTitle}"></a>
+                                    <a th:href="@{'/board/multi/' + ${multiPost.postId}}" class="post-item textover" th:text="${multiPost.postTitle}"></a>
                             </div>
                         </div>
                     </div>

@@ -9,8 +9,9 @@
     <div class="main-container" style="padding-top: 10pt">
         <div class="row">
             <div class="col-md-1"></div>
-            <a href="/free?page=0&size=30">
-                <span class="board-title">자유게시판</span>
+            <a th:href="@{'/board/' + ${board}(page=0, size=30}">
+                <span th:if="${board.toString().equals('free')}" class="board-title">자유게시판</span>
+                <span th:if="${board.toString().equals('multi')}" class="board-title">멀티-내전게시판</span>
             </a>
         </div>
         <input type="hidden" id="post-id" th:value="${post.id}">
@@ -31,7 +32,7 @@
             <div class="post-context">
                 <a th:text="${post.context}"></a>
             </div>
-            <div class="button-container">
+            <div th:if="${board.toString().equals('free')}" class="button-container">
                 <input th:onclick="'postLikeUp()'" class="like-button" type="button" id="btn-like" style="margin-right: 10px;" th:value="'추천 ' + ${post.reLike}">
                 <input th:onclick="'postHateUp()'" class="like-button" type="button" id="btn-hate" th:value="'비추천 ' + ${post.reHate}">
             </div>
@@ -56,7 +57,7 @@
                         </span>
                         </div>
 
-                        <div class="comment-button-container">
+                        <div th:if="${board.toString().equals('free')}" class="comment-button-container">
                             <input th:onclick="'reLikeUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" id="btn-comment-like" th:value="'추천 ' + ${comment.reLike}">
                             <input th:onclick="'reHateUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" id="btn-comment-hate" th:value="'비추천 ' + ${comment.reHate}">
                         </div>
