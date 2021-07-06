@@ -23,11 +23,15 @@ input {
     color: #dddddd;
 }
 
-textarea {
+.introduction {
     background-color: #0e1015;
     border-color: #dddddd;
     color: #dddddd;
     width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 130px;
+    resize: none;
 }
 
 .nickname_blank{

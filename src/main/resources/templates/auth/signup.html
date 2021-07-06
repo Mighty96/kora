@@ -6,38 +6,38 @@
     <link href="/css/sign.css" rel="stylesheet">
 </head>
 <th:block layout:fragment="content">
-    <div class="main-container container login-container">
-        <div class="login-form-1">
-            <h2>Ninda에 오신 것을<br>환영합니다!</h2>
+    <div class="main-container">
+        <div class="login-container border">
+            <h2>Ninda</h2>
             <form>
-                <div class="form-group">
+                <div class="signup-container my-2">
                     <label for="email">이메일</label>
-                    <input type="text" class="form-control" id="email" placeholder="이메일"/>
-                    <span class="email_blank"><br></span>
-                    <span class="email_check_success">사용 가능한 이메일입니다.</span>
-                    <span class="email_check_duplicated">이미 가입된 이메일이 존재합니다.</span>
-                    <span class="email_check_fail">이메일양식에 맞지 않습니다.</span>
+                    <input type="text" class="signup-context" id="email" placeholder="이메일"/>
+                    <span class="chk email_blank"><br><br></span>
+                    <span class="chk email_check_success">사용 가능한 이메일입니다.</span>
+                    <span class="chk email_check_duplicated">이미 가입된 이메일이 존재합니다.</span>
+                    <span class="chk email_check_fail">이메일양식에 맞지 않습니다.</span>
                 </div>
-                <div class="form-group">
+                <div class="signup-container my-2">
                     <label for="pwd1">비밀번호</label>
-                    <input type="password" class="form-control" id="pwd1" placeholder="비밀번호"/>
-                    <span class="pwd1_blank"><br></span>
-                    <span class="pwd1_check_success">사용가능한 비밀번호입니다.</span>
-                    <span class="pwd1_check_fail">비밀번호는 8~16자의 대/소문자 및 숫자의 조합으로 이루어져야 합니다.</span>
+                    <input type="password" class="signup-context" id="pwd1" placeholder="비밀번호"/>
+                    <span class="chk pwd1_blank"><br><br></span>
+                    <span class="chk pwd1_check_success">사용가능한 비밀번호입니다.</span>
+                    <span class="chk pwd1_check_fail">비밀번호는 8~16자의 대/소문자 및 숫자의 조합으로 이루어져야 합니다.</span>
                 </div>
-                <div class="form-group">
+                <div class="signup-container my-2">
                     <label for="pwd2">비밀번호 확인</label>
-                    <input type="password" class="form-control" id="pwd2" placeholder="비밀번호 확인"/>
-                    <span class="pwd2_blank"><br></span>
-                    <span class="pwd2_check_success">비밀번호가 일치합니다.</span>
-                    <span class="pwd2_check_fail">비밀번호가 일치하지 않습니다.</span>
+                    <input type="password" class="signup-context" id="pwd2" placeholder="비밀번호 확인"/>
+                    <span class="chk pwd2_blank"><br><br></span>
+                    <span class="chk pwd2_check_success">비밀번호가 일치합니다.</span>
+                    <span class="chk pwd2_check_fail">비밀번호가 일치하지 않습니다.</span>
                 </div>
-                <div class="form-group">
+                <div class="signup-container my-2">
                     <label for="nickname">닉네임</label>
-                    <input type="text" class="form-control" id="nickname" placeholder="닉네임"/>
-                    <span class="nickname_blank"><br></span>
-                    <span class="nickname_check_success">사용가능한 닉네임입니다.</span>
-                    <span class="nickname_check_fail">닉네임은 2~12자로 이루어져야 합니다.</span>
+                    <input type="text" class="signup-context" id="nickname" placeholder="닉네임"/>
+                    <span class="chk nickname_blank"><br><br></span>
+                    <span class="chk nickname_check_success">사용가능한 닉네임입니다.</span>
+                    <span class="chk nickname_check_fail">닉네임은 2~12자로 이루어져야 합니다.</span>
                 </div>
             </form>
             <input type="button" class="btnSubmit" id="btn-signup" value="등록">

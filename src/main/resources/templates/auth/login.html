@@ -6,36 +6,30 @@
     <link href="/css/sign.css" rel="stylesheet">
 </head>
 <th:block layout:fragment="content">
-    <div class="container login-container">
-        <div class="main-container">
-            <div class="login-form-1">
-                <h2>Ninda에 로그인하세요!</h2>
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="email" placeholder="이메일"/>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="pwd" placeholder="비밀번호"/>
-                    </div>
-                </form>
-                <button type="button" class="btnSubmit" id="btn-login">로그인</button>
-                <p><br></p>
-                <div class="form-group">
-                    <a href="/signup" class="btnForgetPwd">처음 방문하셨나요? Ninda에 회원가입하세요!</a>
-                </div>
-                <div class="form-group">
-                    <a href="/newPassword" class="btnForgetPwd">비밀번호를 잊어버리셨나요?</a>
-                </div>
-                <div class="form-group">
-                    <a href="/oauth2/authorization/kakao">
-                        <img class="img-fluid" src="/images/kakao_login_btn.png">
-                    </a>
-                </div>
-                <div class="form-group">
-                    <a href="/oauth2/authorization/google">
-                        <img class="img-fluid" src="/images/google_login_btn.png">
-                    </a>
-                </div>
+    <div class="main-container">
+        <div class="login-container border">
+            <h2>Ninda</h2>
+            <form>
+                <input class="login-context" type="text" id="email" placeholder="이메일"/>
+                <input class="login-context" type="password" id="pwd" placeholder="비밀번호"/>
+            </form>
+            <div class="login-button">
+            <input  type="button" class="btnSubmit" id="btn-login" value="로그인">
+            </div>
+            <div class="login-button">
+                <a href="/signup" class="btnForgetPwd">처음 방문하셨나요?</a>
+            <div class="login-button">
+                <a href="/newPassword" class="btnForgetPwd">비밀번호를 잊어버리셨나요?</a>
+            </div>
+            <div class="login-button">
+                <a href="/oauth2/authorization/kakao">
+                    <img class="img-fluid" src="/images/kakao_login_btn.png">
+                </a>
+            </div>
+            <div class="login-button">
+                <a href="/oauth2/authorization/google">
+                    <img class="img-fluid" src="/images/google_login_btn.png">
+                </a>
             </div>
         </div>
     </div>
