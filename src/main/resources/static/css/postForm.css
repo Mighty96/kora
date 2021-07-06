@@ -1,0 +1,48 @@
+.input-title {
+    height: 33px;
+    width: 800px;
+    padding: 0 12px;
+    line-height: 35px;
+    font-size: 12pt;
+    border: 1px solid #40444f;
+    color: #dddddd;
+    background-color: black;
+}
+
+.input-container {
+    background-color: #0e1015;
+    border: 3px solid #40444f;
+    padding:40px;
+    width: fit-content;
+}
+
+.input-context {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    height: 400px;
+    width: 1000px;
+    font-size: 11pt;
+    border: 1px solid #40444f;
+    color: #dddddd;
+    resize: none;
+    background-color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.button-container {
+    display: inline-block;
+    width: 100%;
+}
+
+.input-button {
+    width: 100px;
+    background-color: #313131;
+    border: 2px solid #606060;
+    border-radius: 5px;
+    color: #dddddd;
+    float: right;
+    padding-top: 5px;
+    font-size: 15pt;
+    padding-bottom: 5px;
+}

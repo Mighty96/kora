@@ -1,10 +1,15 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.domain.game.Game;
+import com.mighty.ninda.domain.hot.Hot;
+import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.domain.post.PostRepository;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
+import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
+import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,12 +50,53 @@ public class PostService {
     }
 
     @Transactional
-    public List<Post> findTop10ByBoardNoOrderByCreatedDateDesc(Long boardNo) {
-        return postRepository.findTop10ByBoardNoOrderByCreatedDateDesc(boardNo);
+    public List<Post> findTop10ByBoardOrderByCreatedDateDesc(Board board) {
+        return postRepository.findTop10ByBoardOrderByCreatedDateDesc(board);
     }
 
     @Transactional
-    public Page<Post> findByBoardNo(Long boardNo, Pageable pageable) {
-        return postRepository.findByBoardNoOrderByCreatedDateDesc(boardNo, pageable);
+    public Page<Post> findByBoard(Board board, Pageable pageable) {
+        return postRepository.findByBoardOrderByCreatedDateDesc(board, pageable);
+    }
+
+    @Transactional
+    public void viewCountUp(Long id) {
+        Post post = findById(id);
+        post.viewCountUp();
+    }
+
+    @Transactional
+    public Long reLikeUp(Long userId, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + postId));
+
+        String _userId = "[" + userId.toString() + "]";
+
+        if (post.getLikeList().contains(_userId)) {
+            throw new OneLineCommentAlreadyLikeException("이미 추천했습니다.");
+        } else {
+            post.reLikeUp();
+            post.updateLikeList(_userId);
+        }
+
+        return post.getId();
+    }
+
+    @Transactional
+    public Long reHateUp(Long userId, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + postId));
+
+        String _userId = "[" + userId.toString() + "]";
+
+        if (post.getHateList().contains(_userId)) {
+            throw new OneLineCommentAlreadyHateException("이미 비추천했습니다.");
+        } else {
+            post.reHateUp();
+            post.updateHateList(_userId);
+        }
+
+
+        return post.getId();
     }
 }

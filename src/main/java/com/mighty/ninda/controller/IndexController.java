@@ -4,6 +4,7 @@ import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.hot.HotRepository;
+import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.dto.index.IndexHotGameListResponse;
 import com.mighty.ninda.dto.index.IndexNewGameListResponse;
 import com.mighty.ninda.dto.index.IndexNewBoardListResponse;
@@ -11,7 +12,6 @@ import com.mighty.ninda.dto.index.IndexOneLineCommentListResponse;
 import com.mighty.ninda.service.GameService;
 import com.mighty.ninda.service.OneLineCommentService;
 import com.mighty.ninda.service.PostService;
-import com.mighty.ninda.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -38,8 +38,8 @@ public class IndexController {
 
         model.addAttribute("commentList", IndexOneLineCommentListResponse.of(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
         model.addAttribute("newGameList", IndexNewGameListResponse.of(gameService.findNewGame()));
-        model.addAttribute("freeBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardNoOrderByCreatedDateDesc(Constants.FREE_BOARD_NO)));
-        model.addAttribute("multiBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardNoOrderByCreatedDateDesc(Constants.MULTI_BOARD_NO)));
+        model.addAttribute("freeBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.FREE)));
+        model.addAttribute("multiBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.MULTI)));
         List<Long> hotList = hotRepository.findHotGame(LocalDateTime.now().minusHours(1), PageRequest.of(0, 10));
         List<Game> hotGameList = new ArrayList<>();
         for (Long id : hotList) {

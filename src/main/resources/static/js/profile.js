@@ -27,7 +27,7 @@ var main = {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
-                    swal({
+                    Swal.fire({
                         title: "회원정보 수정 완료!",
                         icon: "success"
                     })

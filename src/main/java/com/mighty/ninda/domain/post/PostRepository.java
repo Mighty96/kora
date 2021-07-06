@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    Page<Post> findByBoardNoOrderByCreatedDateDesc(Long boardNo, Pageable pageable);
+    Page<Post> findByBoardOrderByCreatedDateDesc(Board board, Pageable pageable);
 
-    List<Post> findTop10ByBoardNoOrderByCreatedDateDesc(Long boardNo);
+    List<Post> findTop10ByBoardOrderByCreatedDateDesc(Board board);
 
 }

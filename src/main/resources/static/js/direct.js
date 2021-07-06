@@ -17,7 +17,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                swal({
+                Swal({
                     title: "소감을 등록했어요!",
                     icon: "success"
                 })
@@ -52,7 +52,7 @@ function update(_rid) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {
-            swal({
+            Swal({
                 title: "소감을 수정했어요!",
                 icon: "success"
             })
@@ -71,7 +71,7 @@ function del(_rid) {
         type: 'DELETE',
         url: '/api/impressions/' + _rid,
         success: function() {
-            swal({
+            Swal({
                 title: "소감을 삭제했어요!",
                 icon: "success"
             })
@@ -90,7 +90,7 @@ function directLikeUp() {
         type: 'GET',
         url: '/api/directs/' + $('#id').val() + '/like',
         success: function() {
-            swal({
+            Swal.fire({
                 title: "닌텐도 다이렉트를 추천했어요!",
                 icon: "success"
             }).then(() =>{
@@ -99,7 +99,7 @@ function directLikeUp() {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -112,7 +112,7 @@ function directHateUp() {
         type: 'GET',
         url: '/api/directs/' + $('#id').val() + '/hate',
         success: function() {
-            swal({
+            Swal.fire({
                 title: "닌텐도 다이렉트를 비추천했어요!",
                 icon: "success"
             }).then(() =>{
@@ -121,7 +121,7 @@ function directHateUp() {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -134,7 +134,7 @@ function reLikeUp(impressionId) {
         type: 'GET',
         url: '/api/impressions/' + impressionId + '/like',
         success: function() {
-            swal({
+            Swal.fire({
                 title: "소감을 추천했어요!",
                 icon: "success"
             }).then(() =>{
@@ -143,7 +143,7 @@ function reLikeUp(impressionId) {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -156,7 +156,7 @@ function reHateUp(impressionId) {
         type: 'GET',
         url: '/api/impressions/' + impressionId + '/hate',
         success: function() {
-            swal({
+            Swal.fire({
                 title: "소감을 비추천했어요!",
                 icon: "success"
             })
@@ -166,7 +166,7 @@ function reHateUp(impressionId) {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });

@@ -38,7 +38,7 @@ var main = {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
-                    swal({
+                    Swal.fire({
                         title: "이메일로 인증메일이 발송되었습니다.",
                         icon: "success"
                     })

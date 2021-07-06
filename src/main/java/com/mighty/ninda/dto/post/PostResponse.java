@@ -18,15 +18,19 @@ public class PostResponse {
     private String title;
     private String context;
     private String createdDate;
+    private int reLike;
+    private int reHate;
     private Long userId;
     private String userName;
 
     @Builder
-    public PostResponse(Long id, String title, String context, LocalDateTime createdDate, Long userId, String userName) {
+    public PostResponse(Long id, String title, String context, LocalDateTime createdDate, int reLike, int reHate, Long userId, String userName) {
         this.id = id;
         this.title = title;
         this.context = context;
         this.createdDate = createdDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+        this.reLike = reLike;
+        this.reHate = reHate;
         this.userId = userId;
         this.userName = userName;
     }
@@ -37,6 +41,8 @@ public class PostResponse {
                 .title(post.getTitle())
                 .context(post.getContext())
                 .createdDate(post.getCreatedDate())
+                .reLike(post.getReLike())
+                .reHate(post.getReHate())
                 .userId(post.getUser().getId())
                 .userName(post.getUser().getNickname())
                 .build();

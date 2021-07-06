@@ -8,17 +8,17 @@ var main = {
     save : function () {
         var data = {
             context: $('#context').val(),
-            gameId: $('#id').val()
+            postId: $('#post-id').val()
         };
         $.ajax({
             type: 'POST',
-            url: '/api/oneLineComments',
+            url: '/api/comments',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                Swal({
-                    title: "한줄평을 등록했어요!",
+                Swal.fire({
+                    title: "댓글을 등록했어요!",
                     icon: "success"
                 })
                 .then(() =>{
@@ -48,13 +48,13 @@ function update(_rid) {
     }
     $.ajax({
         type: 'POST',
-        url: '/api/oneLineComments/' + _rid,
+        url: '/api/comments/' + _rid,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {
-            Swal({
-                title: "한줄평을 수정했어요!",
+            Swal.fire({
+                title: "댓글을 수정했어요!",
                 icon: "success"
             })
             .then(() =>{
@@ -70,10 +70,10 @@ function update(_rid) {
 function del(_rid) {
     $.ajax({
         type: 'DELETE',
-        url: '/api/oneLineComments/' + _rid,
+        url: '/api/comments/' + _rid,
         success: function() {
-            Swal({
-                title: "한줄평을 삭제했어요!",
+            Swal.fire({
+                title: "댓글을 삭제했어요!",
                 icon: "success"
             })
             .then(() =>{
@@ -86,13 +86,13 @@ function del(_rid) {
     });
 }
 
-function gameLikeUp() {
+function postLikeUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/games/' + $('#id').val() + '/like',
+        url: '/api/posts/' + $('#post-id').val() + '/like',
         success: function() {
-            Swal({
-                title: "게임을 추천했어요!",
+            Swal.fire({
+                title: "게시글을 추천했어요!",
                 icon: "success"
             }).then(() =>{
                 window.location.reload();
@@ -100,7 +100,7 @@ function gameLikeUp() {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            Swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -108,13 +108,13 @@ function gameLikeUp() {
     });
 }
 
-function gameHateUp() {
+function postHateUp() {
     $.ajax({
         type: 'GET',
-        url: '/api/games/' + $('#id').val() + '/hate',
+        url: '/api/posts/' + $('#post-id').val() + '/hate',
         success: function() {
-            Swal({
-                title: "게임을 비추천했어요!",
+            Swal.fire({
+                title: "게시글을 비추천했어요!",
                 icon: "success"
             }).then(() =>{
                 window.location.reload();
@@ -122,7 +122,7 @@ function gameHateUp() {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            Swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -133,10 +133,10 @@ function gameHateUp() {
 function reLikeUp(commentId) {
     $.ajax({
         type: 'GET',
-        url: '/api/oneLineComments/' + commentId + '/like',
+        url: '/api/comments/' + commentId + '/like',
         success: function() {
-            Swal({
-                title: "한줄평을 추천했어요!",
+            Swal.fire({
+                title: "댓글을 추천했어요!",
                 icon: "success"
             }).then(() =>{
                 window.location.reload();
@@ -144,7 +144,7 @@ function reLikeUp(commentId) {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            Swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -155,10 +155,10 @@ function reLikeUp(commentId) {
 function reHateUp(commentId) {
     $.ajax({
         type: 'GET',
-        url: '/api/oneLineComments/' + commentId + '/hate',
+        url: '/api/comments/' + commentId + '/hate',
         success: function() {
             Swal.fire({
-                title: "한줄평을 비추천했어요!",
+                title: "댓글을 비추천했어요!",
                 icon: "success"
             })
             .then(() =>{

@@ -23,7 +23,7 @@ var main = {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
-                    swal({
+                    Swal.fire({
                         title: "회원가입을 축하합니다!",
                         icon: "success"
                     })

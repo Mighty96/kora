@@ -1,75 +1,68 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.domain.comment.OneLineComment;
-import com.mighty.ninda.domain.comment.OneLineCommentRepository;
-import com.mighty.ninda.domain.game.Game;
-import com.mighty.ninda.domain.game.GameRepository;
+import com.mighty.ninda.domain.comment.Comment;
+import com.mighty.ninda.domain.comment.CommentRepository;
+import com.mighty.ninda.domain.post.Post;
+import com.mighty.ninda.domain.post.PostRepository;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
-import com.mighty.ninda.dto.oneLineComment.SaveOneLineComment;
-import com.mighty.ninda.dto.oneLineComment.UpdateOneLineComment;
+import com.mighty.ninda.dto.comment.SaveComment;
+import com.mighty.ninda.dto.comment.UpdateComment;
 import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
-public class OneLineCommentService {
+public class CommentService {
 
-    private final OneLineCommentRepository oneLineCommentRepository;
+
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
-    private final GameRepository gameRepository;
+    private final PostRepository postRepository;
 
     @Transactional
-    public Long save(Long userId, SaveOneLineComment requestDto) {
+    public Long saveComment(Long userId, SaveComment requestDto) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + userId));
 
-        Game game = gameRepository.findById(requestDto.getGameId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + requestDto.getGameId()));
+        Post post = postRepository.findById(requestDto.getPostId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + requestDto.getPostId()));
 
-        OneLineComment oneLineComment = OneLineComment.builder()
+        Comment comment = Comment.builder()
                 .user(user)
                 .context(requestDto.getContext())
-                .game(game)
+                .post(post)
                 .reLike(0)
                 .reHate(0)
                 .likeList("")
                 .hateList("")
                 .build();
 
-        oneLineCommentRepository.save(oneLineComment);
+        commentRepository.save(comment);
 
-        return oneLineComment.getId();
+        return comment.getId();
     }
 
     @Transactional
-    public List<OneLineComment> findAllOneLineCommentByGameId(Long gameId) {
-        return oneLineCommentRepository.findByGameId(gameId);
+    public List<Comment> findAllCommentByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
     }
 
     @Transactional
-    public List<OneLineComment> findOneLineCommentByUserIdDesc(Long userId) {
+    public List<Comment> findCommentByUserIdDesc(Long userId) {
 
-        return oneLineCommentRepository.findByUserIdOrderByIdDesc(userId);
-    }
-
-
-    @Transactional
-    public List<OneLineComment> findTop5ByOrderByCreatedDateDesc() {
-        return oneLineCommentRepository.findTop5ByOrderByCreatedDateDesc();
+        return commentRepository.findByUserIdOrderByIdDesc(userId);
     }
 
     @Transactional
-    public Long update(Long userId, Long commentId, UpdateOneLineComment requestDto) {
-        OneLineComment comment = oneLineCommentRepository.findById(commentId)
+    public Long updateComment(Long userId, Long commentId, UpdateComment requestDto) {
+        Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
 
         if (!userId.equals(comment.getUser().getId())) {
@@ -82,18 +75,18 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public Long deleteOneLineComment(Long id) {
-        OneLineComment comment = oneLineCommentRepository.findById(id)
+    public Long deleteComment(Long id) {
+        Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + id));
 
-        oneLineCommentRepository.delete(comment);
+        commentRepository.delete(comment);
 
         return id;
     }
 
     @Transactional
     public Long reLikeUp(Long userId, Long commentId) {
-        OneLineComment comment = oneLineCommentRepository.findById(commentId)
+        Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
 
         String _userId = "[" + userId.toString() + "]";
@@ -110,7 +103,7 @@ public class OneLineCommentService {
 
     @Transactional
     public Long reHateUp(Long userId, Long commentId) {
-        OneLineComment comment = oneLineCommentRepository.findById(commentId)
+        Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
 
         String _userId = "[" + userId.toString() + "]";

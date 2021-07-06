@@ -1,5 +1,6 @@
 package com.mighty.ninda.dto.post;
 
+import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.domain.user.User;
 import lombok.AccessLevel;
@@ -13,11 +14,11 @@ public class SavePost {
 
     private String title;
     private String context;
-    private Long boardNo;
+    private Board board;
 
     public Post toEntity(User user) {
         return Post.builder()
-                .boardNo(boardNo)
+                .board(board)
                 .title(title)
                 .context(context)
                 .user(user)

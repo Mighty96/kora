@@ -1,4 +1,4 @@
-package com.mighty.ninda.controller;
+package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
@@ -23,9 +23,24 @@ public class PostApiController {
     }
 
 
-
     @PutMapping("/api/posts/{id}")
     public Long update(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
         return postService.update(id, requestDto);
+    }
+
+    @GetMapping("/api/posts/{id}/like")
+    public Long reLikeUp(@LoginUser SessionUser sessionUser,
+                         @PathVariable Long id) {
+        postService.reLikeUp(sessionUser.getId(), id);
+
+        return id;
+    }
+
+    @GetMapping("/api/posts/{id}/hate")
+    public Long reHateUp(@LoginUser SessionUser sessionUser,
+                         @PathVariable Long id) {
+        postService.reHateUp(sessionUser.getId(), id);
+
+        return id;
     }
 }

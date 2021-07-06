@@ -31,7 +31,7 @@ var main = {
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
-                    swal({
+                    Swal.fire({
                         title: "비밀번호가 변경되었습니다.",
                         icon: "success"
                     })

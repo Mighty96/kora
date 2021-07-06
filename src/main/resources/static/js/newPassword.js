@@ -19,7 +19,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                swal({
+                Swal.fire({
                     title: "이메일을 확인해주세요.",
                     icon: "success"
                 })
@@ -28,7 +28,7 @@ var main = {
                 });
             },
             error: function(e) {
-                swal({
+                Swal.fire({
                     title: "이메일을 찾을 수 없습니다.",
                     icon: "error"
                 })

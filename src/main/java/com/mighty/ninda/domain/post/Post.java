@@ -20,7 +20,8 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-    private Long boardNo;
+    @Enumerated(EnumType.STRING)
+    private Board board;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -46,8 +47,8 @@ public class Post extends BaseTimeEntity {
     private String hateList;
 
     @Builder
-    public Post(Long boardNo, String title, String context, User user, int viewCount, int reLike, int reHate, String likeList, String hateList) {
-        this.boardNo = boardNo;
+    public Post(Board board, String title, String context, User user, int viewCount, int reLike, int reHate, String likeList, String hateList) {
+        this.board = board;
         this.title = title;
         this.context = context;
         this.user = user;
@@ -62,5 +63,35 @@ public class Post extends BaseTimeEntity {
     public void update(String title, String context) {
         this.title = title;
         this.context = context;
+    }
+
+    public void viewCountUp() {
+        this.viewCount++;
+    }
+
+    public void reLikeUp() {
+        this.reLike++;
+    }
+
+    public void reHateUp() {
+        this.reHate++;
+    }
+
+    public void updateLikeList(String id) {
+
+        if (!this.likeList.equals("")) {
+            this.likeList +=  "," + id;
+        } else {
+            this.likeList += id;
+        }
+    }
+
+    public void updateHateList(String id) {
+
+        if (!this.hateList.equals("")) {
+            this.hateList +=  "," + id;
+        } else {
+            this.hateList += id;
+        }
     }
 }
