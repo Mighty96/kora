@@ -61,11 +61,28 @@ public class PostController {
     }
 
     @GetMapping("/board/{board}/{id}")
-    public String freePost(Model model,
+    public String freePost(Model model, Pageable pageable,
                            @PathVariable String board,
                            @PathVariable Long id,
+                           @RequestParam int page,
+                           @RequestParam int size,
                            HttpServletRequest request,
                            HttpServletResponse response) {
+
+        Page<Post> pagePostList = null;
+
+        if (board.equals("free")) {
+            pagePostList = postService.findByBoard(Board.FREE, pageable);
+        } else {
+            pagePostList = postService.findByBoard(Board.MULTI, pageable);
+        }
+
+        List<FreeListResponse> postList = pagePostList.stream().map(FreeListResponse::of).collect(Collectors.toList());
+        PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
+
+        model.addAttribute("info", info);
+        model.addAttribute("page", page);
+        model.addAttribute("size", size);
 
         viewCountUp(id, request, response);
         model.addAttribute("post", PostResponse.of(postService.findById(id)));

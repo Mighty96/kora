@@ -1,6 +1,6 @@
 .post-board {
     color: #dddddd;
-    width: 90%;
+    width: 1050px;
     margin-left: 50px;
     font-size: 13pt;
     font-weight: 500;
@@ -98,13 +98,13 @@ a:hover {
     font-family: 'BMHANNA_11yrs', sans-serif;
 }
 
-.button-container {
-    width: 90%;
+.board-button-container {
+    width: 1050px;
     margin-left: 50px;
     display: inline-block;
 }
 
-.button {
+.board-button {
     text-align: center;
     width: 100px;
     background-color: #313131;

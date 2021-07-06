@@ -41,7 +41,7 @@
                         <span th:text="${post.id}"></span>
                     </div>
                     <div class="post-title">
-                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}}">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page={page},size={size})}">
                             <span th:text="${post.title}"></span>
                         </a>
                     </div>
@@ -62,8 +62,8 @@
                 </li>
             </ul>
         </div>
-        <div class="button-container">
-            <input class="button" th:href="@{'/board/' + ${board} + '/postForm'}" value="등록">
+        <div class="board-button-container">
+            <a class="board-button" th:href="@{'/board/' + ${board} + '/postForm'}">등록</a>
         </div>
         <nav aria-label="Page">
             <ul class="pagination center">

@@ -4,6 +4,7 @@
       layout:decorator="layout/default">
 <head>
     <link href="/css/post.css" rel="stylesheet">
+    <link href="/css/board.css" rel="stylesheet">
 </head>
 <th:block layout:fragment="content">
     <div class="main-container" style="padding-top: 10pt">
@@ -32,7 +33,7 @@
             <div class="post-context">
                 <a th:text="${post.context}"></a>
             </div>
-            <div th:if="${board.toString().equals('free')}" class="button-container">
+            <div th:if="${board.toString().equals('free')}" class="post-button-container">
                 <input th:onclick="'postLikeUp()'" class="like-button" type="button" id="btn-like" style="margin-right: 10px;" th:value="'추천 ' + ${post.reLike}">
                 <input th:onclick="'postHateUp()'" class="like-button" type="button" id="btn-hate" th:value="'비추천 ' + ${post.reHate}">
             </div>
@@ -71,6 +72,97 @@
                 <input type="button" class="comment-input-button" id="btn-comment" value="댓글 남기기">
             </div>
         </div>
+        <div class="post-board">
+            <div class="post-item post-top">
+                <div class="post-id">
+                    <span>글번호</span>
+                </div>
+                <div class="post-title">
+                    <span>제목</span>
+                </div>
+                <div class="post-nickname">
+                    <span>닉네임</span>
+                </div>
+                <div class="post-created">
+                    <span>날짜</span>
+                </div>
+                <div class="post-viewCount">
+                    <span>조회수</span>
+                </div>
+                <div th:if="${board.toString().equals('free')}" class="post-like">
+                    <span>추천</span>
+                </div>
+            </div>
+            <ul>
+                <li class="post-item" th:each="post: ${info.contents}">
+                    <div class="post-id">
+                        <span th:text="${post.id}"></span>
+                    </div>
+                    <div class="post-title">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}}">
+                            <span th:text="${post.title}"></span>
+                        </a>
+                    </div>
+                    <div class="post-nickname">
+                        <a th:href="@{'/users/' + ${post.userId}}">
+                            <span th:text="${post.userName}"></span>
+                        </a>
+                    </div>
+                    <div class="post-created">
+                        <span th:text="${post.createdDate}"></span>
+                    </div>
+                    <div class="post-viewCount">
+                        <span th:text="${post.viewCount}"></span>
+                    </div>
+                    <div th:if="${board.toString().equals('free')}" class="post-like">
+                        <span th:text="${post.reLike}"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="board-button-container">
+            <a class="board-button" th:href="@{'/board/' + ${board} + '/postForm'}">등록</a>
+        </div>
+        <nav aria-label="Page">
+            <ul class="pagination center">
+                <li th:if="${page > 9}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) - 1}, size=${size})}"><<</a>
+                </li>
+                <li th:classappend="${(page % 10) == 0} ? active" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${(page / 10) * 10}, size=${size})}" th:text="${((page / 10) * 10) + 1}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 1} ? active" th:if="${(((page / 10) * 10) + 2) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 1}, size=${size})}" th:text="${((page / 10) * 10) + 2}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 2} ? active" th:if="${(((page / 10) * 10) + 3) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 2}, size=${size})}" th:text="${((page / 10) * 10) + 3}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 3} ? active" th:if="${(((page / 10) * 10) + 4) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 3}, size=${size})}" th:text="${((page / 10) * 10) + 4}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 4} ? active" th:if="${(((page / 10) * 10) + 5) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 4}, size=${size})}" th:text="${((page / 10) * 10) + 5}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 5} ? active" th:if="${(((page / 10) * 10) + 6) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 5}, size=${size})}" th:text="${((page / 10) * 10) + 6}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 6} ? active" th:if="${(((page / 10) * 10) + 7) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 6}, size=${size})}" th:text="${((page / 10) * 10) + 7}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 7} ? active" th:if="${(((page / 10) * 10) + 8) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 7}, size=${size})}" th:text="${((page / 10) * 10) + 8}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 8} ? active" th:if="${(((page / 10) * 10) + 9) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 8}, size=${size})}" th:text="${((page / 10) * 10) + 9}"></a>
+                </li>
+                <li th:classappend="${(page % 10) == 9} ? active" th:if="${(((page / 10) * 10) + 10) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 9}, size=${size})}" th:text="${((page / 10) * 10) + 10}"></a>
+                </li>
+                <li th:if="${(page / 10) < ((info.totalPages - 1) / 10)}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((page / 10) * 10) + 10}, size=${size})}">>></a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <script src="/js/post.js"></script>
 </th:block>
