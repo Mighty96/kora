@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.CookieGenerator;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -56,10 +57,11 @@ public class PostController {
                            @PathVariable Long id,
                            HttpServletRequest request,
                            HttpServletResponse response) {
+
+        viewCountUp(id, request, response);
         model.addAttribute("post", PostResponse.of(postService.findById(id)));
         model.addAttribute("commentList", PostCommentListResponse.of(commentService.findAllCommentByPostId(id)));
 
-        viewCountUp(id, request, response);
 
         return "post/freePost";
     }
@@ -88,10 +90,10 @@ public class PostController {
                            @PathVariable Long id,
                            HttpServletRequest request,
                             HttpServletResponse response) {
-        model.addAttribute("post", PostResponse.of(postService.findById(id)));
-        model.addAttribute("commentList", PostCommentListResponse.of(commentService.findAllCommentByPostId(id)));
 
         viewCountUp(id, request, response);
+        model.addAttribute("post", PostResponse.of(postService.findById(id)));
+        model.addAttribute("commentList", PostCommentListResponse.of(commentService.findAllCommentByPostId(id)));
 
         return "post/multiPost";
     }
@@ -123,25 +125,35 @@ public class PostController {
         return "post/multiPostForm";
     }
 
-    private void viewCountUp(Long id, HttpServletRequest request, HttpServletResponse response) {
-        Post post = postService.findById(id);
 
-        // 조회수 중복 방지
+    /**
+    조회수 중복 방지
+    **/
+    private void viewCountUp(Long id, HttpServletRequest request, HttpServletResponse response) {
+
+        Cookie oldCookie = null;
         Cookie[] cookies = request.getCookies();
-        boolean flag = true;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("post" + id.toString())) {
-                    flag = false;
+                if (cookie.getName().equals("postView")) {
+                    oldCookie = cookie;
                 }
             }
         }
 
-        if (flag) {
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                postService.viewCountUp(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
             postService.viewCountUp(id);
-            Cookie newCookie = new Cookie("post" + id.toString(), "post" + id.toString());
-            newCookie.setMaxAge(60 * 30);
+            Cookie newCookie = new Cookie("postView","[" + id + "]");
             newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
             response.addCookie(newCookie);
         }
     }

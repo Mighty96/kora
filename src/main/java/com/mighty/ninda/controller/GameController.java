@@ -1,6 +1,7 @@
 package com.mighty.ninda.controller;
 
 import com.mighty.ninda.domain.game.Game;
+import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.dto.game.GameListResponse;
 import com.mighty.ninda.dto.game.GameOneLineCommentListResponse;
 import com.mighty.ninda.dto.game.GameResponse;
@@ -70,30 +71,44 @@ public class GameController {
                        @PathVariable Long id,
                        HttpServletRequest request,
                        HttpServletResponse response) {
-        Game game = gameService.findById(id);
 
-        // 조회수 중복 방지
+        viewCountUp(id, request, response);
+
+
+        model.addAttribute("game", GameResponse.of(gameService.findById(id)));
+        model.addAttribute("commentList", GameOneLineCommentListResponse.of(oneLineCommentService.findAllOneLineCommentByGameId(id)));
+        return "game/game";
+    }
+
+    /**
+     조회수 중복 방지
+     **/
+    private void viewCountUp(Long id, HttpServletRequest request, HttpServletResponse response) {
+        Cookie oldCookie = null;
+
         Cookie[] cookies = request.getCookies();
-        boolean flag = true;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("game" + id.toString())) {
-                    flag = false;
+                if (cookie.getName().equals("gameView")) {
+                    oldCookie = cookie;
                 }
             }
         }
 
-        if (flag) {
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                gameService.viewCountUp(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
             gameService.viewCountUp(id);
-            Cookie newCookie = new Cookie("game" + id.toString(), "game" + id.toString());
-            newCookie.setMaxAge(60 * 30);
+            Cookie newCookie = new Cookie("gameView","[" + id + "]");
             newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
             response.addCookie(newCookie);
         }
-
-
-        model.addAttribute("game", GameResponse.of(game));
-        model.addAttribute("commentList", GameOneLineCommentListResponse.of(oneLineCommentService.findAllOneLineCommentByGameId(game.getId())));
-        return "game/game";
     }
 }
