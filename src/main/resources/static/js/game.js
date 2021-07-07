@@ -17,7 +17,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                Swal({
+                Swal.fire({
                     title: "한줄평을 등록했어요!",
                     icon: "success"
                 })
@@ -53,7 +53,7 @@ function update(_rid) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "한줄평을 수정했어요!",
                 icon: "success"
             })
@@ -72,7 +72,7 @@ function del(_rid) {
         type: 'DELETE',
         url: '/api/oneLineComments/' + _rid,
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "한줄평을 삭제했어요!",
                 icon: "success"
             })
@@ -91,7 +91,7 @@ function gameLikeUp() {
         type: 'GET',
         url: '/api/games/' + $('#id').val() + '/like',
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "게임을 추천했어요!",
                 icon: "success"
             }).then(() =>{
@@ -100,7 +100,7 @@ function gameLikeUp() {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            Swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -113,7 +113,7 @@ function gameHateUp() {
         type: 'GET',
         url: '/api/games/' + $('#id').val() + '/hate',
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "게임을 비추천했어요!",
                 icon: "success"
             }).then(() =>{
@@ -122,7 +122,7 @@ function gameHateUp() {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            Swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
@@ -135,7 +135,7 @@ function reLikeUp(commentId) {
         type: 'GET',
         url: '/api/oneLineComments/' + commentId + '/like',
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "한줄평을 추천했어요!",
                 icon: "success"
             }).then(() =>{
@@ -144,7 +144,7 @@ function reLikeUp(commentId) {
         },
         error: function(request) {
             var outputMessage = JSON.parse(request.responseText).outputMessage;
-            Swal({
+            Swal.fire({
                 title: outputMessage,
                 icon: "error"
             });
