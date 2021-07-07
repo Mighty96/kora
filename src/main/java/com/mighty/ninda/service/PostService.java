@@ -62,6 +62,7 @@ public class PostService {
     @Transactional
     public void viewCountUp(Long id) {
         Post post = findById(id);
+        log.info(Integer.toString(post.getViewCount()));
         post.viewCountUp();
     }
 

@@ -99,7 +99,7 @@
                         <span th:text="${post.id}"></span>
                     </div>
                     <div class="post-title">
-                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}}">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${page},size=${size})}">
                             <span th:text="${post.title}"></span>
                         </a>
                     </div>
