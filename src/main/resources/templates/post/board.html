@@ -9,7 +9,7 @@
     <div class="main-container" style="padding-top: 10pt">
         <div class="row">
             <div class="col-md-1"></div>
-            <a th:href="@{'/board/' + ${board}(page=0, size=30}">
+            <a th:href="@{'/board/' + ${board}(page=0, size=30)}">
                 <span th:if="${board.toString().equals('free')}" class="board-title">자유게시판</span>
                 <span th:if="${board.toString().equals('multi')}" class="board-title">멀티-내전게시판</span>
             </a>
