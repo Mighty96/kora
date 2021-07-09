@@ -1,13 +1,10 @@
 package com.mighty.ninda.controller;
 
-import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
-import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.dto.game.GameListResponse;
 import com.mighty.ninda.dto.page.PageResponse;
-import com.mighty.ninda.dto.post.FreeListResponse;
+import com.mighty.ninda.dto.post.PostListResponse;
 import com.mighty.ninda.dto.post.PostCommentListResponse;
 import com.mighty.ninda.dto.post.PostResponse;
 import com.mighty.ninda.service.CommentService;
@@ -19,8 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.CookieGenerator;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,26 +32,21 @@ public class PostController {
 
     @GetMapping("/board/{board}")
     public String freeBoard(Model model, Pageable pageable,
-                            @PathVariable String board,
-                            @RequestParam int page,
-                            @RequestParam int size) {
+                            @PathVariable String board) {
 
         Page<Post> pagePostList = null;
 
-        if (board.equals("free")) {
-            pagePostList = postService.findByBoard(Board.FREE, pageable);
-        } else {
-            pagePostList = postService.findByBoard(Board.MULTI, pageable);
+        for (Board bd : Board.values()) {
+            if (bd.getValue().equals(board)) {
+                pagePostList = postService.findByBoard(bd, pageable);
+            }
         }
 
-        List<FreeListResponse> postList = pagePostList.stream().map(FreeListResponse::of).collect(Collectors.toList());
+        List<PostListResponse> postList = pagePostList.stream().map(PostListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
 
         model.addAttribute("info", info);
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
         model.addAttribute("board", board);
-
         return "post/board";
     }
 
@@ -64,25 +54,21 @@ public class PostController {
     public String freePost(Model model, Pageable pageable,
                            @PathVariable String board,
                            @PathVariable Long id,
-                           @RequestParam int page,
-                           @RequestParam int size,
                            HttpServletRequest request,
                            HttpServletResponse response) {
 
         Page<Post> pagePostList = null;
 
-        if (board.equals("free")) {
-            pagePostList = postService.findByBoard(Board.FREE, pageable);
-        } else {
-            pagePostList = postService.findByBoard(Board.MULTI, pageable);
+        for (Board bd : Board.values()) {
+            if (bd.getValue().equals(board)) {
+                pagePostList = postService.findByBoard(bd, pageable);
+            }
         }
 
-        List<FreeListResponse> postList = pagePostList.stream().map(FreeListResponse::of).collect(Collectors.toList());
+        List<PostListResponse> postList = pagePostList.stream().map(PostListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
 
         model.addAttribute("info", info);
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
 
         viewCountUp(id, request, response);
         model.addAttribute("post", PostResponse.of(postService.findById(id)));

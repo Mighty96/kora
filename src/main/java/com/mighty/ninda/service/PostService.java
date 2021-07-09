@@ -5,6 +5,7 @@ import com.mighty.ninda.domain.hot.Hot;
 import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.domain.post.PostRepository;
+import com.mighty.ninda.domain.post.PostSpecs;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -58,6 +60,11 @@ public class PostService {
     public Page<Post> findByBoard(Board board, Pageable pageable) {
         return postRepository.findByBoardOrderByCreatedDateDesc(board, pageable);
     }
+
+//    @Transactional
+//    public Page<Post> findAllByIdDesc(Map<String, Object> searchKeyword, Pageable pageable) {
+//        return postRepository.findAllOrderByPostIdDesc(PostSpecs.searchPost(searchKeyword), pageable);
+//    }
 
     @Transactional
     public void viewCountUp(Long id) {

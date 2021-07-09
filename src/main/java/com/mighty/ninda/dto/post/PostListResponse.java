@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeListResponse {
+public class PostListResponse {
 
     private Long id;
     private Long boardNo;
@@ -24,7 +24,7 @@ public class FreeListResponse {
     private int reLike;
 
     @Builder
-    public FreeListResponse(Long id, String title, Long userId, String userName, LocalDateTime created, int viewCount, int reLike) {
+    public PostListResponse(Long id, String title, Long userId, String userName, LocalDateTime created, int viewCount, int reLike) {
         this.id = id;
         this.title = title;
         this.userId = userId;
@@ -34,8 +34,8 @@ public class FreeListResponse {
         this.reLike = reLike;
     }
 
-    public static FreeListResponse of(Post post) {
-        return FreeListResponse.builder()
+    public static PostListResponse of(Post post) {
+        return PostListResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .userId(post.getUser().getId())

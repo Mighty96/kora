@@ -10,25 +10,23 @@ import java.util.List;
 @Getter
 public class PageResponse<T> {
 
-    private final static int VIEWPAGESIZE = 12;
-    private int startPage;
-    private int endPage;
+    private int nowPage;
+    private int size;
     private int totalPages;
     private List<T> contents;
 
-    private PageResponse(int startPage, int endPage, int totalPages, List<T> contents) {
-        this.startPage = startPage;
-        this.endPage = endPage;
+    private PageResponse(int nowPage, int size, int totalPages, List<T> contents) {
+        this.nowPage = nowPage;
+        this.size = size;
         this.totalPages = totalPages;
         this.contents = contents;
     }
 
     public static <T, G> PageResponse of(Page<G> entities, List<T> contents) {
+        int nowPage = entities.getPageable().getPageNumber();
+        int size = entities.getSize();
         int totalPages = entities.getTotalPages();
-        int nowPage = entities.getPageable().getPageNumber() + 1;
-        int startPage = 1 * VIEWPAGESIZE * (nowPage / VIEWPAGESIZE);
-        int endPage = startPage + VIEWPAGESIZE - 1;
 
-        return new PageResponse<>(startPage == 0 ? 1 : startPage, endPage > totalPages ? totalPages : endPage, totalPages, contents);
+        return new PageResponse<>(nowPage, size, totalPages, contents);
     }
 }

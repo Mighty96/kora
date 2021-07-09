@@ -32,19 +32,13 @@ public class UserOneLineCommentListResponse {
 
     }
 
-    public static List<UserOneLineCommentListResponse> of(List<OneLineComment> oneLineComments) {
-        List<UserOneLineCommentListResponse> list = new ArrayList<>();
-
-        for (OneLineComment oneLineComment : oneLineComments) {
-            list.add(UserOneLineCommentListResponse.builder()
+    public static UserOneLineCommentListResponse of(OneLineComment oneLineComment) {
+        return UserOneLineCommentListResponse.builder()
                     .gameId(oneLineComment.getGame().getId())
                     .gameTitle(oneLineComment.getGame().getTitle())
                     .commentId(oneLineComment.getId())
                     .context(oneLineComment.getContext())
                     .createdDate(oneLineComment.getCreatedDate())
-                    .build());
-        }
-
-        return list;
+                    .build();
     }
 }

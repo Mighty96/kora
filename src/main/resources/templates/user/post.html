@@ -13,19 +13,26 @@
                     <div class="btn-group-vertical">
                         <button type="button" onclick="location.href='/user/profile'" class="btn btn-dark">내정보 수정</button>
                         <button th:if="${session.user.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='http://localhost:8080/user/password'" class="btn btn-dark">비밀번호 변경</button>
-                        <button type="button" onclick="location.href='/user/post?page=0&size=20&board=all'" class="btn btn-dark">내가 작성한 글</button>
-                        <button type="button" onclick="location.href='/user/oneLineComment?page=0&size=10'" class="btn btn-dark active">내가 작성한 한줄평</button>
+                        <button type="button" onclick="location.href='/user/post?page=0&size=20&board=all'" class="btn btn-dark active">내가 작성한 글</button>
+                        <button type="button" onclick="location.href='/user/oneLineComment?page=0&size=10'" class="btn btn-dark">내가 작성한 한줄평</button>
                         <button type="button" onclick="location.href='/user/book'" class="btn btn-dark">북마크</button>
                     </div>
                 </div>
 
             </div>
             <div class="col-md-9">
+                <div>
+                    <select onchange="if(this.value) location.href=(this.value);">
+                        <option value="/user/post?page=0&size=20&board=all">전체 글 보기</option>
+                        <option value="/user/post?page=0&size=20&board=free">자유게시판</option>
+                        <option value="/user/post?page=0&size=20&board=multi">멀티-내전게시판</option>
+                    </select>
+                </div>
                 <div class="container p-3 border" th:if="${#lists.isEmpty(info.contents)}">
-                    <a>아직 작성하신 한줄평이 없어요.</a>
+                    <a>아직 작성하신 글이 없어요.</a>
                 </div>
                 <form>
-                    <div class="container p-3 border" th:each="oneLineComment: ${info.contents}">
+                    <div class="container p-3 border" th:each="post: ${info.contents}">
                         <a class="game_title" th:href="@{'/games/' + ${oneLineComment.gameId}}" th:text="${oneLineComment.gameTitle}"></a>
                         <p class="date" th:text="${oneLineComment.createdDate}"></p>
                         <a th:text="${oneLineComment.context}"></a>
@@ -34,25 +41,25 @@
                 <nav aria-label="Page">
                     <ul class="pagination center">
                         <li th:if="${page > 4}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) - 1}, size=${size})}"><<</a>
+                            <a class="page-link" th:href="@{/user/post(page=${((page / 5) * 5) - 1}, size=${size})}"><<</a>
                         </li>
                         <li th:classappend="${(page % 5) == 0} ? active" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${(page / 5) * 5}, size=${size})}" th:text="${((page / 5) * 5) + 1}"></a>
+                            <a class="page-link" th:href="@{/user/post(page=${(page / 5) * 5}, size=${size})}" th:text="${((page / 5) * 5) + 1}"></a>
                         </li>
                         <li th:classappend="${(page % 5) == 1} ? active" th:if="${(((page / 5) * 5) + 2) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 1}, size=${size})}" th:text="${((page / 5) * 5) + 2}"></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((page / 5) * 5) + 1}, size=${size})}" th:text="${((page / 5) * 5) + 2}"></a>
                         </li>
                         <li th:classappend="${(page % 5) == 2} ? active" th:if="${(((page / 5) * 5) + 3) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 2}, size=${size})}" th:text="${((page / 5) * 5) + 3}"></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((page / 5) * 5) + 2}, size=${size})}" th:text="${((page / 5) * 5) + 3}"></a>
                         </li>
                         <li th:classappend="${(page % 5) == 3} ? active" th:if="${(((page / 5) * 5) + 4) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 3}, size=${size)}" th:text="${((page / 5) * 5) + 4}"></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((page / 5) * 5) + 3}, size=${size)}" th:text="${((page / 5) * 5) + 4}"></a>
                         </li>
                         <li th:classappend="${(page % 5) == 4} ? active" th:if="${(((page / 5) * 5) + 5) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 4}, size=${size})}" th:text="${((page / 5) * 5) + 5}"></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((page / 5) * 5) + 4}, size=${size})}" th:text="${((page / 5) * 5) + 5}"></a>
                         </li>
                         <li th:if="${(page / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 5}, size=${size})}">>></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((page / 5) * 5) + 5}, size=${size})}">>></a>
                         </li>
                     </ul>
                 </nav>

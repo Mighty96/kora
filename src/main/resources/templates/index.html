@@ -100,7 +100,7 @@
                                 <a href="/board/free?page=0&size=30">자유게시판</a>
                             </div>
                             <div th:each="freePost : ${freeBoard}">
-                                <a th:href="@{'/board/free/' + ${freePost.postId}}" class="post-item textover" th:text="${freePost.postTitle}"></a>
+                                <a th:href="@{'/board/free/' + ${freePost.postId}(page=0,size=30)}" class="post-item textover" th:text="${freePost.postTitle}"></a>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                 <a href="/board/multi?page=0&size=30">멀티-내전게시판</a>
                             </div>
                             <div th:each="multiPost : ${multiBoard}">
-                                    <a th:href="@{'/board/multi/' + ${multiPost.postId}}" class="post-item textover" th:text="${multiPost.postTitle}"></a>
+                                    <a th:href="@{'/board/multi/' + ${multiPost.postId}(page=0,size=30)}" class="post-item textover" th:text="${multiPost.postTitle}"></a>
                             </div>
                         </div>
                     </div>

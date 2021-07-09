@@ -34,13 +34,11 @@ public class GameController {
 
     @GetMapping("/games")
     public String gameList(Model model, Pageable pageable,
-                           @RequestParam int page,
-                           @RequestParam int size,
                            @RequestParam List<String> sort,
                            @RequestParam String q,
                            @RequestParam String list) {
 
-        Page<Game> pageGameList = null;
+        Page<Game> pageGameList;
         if (q.equals("")) {
             if (list.equals("all")) {
                 pageGameList = gameService.findAll(pageable);
@@ -58,8 +56,6 @@ public class GameController {
         PageResponse<GameListResponse> info = PageResponse.of(pageGameList, gameList);
 
         model.addAttribute("info", info);
-        model.addAttribute("page", page);
-        model.addAttribute("size", size);
         model.addAttribute("sort", sort);
         model.addAttribute("list", list);
         model.addAttribute("q", q);

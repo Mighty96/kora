@@ -2,15 +2,28 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.domain.comment.OneLineComment;
+import com.mighty.ninda.domain.post.Board;
+import com.mighty.ninda.domain.post.Post;
+import com.mighty.ninda.dto.game.GameListResponse;
+import com.mighty.ninda.dto.page.PageResponse;
 import com.mighty.ninda.dto.user.UserOneLineCommentListResponse;
 import com.mighty.ninda.dto.user.UserResponse;
 import com.mighty.ninda.service.OneLineCommentService;
+import com.mighty.ninda.service.PostService;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,6 +32,7 @@ public class UserController {
 
     private final UserService userService;
     private final OneLineCommentService oneLineCommentService;
+    private final PostService postService;
 
     @GetMapping("/user/profile")
     public String profile(@LoginUser SessionUser sessionUser, Model model) {
@@ -26,14 +40,44 @@ public class UserController {
         return "user/profile";
     }
 
-    @GetMapping("/user/oneLineComment")
-    public String oneLineComment(@LoginUser SessionUser sessionUser, Model model) {
+//    @GetMapping("/user/post")
+//    public String post(@LoginUser SessionUser sessionUser,
+//                       Model model,
+//                       Pageable pageable,
+//                       @RequestParam int page,
+//                       @RequestParam int size,
+//                       @RequestParam(required = false) Map<String, Object> searchKeyword) {
+//
+//        Page<Post> pagePostList = postService.findAllByIdDesc(searchKeyword, pageable);
+//
+//        List<UserOneLineCommentListResponse> oneLineCommentList = pageOneLineCommentList.stream().map(UserOneLineCommentListResponse::of).collect(Collectors.toList());
+//        PageResponse<UserOneLineCommentListResponse> info = PageResponse.of(pageOneLineCommentList, oneLineCommentList);
+//
+//        model.addAttribute("info", info);
+//        model.addAttribute("page", page);
+//        model.addAttribute("size", size);
+//
+//        return "user/oneLineComment";
+//    }
 
-
-        model.addAttribute("oneLineCommentList", UserOneLineCommentListResponse.of(oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId())));
-
-        return "user/oneLineComment";
-    }
+//    @GetMapping("/user/oneLineComment")
+//    public String oneLineComment(@LoginUser SessionUser sessionUser,
+//                                 Model model,
+//                                 Pageable pageable,
+//                                 @RequestParam int page,
+//                                 @RequestParam int size) {
+//
+//        Page<OneLineComment> pageOneLineCommentList = oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId(), pageable);
+//
+//        List<UserOneLineCommentListResponse> oneLineCommentList = pageOneLineCommentList.stream().map(UserOneLineCommentListResponse::of).collect(Collectors.toList());
+//        PageResponse<UserOneLineCommentListResponse> info = PageResponse.of(pageOneLineCommentList, oneLineCommentList);
+//
+//        model.addAttribute("info", info);
+//        model.addAttribute("page", page);
+//        model.addAttribute("size", size);
+//
+//        return "user/oneLineComment";
+//    }
 
     @GetMapping("user/password")
     public String password(@LoginUser SessionUser sessionUser) {

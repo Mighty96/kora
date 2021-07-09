@@ -12,6 +12,8 @@ import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,11 +57,11 @@ public class OneLineCommentService {
         return oneLineCommentRepository.findByGameId(gameId);
     }
 
-    @Transactional
-    public List<OneLineComment> findOneLineCommentByUserIdDesc(Long userId) {
-
-        return oneLineCommentRepository.findByUserIdOrderByIdDesc(userId);
-    }
+//    @Transactional
+//    public Page<OneLineComment> findOneLineCommentByUserIdDesc(Long userId, Pageable pageable) {
+//
+//        return oneLineCommentRepository.findByUserIdOrderByIdDesc(userId, pageable);
+//    }
 
 
     @Transactional
