@@ -9,7 +9,7 @@ var main = {
         var data = {
             title: $('#title').val(),
             context: $('#context').val(),
-            board: $('#board-id').val().toUpperCase()
+            board: $('#board-id').val()
         };
         $.ajax({
             type: 'POST',

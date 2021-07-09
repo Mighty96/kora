@@ -20,8 +20,7 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private Board board;
+    private String board;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -47,7 +46,7 @@ public class Post extends BaseTimeEntity {
     private String hateList;
 
     @Builder
-    public Post(Board board, String title, String context, User user, int viewCount, int reLike, int reHate, String likeList, String hateList) {
+    public Post(String board, String title, String context, User user, int viewCount, int reLike, int reHate, String likeList, String hateList) {
         this.board = board;
         this.title = title;
         this.context = context;

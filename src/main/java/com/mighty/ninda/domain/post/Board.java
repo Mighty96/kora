@@ -15,5 +15,13 @@ public enum Board {
         this.value = value;
     }
 
+    public static Board of(String value) {
+        for (Board bd : Board.values()) {
+            if (bd.getValue().equals(value)) {
+                return bd;
+            }
+        }
+        return null;
+    }
 
 }

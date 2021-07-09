@@ -38,8 +38,8 @@ public class IndexController {
 
         model.addAttribute("commentList", IndexOneLineCommentListResponse.of(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
         model.addAttribute("newGameList", IndexNewGameListResponse.of(gameService.findNewGame()));
-        model.addAttribute("freeBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.FREE)));
-        model.addAttribute("multiBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.MULTI)));
+        model.addAttribute("freeBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.FREE.getValue())));
+        model.addAttribute("multiBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.MULTI.getValue())));
         List<Long> hotList = hotRepository.findHotGame(LocalDateTime.now().minusHours(1), PageRequest.of(0, 10));
         List<Game> hotGameList = new ArrayList<>();
         for (Long id : hotList) {

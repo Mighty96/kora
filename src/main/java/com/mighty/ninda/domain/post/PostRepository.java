@@ -1,5 +1,6 @@
 package com.mighty.ninda.domain.post;
 
+import com.sun.istack.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,11 +12,9 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
 
-    Page<Post> findByBoardOrderByCreatedDateDesc(Board board, Pageable pageable);
+    Page<Post> findByBoardOrderByCreatedDateDesc(String board, Pageable pageable);
 
-//    Page<Post> findByBoardAndByUserIdOrderByCreatedDateDesc(Board board, Long userId, Pageable pageable);
+    List<Post> findTop10ByBoardOrderByCreatedDateDesc(String board);
 
-    List<Post> findTop10ByBoardOrderByCreatedDateDesc(Board board);
-
-//    Page<Post> findAllOrderByPostIdDesc(Specification<Post> spec, Pageable pageable);
+    Page<Post> findAll(@Nullable Specification<Post> spec, Pageable pageable);
 }

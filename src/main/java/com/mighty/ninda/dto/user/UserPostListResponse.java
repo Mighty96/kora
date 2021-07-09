@@ -14,13 +14,15 @@ import java.time.format.DateTimeFormatter;
 public class UserPostListResponse {
 
     private Long postId;
+    private String board;
     private String postTitle;
     private String context;
     private String createdDate;
 
     @Builder
-    public UserPostListResponse(Long postId, String postTitle, String context, LocalDateTime createdDate) {
+    public UserPostListResponse(Long postId, String board, String postTitle, String context, LocalDateTime createdDate) {
         this.postId = postId;
+        this.board = board;
         this.postTitle = postTitle;
         this.context = context;
         this.createdDate = createdDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
@@ -31,6 +33,7 @@ public class UserPostListResponse {
     public static UserPostListResponse of(Post post) {
         return UserPostListResponse.builder()
                 .postId(post.getId())
+                .board(post.getBoard())
                 .postTitle(post.getTitle())
                 .context(post.getContext())
                 .createdDate(post.getCreatedDate())

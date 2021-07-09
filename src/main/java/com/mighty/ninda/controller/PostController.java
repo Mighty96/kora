@@ -34,13 +34,7 @@ public class PostController {
     public String freeBoard(Model model, Pageable pageable,
                             @PathVariable String board) {
 
-        Page<Post> pagePostList = null;
-
-        for (Board bd : Board.values()) {
-            if (bd.getValue().equals(board)) {
-                pagePostList = postService.findByBoard(bd, pageable);
-            }
-        }
+        Page<Post> pagePostList = postService.findByBoard(board, pageable);
 
         List<PostListResponse> postList = pagePostList.stream().map(PostListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
@@ -57,13 +51,7 @@ public class PostController {
                            HttpServletRequest request,
                            HttpServletResponse response) {
 
-        Page<Post> pagePostList = null;
-
-        for (Board bd : Board.values()) {
-            if (bd.getValue().equals(board)) {
-                pagePostList = postService.findByBoard(bd, pageable);
-            }
-        }
+        Page<Post> pagePostList = postService.findByBoard(board, pageable);
 
         List<PostListResponse> postList = pagePostList.stream().map(PostListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);

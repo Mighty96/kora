@@ -14,7 +14,7 @@ public class SavePost {
 
     private String title;
     private String context;
-    private Board board;
+    private String board;
 
     public Post toEntity(User user) {
         return Post.builder()

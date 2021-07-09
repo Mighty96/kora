@@ -1,7 +1,5 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.domain.game.Game;
-import com.mighty.ninda.domain.hot.Hot;
 import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.domain.post.PostRepository;
@@ -52,19 +50,19 @@ public class PostService {
     }
 
     @Transactional
-    public List<Post> findTop10ByBoardOrderByCreatedDateDesc(Board board) {
+    public List<Post> findTop10ByBoardOrderByCreatedDateDesc(String board) {
         return postRepository.findTop10ByBoardOrderByCreatedDateDesc(board);
     }
 
     @Transactional
-    public Page<Post> findByBoard(Board board, Pageable pageable) {
+    public Page<Post> findByBoard(String board, Pageable pageable) {
         return postRepository.findByBoardOrderByCreatedDateDesc(board, pageable);
     }
 
-//    @Transactional
-//    public Page<Post> findAllByIdDesc(Map<String, Object> searchKeyword, Pageable pageable) {
-//        return postRepository.findAllOrderByPostIdDesc(PostSpecs.searchPost(searchKeyword), pageable);
-//    }
+    @Transactional
+    public Page<Post> findAll(Map<String, Object> searchKeyword, Pageable pageable) {
+        return postRepository.findAll(PostSpecs.searchPost(searchKeyword), pageable);
+    }
 
     @Transactional
     public void viewCountUp(Long id) {
