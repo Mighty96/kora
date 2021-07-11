@@ -43,6 +43,7 @@
                     <div class="post-title">
                         <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage},size=${info.size})}">
                             <span th:text="${post.title}"></span>
+                            <span class="post-comment" th:text="' [' + ${post.commentCount} + ']'"></span>
                         </a>
                     </div>
                     <div class="post-nickname">
@@ -63,7 +64,7 @@
             </ul>
         </div>
         <div class="board-button-container">
-            <a class="board-button" th:href="@{'/board/' + ${board} + '/postForm'}">등록</a>
+            <a class="board-button" th:href="@{'/board/' + ${board} + '/write'}">등록</a>
         </div>
         <nav aria-label="Page">
             <ul class="pagination center">

@@ -32,6 +32,25 @@ var main = {
     }
 };
 
+function post_del() {
+    $.ajax({
+         type: 'DELETE',
+         url: '/api/posts/' + $('#post-id').val(),
+         success: function() {
+             Swal.fire({
+                 title: "게시글을 삭제했어요.",
+                 icon: "success"
+             })
+             .then(() =>{
+                 window.location.href= '/board/' + $('#board').val();
+             });
+         },
+         error: function(e) {
+             alert('몰라');
+         }
+    });
+}
+
 function update_mode(_rid) {
     var html= "";
     html += '<textarea class="form-control" id="update" placeholder="댓글">' + $('#rid' + _rid).text() + '</textarea>'

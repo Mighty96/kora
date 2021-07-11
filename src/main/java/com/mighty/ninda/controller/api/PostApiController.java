@@ -7,8 +7,10 @@ import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {
@@ -17,15 +19,21 @@ public class PostApiController {
     private final UserService userService;
 
     @PostMapping("/api/posts")
-    public Long save(@RequestBody SavePost requestDto,
+    public Long savePost(@RequestBody SavePost requestDto,
                      @LoginUser SessionUser sessionUser) {
         return postService.save(requestDto, userService.findById(sessionUser.getId()));
     }
 
 
-    @PutMapping("/api/posts/{id}")
-    public Long update(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
+    @PostMapping("/api/posts/{id}")
+    public Long updatePost(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
+        log.info("asd");
         return postService.update(id, requestDto);
+    }
+
+    @DeleteMapping("/api/posts/{id}")
+    public Long deletePost(@PathVariable Long id) {
+        return postService.delete(id);
     }
 
     @GetMapping("/api/posts/{id}/like")

@@ -57,11 +57,11 @@ public class OneLineCommentService {
         return oneLineCommentRepository.findByGameId(gameId);
     }
 
-//    @Transactional
-//    public Page<OneLineComment> findOneLineCommentByUserIdDesc(Long userId, Pageable pageable) {
-//
-//        return oneLineCommentRepository.findByUserIdOrderByIdDesc(userId, pageable);
-//    }
+    @Transactional
+    public Page<OneLineComment> findOneLineCommentByUserIdDesc(Long userId, Pageable pageable) {
+
+        return oneLineCommentRepository.findByUserIdOrderByIdDesc(userId, pageable);
+    }
 
 
     @Transactional

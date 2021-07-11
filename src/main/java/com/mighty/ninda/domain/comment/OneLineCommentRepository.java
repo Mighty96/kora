@@ -11,5 +11,5 @@ public interface OneLineCommentRepository extends JpaRepository<OneLineComment, 
 
     List<OneLineComment> findByGameId(Long gameId);
     List<OneLineComment> findTop5ByOrderByCreatedDateDesc();
-//    Page<OneLineComment> findByUserIdOrderByIdDesc(Long userId, Pageable pageable);
+    Page<OneLineComment> findByUserIdOrderByIdDesc(Long userId, Pageable pageable);
 }

@@ -2,9 +2,11 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.post.Board;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.dto.page.PageResponse;
+import com.mighty.ninda.dto.user.UserOneLineCommentListResponse;
 import com.mighty.ninda.dto.user.UserPostListResponse;
 import com.mighty.ninda.dto.user.UserResponse;
 import com.mighty.ninda.service.OneLineCommentService;
@@ -59,22 +61,20 @@ public class UserController {
         return "user/post";
     }
 
-//    @GetMapping("/user/oneLineComment")
-//    public String oneLineComment(@LoginUser SessionUser sessionUser,
-//                                 Model model,
-//                                 Pageable pageable) {
-//
-//        Page<OneLineComment> pageOneLineCommentList = oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId(), pageable);
-//
-//        List<UserOneLineCommentListResponse> oneLineCommentList = pageOneLineCommentList.stream().map(UserOneLineCommentListResponse::of).collect(Collectors.toList());
-//        PageResponse<UserOneLineCommentListResponse> info = PageResponse.of(pageOneLineCommentList, oneLineCommentList);
-//
-//        model.addAttribute("info", info);
-//        model.addAttribute("page", page);
-//        model.addAttribute("size", size);
-//
-//        return "user/oneLineComment";
-//    }
+    @GetMapping("/user/oneLineComment")
+    public String oneLineComment(@LoginUser SessionUser sessionUser,
+                                 Model model,
+                                 Pageable pageable) {
+
+        Page<OneLineComment> pageOneLineCommentList = oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId(), pageable);
+
+        List<UserOneLineCommentListResponse> oneLineCommentList = pageOneLineCommentList.stream().map(UserOneLineCommentListResponse::of).collect(Collectors.toList());
+        PageResponse<UserOneLineCommentListResponse> info = PageResponse.of(pageOneLineCommentList, oneLineCommentList);
+
+        model.addAttribute("info", info);
+
+        return "user/oneLineComment";
+    }
 
     @GetMapping("user/password")
     public String password(@LoginUser SessionUser sessionUser) {

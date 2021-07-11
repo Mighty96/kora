@@ -33,26 +33,26 @@
                 </form>
                 <nav aria-label="Page">
                     <ul class="pagination center">
-                        <li th:if="${page > 4}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) - 1}, size=${size})}"><<</a>
+                        <li th:if="${info.nowPage > 4}" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) - 1}, size=${info.size})}"><<</a>
                         </li>
-                        <li th:classappend="${(page % 5) == 0} ? active" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${(page / 5) * 5}, size=${size})}" th:text="${((page / 5) * 5) + 1}"></a>
+                        <li th:classappend="${(info.nowPage % 5) == 0} ? active" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${(info.nowPage / 5) * 5}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + 1}"></a>
                         </li>
-                        <li th:classappend="${(page % 5) == 1} ? active" th:if="${(((page / 5) * 5) + 2) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 1}, size=${size})}" th:text="${((page / 5) * 5) + 2}"></a>
+                        <li th:classappend="${(info.nowPage % 5) == 1} ? active" th:if="${(((info.nowPage / 5) * 5) + 2) <= info.totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) + 1}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + 2}"></a>
                         </li>
-                        <li th:classappend="${(page % 5) == 2} ? active" th:if="${(((page / 5) * 5) + 3) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 2}, size=${size})}" th:text="${((page / 5) * 5) + 3}"></a>
+                        <li th:classappend="${(info.nowPage % 5) == 2} ? active" th:if="${(((info.nowPage / 5) * 5) + 3) <= info.totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) + 2}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + 3}"></a>
                         </li>
-                        <li th:classappend="${(page % 5) == 3} ? active" th:if="${(((page / 5) * 5) + 4) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 3}, size=${size)}" th:text="${((page / 5) * 5) + 4}"></a>
+                        <li th:classappend="${(info.nowPage % 5) == 3} ? active" th:if="${(((info.nowPage / 5) * 5) + 4) <= info.totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) + 3}, size=${info.size)}" th:text="${((info.nowPage / 5) * 5) + 4}"></a>
                         </li>
-                        <li th:classappend="${(page % 5) == 4} ? active" th:if="${(((page / 5) * 5) + 5) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 4}, size=${size})}" th:text="${((page / 5) * 5) + 5}"></a>
+                        <li th:classappend="${(info.nowPage % 5) == 4} ? active" th:if="${(((info.nowPage / 5) * 5) + 5) <= info.totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) + 4}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + 5}"></a>
                         </li>
-                        <li th:if="${(page / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
-                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((page / 5) * 5) + 5}, size=${size})}">>></a>
+                        <li th:if="${(info.nowPage / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
+                            <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) + 5}, size=${info.size})}">>></a>
                         </li>
                     </ul>
                 </nav>

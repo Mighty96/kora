@@ -20,8 +20,8 @@
             <div class="post-head">
                 <span class="post-title" th:text="${post.title}"></span>
                 <div th:if="${session.user != null && post.userId.toString().equals(session.user.id.toString())}" class="post-button">
-                    <a>수정</a>
-                    <a>삭제</a>
+                    <a th:href="@{'/board/' + ${board} + '/' + ${post.id} + '/modify'}">수정</a>
+                    <span th:onclick="post_del()" >삭제</span>
                 </div>
 
                 <a><br></a>
@@ -50,12 +50,8 @@
                     </div>
                     <div class="col-md-2" style="display: inline-block;">
                         <div class="comment-update-button">
-                        <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}" id="btn-update-mode">
-                        수정
-                        </span>
-                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">
-                        삭제
-                        </span>
+                        <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}" id="btn-update-mode">수정</span>
+                        <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">삭제</span>
                         </div>
 
                         <div th:if="${board.toString().equals('free')}" class="comment-button-container">
@@ -101,6 +97,7 @@
                     <div class="post-title">
                         <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage},size=${info.size})}">
                             <span th:text="${post.title}"></span>
+                            <span class="post-comment" th:text="' [' + ${post.commentCount} + ']'"></span>
                         </a>
                     </div>
                     <div class="post-nickname">
@@ -121,7 +118,7 @@
             </ul>
         </div>
         <div class="board-button-container">
-            <a class="board-button" th:href="@{'/board/' + ${board} + '/postForm'}">등록</a>
+            <a class="board-button" th:href="@{'/board/' + ${board} + '/write'}">등록</a>
         </div>
         <nav aria-label="Page">
             <ul class="pagination center">

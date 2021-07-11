@@ -68,6 +68,12 @@ a:hover {
     white-space: nowrap;
     text-align: left;
 }
+
+.post-comment {
+    color: #96cbe2;
+    font-size: 11pt;
+}
+
 .post-nickname {
     width: 150px;
 }

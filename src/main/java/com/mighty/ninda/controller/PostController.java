@@ -7,6 +7,7 @@ import com.mighty.ninda.dto.page.PageResponse;
 import com.mighty.ninda.dto.post.PostListResponse;
 import com.mighty.ninda.dto.post.PostCommentListResponse;
 import com.mighty.ninda.dto.post.PostResponse;
+import com.mighty.ninda.dto.post.PostUpdateResponse;
 import com.mighty.ninda.service.CommentService;
 import com.mighty.ninda.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.persistence.PostUpdate;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +33,7 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping("/board/{board}")
-    public String freeBoard(Model model, Pageable pageable,
+    public String board(Model model, Pageable pageable,
                             @PathVariable String board) {
 
         Page<Post> pagePostList = postService.findByBoard(board, pageable);
@@ -45,7 +47,7 @@ public class PostController {
     }
 
     @GetMapping("/board/{board}/{id}")
-    public String freePost(Model model, Pageable pageable,
+    public String post(Model model, Pageable pageable,
                            @PathVariable String board,
                            @PathVariable Long id,
                            HttpServletRequest request,
@@ -66,11 +68,20 @@ public class PostController {
         return "post/post";
     }
 
-    @GetMapping("/board/{board}/postForm")
-    public String freePostForm(Model model,
-                               @PathVariable String board) {
+    @GetMapping("/board/{board}/write")
+    public String write(Model model,
+                        @PathVariable String board) {
         model.addAttribute("board", board);
         return "post/postForm";
+    }
+
+    @GetMapping("/board/{board}/{id}/modify")
+    public String modify(Model model,
+                         @PathVariable String board,
+                         @PathVariable Long id) {
+        model.addAttribute("board", board);
+        model.addAttribute("post", PostUpdateResponse.of(postService.findById(id)));
+        return "post/modifyForm";
     }
 
 

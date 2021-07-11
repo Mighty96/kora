@@ -20,16 +20,18 @@ public class PostListResponse {
     private Long userId;
     private String userName;
     private String createdDate;
+    private int commentCount;
     private int viewCount;
     private int reLike;
 
     @Builder
-    public PostListResponse(Long id, String title, Long userId, String userName, LocalDateTime created, int viewCount, int reLike) {
+    public PostListResponse(Long id, String title, Long userId, String userName, LocalDateTime created, int commentCount, int viewCount, int reLike) {
         this.id = id;
         this.title = title;
         this.userId = userId;
         this.userName = userName;
         this.createdDate = changeDateFormat(created);
+        this.commentCount = commentCount;
         this.viewCount = viewCount;
         this.reLike = reLike;
     }
@@ -41,6 +43,7 @@ public class PostListResponse {
                 .userId(post.getUser().getId())
                 .userName(post.getUser().getNickname())
                 .created(post.getCreatedDate())
+                .commentCount(post.getComments().size())
                 .viewCount(post.getViewCount())
                 .reLike(post.getReLike())
                 .build();

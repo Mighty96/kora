@@ -36,7 +36,14 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
-        post.update(requestDto.getTitle(), requestDto.getContent());
+        post.update(requestDto.getTitle(), requestDto.getContext());
+
+        return id;
+    }
+
+    @Transactional
+    public Long delete(Long id) {
+        postRepository.deleteById(id);
 
         return id;
     }
