@@ -7,7 +7,6 @@
 </head>
 <th:block layout:fragment="content">
     <div class="main-container" style="padding-top: 10pt">
-        <a href="/directs/directForm">등록</a>
         <div th:each="direct: ${directList}">
             <div class="card mb-4">
                 <a th:href="@{'/directs/' + ${direct.id}}">

@@ -20,9 +20,6 @@
                         <a class="dropdown-item" href="/board/friendCode?page=0&size=50">친구코드교환</a>
                     </div>
                 </li>
-                <li class="nav-item left-tap">
-                    <a class="nav-link" href="/api/gameCrawl">게임 업데이트(어드민)</a>
-                </li>
                 <li th:if = "${session.user == null}" class="nav-item right-tap">
                     <a class="nav-link" href="/signin">로그인</a>
                 </li>
@@ -33,7 +30,7 @@
                     <a class="nav-link" href="/user/profile" th:text = "${session.user.nickname}"></a>
                 </li>
                 <li th:if = "${session.user != null && session.user.role.toString().equals('ADMIN')}" class="nav-item right-tap">
-                    <a class="nav-link" href="/admin">어드민페이지</a>
+                    <a class="nav-link" href="/admin/main">어드민페이지</a>
                 </li>
             </ul>
         </nav>

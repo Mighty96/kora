@@ -62,7 +62,7 @@ public class Crawler {
     @Transactional
     private void crawlGame(Element g, Elements title) throws IOException {
         Game game;
-        Elements price = g.getElementsByClass("price");
+        Element price = g.getElementsByClass("price").get(0);
         Elements tempDate = g.getElementsByClass("category-product-item-released");
         LocalDate releasedDate = LocalDate.of(Integer.parseInt("20" + tempDate.text().split("\\.")[0].split(" ")[1]),
                 Integer.parseInt(tempDate.text().split("\\.")[1]), Integer.parseInt(tempDate.text().split("\\.")[2]));
@@ -107,10 +107,6 @@ public class Crawler {
 
     @Transactional
     private boolean findByTitle(String title) {
-        if (gameRepository.findByTitle(title).isPresent()) {
-            return true;
-        }
-
-        return false;
+        return gameRepository.findByTitle(title).isPresent();
     }
 }

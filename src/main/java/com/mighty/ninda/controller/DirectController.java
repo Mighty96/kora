@@ -35,8 +35,4 @@ public class DirectController {
         return "direct/direct";
     }
 
-    @GetMapping("/directs/directForm")
-    public String directForm() {
-        return "direct/directForm";
-    }
 }

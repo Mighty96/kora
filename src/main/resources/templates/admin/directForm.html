@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="main-container" style="padding-top: 10pt">
+        <label for="title">타이틀</label>
+        <input type="text" id="title">
+        <label for="japanUrl">일본주소</label>
+        <input type="text" id="japanUrl">
+        <label for="americaUrl">북미주소</label>
+        <input type="text" id="americaUrl">
+        <input type="button" id="btn-create" value="등록">
+    </div>
+    <script src="/js/directForm.js"></script>
+</th:block>
+</html>

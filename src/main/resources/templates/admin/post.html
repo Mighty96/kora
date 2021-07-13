@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<th:block layout:fragment="content">
+    <div class="main-container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="p-2 my-2">
+                    <div class="btn-group-vertical">
+                        <button type="button" onclick="location.href='/admin/main'" class="btn btn-dark">메인</button>
+                        <button type="button" onclick="location.href='/admin/crawl'" class="btn btn-dark">크롤러</button>
+                        <button type="button" onclick="location.href='/admin/post'" class="btn btn-dark active">게시글</button>
+                        <button type="button" onclick="location.href='/admin/direct'" class="btn btn-dark">닌텐도 다이렉트</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-9">
+                <button onclick="location.href='/admin/direct/directForm'">등록</button>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
