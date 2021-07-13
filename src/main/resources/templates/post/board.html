@@ -73,14 +73,14 @@
             <form th:action="@{'/board/' + ${board}}">
                 <input type="hidden" name="page" th:value="${info.nowPage}">
                 <input type="hidden" name="size" th:value="${info.size}">
-                <select name="s_type">
+                <select name="s_type" class="board-search-select">
                     <option th:selected="${param.s_type == null || param.s_type.toString().equals('title_context')}" value="title_context">제목+내용</option>
                     <option th:selected="${param.s_type != null && param.s_type.toString().equals('title')}" value="title">제목</option>
                     <option th:selected="${param.s_type != null && param.s_type.toString().equals('context')}" value="context">내용</option>
                     <option th:selected="${param.s_type != null && param.s_type.toString().equals('author')}" value="author">글쓴이</option>
                 </select>
-                <input type="text" name="s_keyword" placeholder="검색어" th:value="${param.s_keyword}">
-                <button th:action="@{'/board/' + ${board}}" type="submit">검색</button>
+                <input class="board-search-input" type="text" name="s_keyword" placeholder="검색어" th:value="${param.s_keyword}">
+                <button class="board-search-button" th:action="@{'/board/' + ${board}}" type="submit">검색</button>
             </form>
         </div>
         <nav aria-label="Page">

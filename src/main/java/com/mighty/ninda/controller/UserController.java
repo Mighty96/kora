@@ -50,7 +50,6 @@ public class UserController {
 
         searchKeyword.put("userId", sessionUser.getId());
 
-        pageable.getSort().and(Sort.by("CreatedDate").descending());
         Page<Post> pagePostList = postService.findAll(searchKeyword, pageable);
 
         List<UserPostListResponse> userPostList = pagePostList.stream().map(UserPostListResponse::of).collect(Collectors.toList());

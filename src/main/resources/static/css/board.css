@@ -122,3 +122,31 @@ a:hover {
     font-size: 15pt;
     padding-bottom: 5px;
 }
+
+.board-search-container {
+    text-align: center;
+}
+
+.board-search-select {
+    width: 100px;
+    height: 40px;
+    background-color: black;
+    border: 1px solid #dddddd;
+    color: #dddddd;
+}
+
+.board-search-input {
+    width: 300px;
+    height: 40px;
+    background-color: black;
+    border: 1px solid #dddddd;
+    color: #dddddd;
+}
+
+.board-search-button {
+    width: 100px;
+    height: 40px;
+    background-color: #313131;
+    border: 1px solid #606060;
+    color: #dddddd;
+}
