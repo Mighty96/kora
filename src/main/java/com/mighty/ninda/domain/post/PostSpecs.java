@@ -22,16 +22,21 @@ public class PostSpecs {
 
             searchKeyword.forEach((key, value) -> {
 
+                String likeValue = "%" + value + "%";
+
                 switch (key) {
                     case "board":
-                        predicates.add(builder.equal(root.get(key), value.toString()));
+                        predicates.add(builder.equal(root.get(key), likeValue));
                         break;
                     case "title":
                     case "context":
-                        predicates.add(builder.like(root.get(key), value.toString()));
+                        predicates.add(builder.like(root.get(key), likeValue));
+                        break;
+                    case "title_context":
+                        predicates.add(builder.or(builder.like(root.get("title"), likeValue), builder.like(root.get("context"), likeValue)));
                         break;
                     case "userId":
-                        predicates.add(builder.equal(joinUser.get("id"), Long.valueOf(value.toString())));
+                        predicates.add(builder.equal(joinUser.get("id"), Long.valueOf(likeValue)));
                         break;
                     case "userName":
                         predicates.add(builder.equal(joinUser.get("nickname"), value.toString()));

@@ -123,40 +123,13 @@
         <nav aria-label="Page">
             <ul class="pagination center">
                 <li th:if="${info.nowPage > 9}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) - 1}, size=${info.size})}"><<</a>
+                    <a class="page-link" th:href="@{'/board/' + ${board} + ${queryString.makeQueryString(0)}}"><<</a>
                 </li>
-                <li th:classappend="${(info.nowPage % 10) == 0} ? active" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${(info.nowPage / 10) * 10}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 1}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 1} ? active" th:if="${(((info.nowPage / 10) * 10) + 2) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 1}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 2}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 2} ? active" th:if="${(((info.nowPage / 10) * 10) + 3) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 2}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 3}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 3} ? active" th:if="${(((info.nowPage / 10) * 10) + 4) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 3}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 4}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 4} ? active" th:if="${(((info.nowPage / 10) * 10) + 5) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 4}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 5}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 5} ? active" th:if="${(((info.nowPage / 10) * 10) + 6) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 5}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 6}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 6} ? active" th:if="${(((info.nowPage / 10) * 10) + 7) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 6}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 7}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 7} ? active" th:if="${(((info.nowPage / 10) * 10) + 8) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 7}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 8}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 8} ? active" th:if="${(((info.nowPage / 10) * 10) + 9) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 8}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 9}"></a>
-                </li>
-                <li th:classappend="${(info.nowPage % 10) == 9} ? active" th:if="${(((info.nowPage / 10) * 10) + 10) <= info.totalPages}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 9}, size=${info.size})}" th:text="${((info.nowPage / 10) * 10) + 10}"></a>
+                <li th:each="num : ${#numbers.sequence(0, 9)}" th:classappend="${(info.nowPage % 10) == num} ? active" th:if="${(((info.nowPage / 10) * 10) + num + 1) <= info.totalPages}" class="page-item">
+                    <a class="page-link" th:href="@{'/board/' + ${board} + ${queryString.makeQueryString((info.nowPage / 10) * 10 + num)}}" th:text="${((info.nowPage / 10) * 10) + 1 + num}"></a>
                 </li>
                 <li th:if="${(info.nowPage / 10) < ((info.totalPages - 1) / 10)}" class="page-item">
-                    <a class="page-link" th:href="@{'/board/' + ${board}(page=${((info.nowPage / 10) * 10) + 10}, size=${info.size})}">>></a>
+                    <a class="page-link" th:href="@{'/board/' + ${board} + ${queryString.makeQueryString(info.totalPages - 1)}}">>></a>
                 </li>
             </ul>
         </nav>
