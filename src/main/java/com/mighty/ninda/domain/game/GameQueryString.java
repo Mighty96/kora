@@ -1,40 +1,44 @@
-package com.mighty.ninda.domain.post;
+package com.mighty.ninda.domain.game;
 
 import lombok.Getter;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Optional;
 
 @Getter
-public class PostQueryString {
+public class GameQueryString {
+
+    private final String q;
+
+    private final List<String> sort;
+
+    private final String list;
 
     private final int page;
 
     private final int size;
 
-    private final Optional<String> s_type;
-
-    private final Optional<String> s_keyword;
-
-    public PostQueryString(int page, int size, String s_type, String s_keyword) {
+    public GameQueryString(String q, List<String> sort, String list, int page, int size) {
+        this.q = q;
+        this.sort = sort;
+        this.list = list;
         this.page = page;
         this.size = size;
-        this.s_type = Optional.ofNullable(s_type);
-        this.s_keyword = Optional.ofNullable(s_keyword);
     }
 
     public String makeQueryString(int page) {
         UriComponents uriComponents = UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("size", size)
-                .queryParamIfPresent("s_type", s_type)
-                .queryParamIfPresent("s_keyword", s_keyword)
+                .queryParam("q", q)
+                .queryParam("sort", sort)
+                .queryParam("list", list)
                 .build()
                 .encode();
 
 
         return uriComponents.toUriString();
     }
-
 }

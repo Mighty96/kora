@@ -1,6 +1,7 @@
 package com.mighty.ninda.controller;
 
 import com.mighty.ninda.domain.game.Game;
+import com.mighty.ninda.domain.game.GameQueryString;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.dto.game.GameListResponse;
 import com.mighty.ninda.dto.game.GameOneLineCommentListResponse;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,31 +36,26 @@ public class GameController {
 
     @GetMapping("/games")
     public String gameList(Model model, Pageable pageable,
-                           @RequestParam List<String> sort,
-                           @RequestParam String q,
-                           @RequestParam String list) {
+                           @ModelAttribute("queryString")GameQueryString gameQueryString) {
 
         Page<Game> pageGameList;
-        if (q.equals("")) {
-            if (list.equals("all")) {
+        if (gameQueryString.getQ().equals("")) {
+            if (gameQueryString.getList().equals("all")) {
                 pageGameList = gameService.findAll(pageable);
             } else {
                 pageGameList = gameService.findAllBefore(pageable);
             }
         } else {
-            if (list.equals("all")) {
-                pageGameList = gameService.search(q, pageable);
+            if (gameQueryString.getList().equals("all")) {
+                pageGameList = gameService.search(gameQueryString.getQ(), pageable);
             } else {
-                pageGameList = gameService.searchBefore(q, pageable);
+                pageGameList = gameService.searchBefore(gameQueryString.getQ(), pageable);
             }
         }
         List<GameListResponse> gameList = pageGameList.stream().map(GameListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pageGameList, gameList);
 
         model.addAttribute("info", info);
-        model.addAttribute("sort", sort);
-        model.addAttribute("list", list);
-        model.addAttribute("q", q);
         return "game/gameList";
     }
 

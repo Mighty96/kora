@@ -14,10 +14,10 @@
                         <a style="padding-right:0" class="nav-link white">출시 예정작 제외</a>
                     </li>
                     <li class="nav-item left-tap">
-                        <a style="padding-left:6px" class="nav-link white" th:if="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${q}, list='released')}">
+                        <a style="padding-left:6px" class="nav-link white" th:if="${queryString.list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${queryString.q}, list='released')}">
                             <img src="/images/unchecked_box.png" height="14" weight="14">
                         </a>
-                        <a style="padding-left:6px" class="nav-link white" th:unless="${list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort=${sort}, q=${q}, list='all')}">
+                        <a style="padding-left:6px" class="nav-link white" th:unless="${queryString.list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort=${queryString.sort}, q=${queryString.q}, list='all')}">
                             <img src="/images/checked_box.png" height="14" weight="14">
                         </a>
                     </li>
@@ -34,16 +34,16 @@
                         </form>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${q}, list=${list})}">추천순</a>
+                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${queryString.q}, list=${queryString.list})}">추천순</a>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='viewCount,desc', sort='title', q=${q}, list=${list})}">인기순</a>
+                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='viewCount,desc', sort='title', q=${queryString.q}, list=${queryString.list})}">인기순</a>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='releasedDate,desc', sort='title', q=${q}, list=${list})}">최신순</a>
+                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='releasedDate,desc', sort='title', q=${queryString.q}, list=${queryString.list})}">최신순</a>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='title', q=${q}, list=${list})}">이름순</a>
+                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='title', q=${queryString.q}, list=${queryString.list})}">이름순</a>
                     </li>
                 </ul>
             </div>
@@ -58,25 +58,13 @@
                 <nav aria-label="Page">
                     <ul class="pagination center">
                         <li th:if="${info.nowPage > 4}" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${((info.nowPage / 5) * 5) - 1}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}"><<</a>
+                            <a class="page-link" th:href="@{'/games' + queryString.makeQueryString(((info.nowPage / 5) * 5) - 1)}"><<</a>
                         </li>
-                        <li th:classappend="${(info.nowPage % 5) == 0} ? active" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${(info.nowPage / 5) * 5}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}" th:text="${((info.nowPage / 5) * 5) + 1}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 1} ? active" th:if="${(((info.nowPage / 5) * 5) + 2) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${((info.nowPage / 5) * 5) + 1}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}" th:text="${((info.nowPage / 5) * 5) + 2}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 2} ? active" th:if="${(((info.nowPage / 5) * 5) + 3) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${((info.nowPage / 5) * 5) + 2}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}" th:text="${((info.nowPage / 5) * 5) + 3}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 3} ? active" th:if="${(((info.nowPage / 5) * 5) + 4) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${((info.nowPage / 5) * 5) + 3}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}" th:text="${((info.nowPage / 5) * 5) + 4}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 4} ? active" th:if="${(((info.nowPage / 5) * 5) + 5) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${((info.nowPage / 5) * 5) + 4}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}" th:text="${((info.nowPage / 5) * 5) + 5}"></a>
+                        <li th:each="num : ${#numbers.sequence(0, 4)}" th:classappend="${(info.nowPage % 5) == num} ? active" th:if="${(((info.nowPage / 5) * 5) + 1 + num) < info.totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{'/games' + queryString.makeQueryString(((info.nowPage / 5) * 5) + num)}" th:text="${((info.nowPage / 5) * 5) + 1 + num}"></a>
                         </li>
                         <li th:if="${(info.nowPage / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
-                            <a class="page-link" th:href="@{/games(page=${((info.nowPage / 5) * 5) + 5}, sort=${sort}, size=${info.size}, q=${q}, list=${list})}">>></a>
+                            <a class="page-link" th:href="@{'/games' + queryString.makeQueryString(((info.nowPage / 5) * 5) + 5)}">>></a>
                         </li>
                     </ul>
                 </nav>

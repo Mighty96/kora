@@ -75,7 +75,7 @@ public class UserController {
         return "user/oneLineComment";
     }
 
-    @GetMapping("user/password")
+    @GetMapping("/user/password")
     public String password(@LoginUser SessionUser sessionUser) {
 
         return "user/password";
