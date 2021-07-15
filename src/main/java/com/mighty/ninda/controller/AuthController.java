@@ -2,7 +2,6 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
-import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +37,13 @@ public class AuthController {
     }
 
     @GetMapping("/signup_auth")
-    public String auth(@LoginUser SessionUser user) {
-        if (user.getRegistrationId() == RegistrationId.NINDA) {
-            return "auth/signup_ninda";
-        } else {
-            return "auth/signup_oauth";
-        }
+    public String auth() {
+//        if (user.getRegistrationId() == RegistrationId.NINDA) {
+//            return "auth/signup_ninda";
+//        } else {
+//            return "auth/signup_oauth";
+//        }
+        return "auth/signup_oauth";
     }
 
     @GetMapping("/authConfirm")

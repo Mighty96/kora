@@ -15,12 +15,6 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping("/api/login")
-    public Long login(@RequestBody UserLogin requestDto) {
-
-        return userService.login(requestDto);
-    }
-
     @PostMapping("/api/users/signup/ninda")
     public Long save(@RequestBody SaveUser requestDto) {
         return userService.save(requestDto);

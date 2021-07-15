@@ -9,13 +9,13 @@
     <div class="main-container">
         <div class="login-container border">
             <h2>Ninda</h2>
-            <form>
-                <input class="login-context" type="text" id="email" placeholder="이메일"/>
-                <input class="login-context" type="password" id="pwd" placeholder="비밀번호"/>
+            <form action="/login" method="POST">
+                <input class="login-context" type="text" name="email" placeholder="이메일"/>
+                <input class="login-context" type="password" name="password" placeholder="비밀번호"/>
+                <div class="login-button">
+                    <input type="submit" class="btnSubmit" formaction="/login" formmethod="POST" value="로그인">
+                </div>
             </form>
-            <div class="login-button">
-            <input  type="button" class="btnSubmit" id="btn-login" value="로그인">
-            </div>
             <div class="login-button">
                 <a href="/signup" class="btnForgetPwd">처음 방문하셨나요?</a>
             <div class="login-button">
@@ -33,6 +33,5 @@
             </div>
         </div>
     </div>
-    <script src="/js/login.js"></script>
 </th:block>
 </html>

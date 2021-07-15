@@ -23,12 +23,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable() // h2-console 사용
                 .and()
                     .formLogin()
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .loginProcessingUrl("/login")
                         .loginPage("/signin")
+                        .permitAll()
+
                 .and()
                     .authorizeRequests() // antMatchers를 사용하기 위해 선언
-                        .antMatchers("/**", "/signin", "/signup", "/api/signup/**", "/api/login", "/authConfirm", "/newPassword", "/api/newPassword", "/api/gameCrawl", "/game", "/game/**").permitAll() // 지정 URL들은 전체 열람 권한
-                        .antMatchers("/signup_auth").hasRole(Role.GUEST.name())
-                        .antMatchers("/api/**").hasRole(Role.USER.name()) // USER권한을 가진 사람만 열람
+                        .antMatchers("/**").permitAll() // 지정 URL들은 전체 열람 권한
+//                        .antMatchers("/signup_auth").hasRole(Role.GUEST.name())
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")
@@ -48,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/", "/css/**", "/js/**", "/images/**", "/h2-console/**");
+                .antMatchers("/css/**", "/js/**", "/images/**", "/h2-console/**");
     }
 
     // 비밀번호 암호화

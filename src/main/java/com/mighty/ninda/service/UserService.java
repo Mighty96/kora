@@ -1,5 +1,6 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.domain.user.Role;
@@ -49,9 +50,6 @@ public class UserService {
         String authKey = mailSendService.sendAuthMail(user.getEmail());
         user.updateAuthKey(authKey);
 
-        //세션저장
-        httpSession.setAttribute("user", new SessionUser(user));
-
         return user.getId();
     }
 
@@ -94,19 +92,6 @@ public class UserService {
     }
 
     @Transactional
-    public Long login(UserLogin requestDto) {
-        User user = userRepository.findByEmail(requestDto.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + requestDto.getEmail()));
-
-        if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 올바르지 않습니다.");
-        } else {
-            httpSession.setAttribute("user", new SessionUser(user));
-            return user.getId();
-        }
-    }
-
-    @Transactional
     public void authConfirm(String email, String authKey, Model model) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + email));
@@ -126,7 +111,7 @@ public class UserService {
     }
 
     @Transactional
-    public Long resendAuthMail(SessionUser sessionUser) {
+    public Long resendAuthMail(@LoginUser SessionUser sessionUser) {
 
         User user = userRepository.findByEmail(sessionUser.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = " + sessionUser.getEmail()));
