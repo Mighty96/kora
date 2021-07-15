@@ -40,25 +40,13 @@
                 <nav aria-label="Page">
                     <ul class="pagination center">
                         <li th:if="${info.nowPage > 4}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) - 1}, size=${size})}"><<</a>
+                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) - 1}, size=${info.size})}"><<</a>
                         </li>
-                        <li th:classappend="${(info.nowPage % 5) == 0} ? active" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${(info.nowPage / 5) * 5}, size=${size})}" th:text="${((info.nowPage / 5) * 5) + 1}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 1} ? active" th:if="${(((info.nowPage / 5) * 5) + 2) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 1}, size=${size})}" th:text="${((info.nowPage / 5) * 5) + 2}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 2} ? active" th:if="${(((info.nowPage / 5) * 5) + 3) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 2}, size=${size})}" th:text="${((info.nowPage / 5) * 5) + 3}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 3} ? active" th:if="${(((info.nowPage / 5) * 5) + 4) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 3}, size=${size)}" th:text="${((info.nowPage / 5) * 5) + 4}"></a>
-                        </li>
-                        <li th:classappend="${(info.nowPage % 5) == 4} ? active" th:if="${(((info.nowPage / 5) * 5) + 5) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 4}, size=${size})}" th:text="${((info.nowPage / 5) * 5) + 5}"></a>
+                        <li th:each="num : ${#numbers.sequence(0, 4)}" th:classappend="${(info.nowPage % 5) == num} ? active" th:if="${(((info.nowPage / 5) * 5) + num + 1) <= info.totalPages}" class="page-item">
+                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + num}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + num + 1}"></a>
                         </li>
                         <li th:if="${(info.nowPage / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 5}, size=${size})}">>></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 5}, size=${info.size})}">>></a>
                         </li>
                     </ul>
                 </nav>
