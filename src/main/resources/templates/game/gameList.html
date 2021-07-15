@@ -58,13 +58,13 @@
                 <nav aria-label="Page">
                     <ul class="pagination center">
                         <li th:if="${info.nowPage > 4}" class="page-item">
-                            <a class="page-link" th:href="@{'/games' + queryString.makeQueryString(((info.nowPage / 5) * 5) - 1)}"><<</a>
+                            <a class="page-link" th:href="@{'/games' + ${queryString.makeQueryString(((info.nowPage / 5) * 5) - 1)}}"><<</a>
                         </li>
                         <li th:each="num : ${#numbers.sequence(0, 4)}" th:classappend="${(info.nowPage % 5) == num} ? active" th:if="${(((info.nowPage / 5) * 5) + 1 + num) < info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{'/games' + queryString.makeQueryString(((info.nowPage / 5) * 5) + num)}" th:text="${((info.nowPage / 5) * 5) + 1 + num}"></a>
+                            <a class="page-link" th:href="@{'/games' + ${queryString.makeQueryString(((info.nowPage / 5) * 5) + num)}}" th:text="${((info.nowPage / 5) * 5) + 1 + num}"></a>
                         </li>
                         <li th:if="${(info.nowPage / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
-                            <a class="page-link" th:href="@{'/games' + queryString.makeQueryString(((info.nowPage / 5) * 5) + 5)}">>></a>
+                            <a class="page-link" th:href="@{'/games' + ${queryString.makeQueryString(((info.nowPage / 5) * 5) + 5)}}">>></a>
                         </li>
                     </ul>
                 </nav>
