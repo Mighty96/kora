@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class PostController {
 
     @GetMapping("/board/{board}")
     public String board(@ModelAttribute("queryString") PostQueryString postQueryString,
-                        Model model, Pageable pageable,
+                        Model model, @PageableDefault(size = 30) Pageable pageable,
                         @PathVariable String board) {
 
         Page<Post> pagePostList = getPosts(postQueryString, pageable, board);
@@ -55,7 +56,7 @@ public class PostController {
 
     @GetMapping("/board/{board}/{id}")
     public String post(@ModelAttribute("queryString") PostQueryString postQueryString,
-                       Model model, Pageable pageable,
+                       Model model, @PageableDefault(size = 30) Pageable pageable,
                        @PathVariable String board,
                        @PathVariable Long id,
                        HttpServletRequest request,
@@ -129,10 +130,8 @@ public class PostController {
 
     private Page<Post> getPosts(PostQueryString postQueryString, Pageable pageable, String board) {
         Page<Post> pagePostList;
-        if (postQueryString.getS_type().isEmpty()) {
-            pagePostList = postService.findByBoard(board, pageable);
-        } else {
-            Map<String, Object> searchKeyword = new HashMap<>();
+        Map<String, Object> searchKeyword = new HashMap<>();
+        if (postQueryString.getS_type().isPresent()) {
             if (postQueryString.getS_type().get().equals("title")) {
                 searchKeyword.put("title", postQueryString.getS_keyword().get());
             } else if (postQueryString.getS_type().get().equals("context")) {
@@ -142,8 +141,11 @@ public class PostController {
             } else if (postQueryString.getS_type().get().equals("author")) {
                 searchKeyword.put("userName", postQueryString.getS_keyword().get());
             }
-            pagePostList = postService.findAll(searchKeyword, pageable);
         }
+
+        searchKeyword.put("board", board);
+        pagePostList = postService.findAll(searchKeyword, pageable);
+
         return pagePostList;
     }
 }

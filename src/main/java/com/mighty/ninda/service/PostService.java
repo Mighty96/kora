@@ -62,11 +62,6 @@ public class PostService {
     }
 
     @Transactional
-    public Page<Post> findByBoard(String board, Pageable pageable) {
-        return postRepository.findByBoardOrderByCreatedDateDesc(board, pageable);
-    }
-
-    @Transactional
     public Page<Post> findAll(Map<String, Object> searchKeyword, Pageable pageable) {
         return postRepository.findAll(PostSpecs.searchPost(searchKeyword), pageable);
     }

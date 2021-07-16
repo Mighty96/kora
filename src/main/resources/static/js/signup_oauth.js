@@ -23,11 +23,11 @@ var main = {
                 data: JSON.stringify(data),
                 success: function() {
                     Swal.fire({
-                        title: "회원가입을 축하합니다!",
+                        title: "회원가입을 축하합니다! 다시 로그인해주세요.",
                         icon: "success"
                     })
                     .then(() =>{
-                        window.location.href='/';
+                        window.location.href='/logout';
                     });
                 },
                 error: function(e) {

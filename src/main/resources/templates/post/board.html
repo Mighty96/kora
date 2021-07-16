@@ -9,7 +9,7 @@
     <div class="main-container" style="padding-top: 10pt">
         <div class="row">
             <div class="col-md-1"></div>
-            <a th:href="@{'/board/' + ${board}(page=0, size=30)}">
+            <a th:href="@{'/board/' + ${board}(page=0)}">
                 <span th:if="${board.toString().equals('free')}" class="board-title">자유게시판</span>
                 <span th:if="${board.toString().equals('multi')}" class="board-title">멀티-내전게시판</span>
             </a>
@@ -44,7 +44,7 @@
                         <span th:text="${post.id}"></span>
                     </div>
                     <div class="post-title">
-                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage},size=${info.size})}">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage})}">
                             <span th:text="${post.title}"></span>
                             <span class="post-comment" th:text="' [' + ${post.commentCount} + ']'"></span>
                         </a>
@@ -72,7 +72,6 @@
         <div class="board-search-container">
             <form th:action="@{'/board/' + ${board}}">
                 <input type="hidden" name="page" th:value="${info.nowPage}">
-                <input type="hidden" name="size" th:value="${info.size}">
                 <select name="s_type" class="board-search-select">
                     <option th:selected="${param.s_type == null || param.s_type.toString().equals('title_context')}" value="title_context">제목+내용</option>
                     <option th:selected="${param.s_type != null && param.s_type.toString().equals('title')}" value="title">제목</option>

@@ -13,8 +13,8 @@
                     <div class="btn-group-vertical">
                         <button type="button" onclick="location.href='/user/profile'" class="btn btn-dark">내정보 수정</button>
                         <button th:if="${session.user.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='http://localhost:8080/user/password'" class="btn btn-dark">비밀번호 변경</button>
-                        <button type="button" onclick="location.href='/user/post?page=0&size=20'" class="btn btn-dark active">내가 작성한 글</button>
-                        <button type="button" onclick="location.href='/user/oneLineComment?page=0&size=10'" class="btn btn-dark">내가 작성한 한줄평</button>
+                        <button type="button" onclick="location.href='/user/post?page=0'" class="btn btn-dark active">내가 작성한 글</button>
+                        <button type="button" onclick="location.href='/user/oneLineComment?page=0'" class="btn btn-dark">내가 작성한 한줄평</button>
                         <button type="button" onclick="location.href='/user/book'" class="btn btn-dark">북마크</button>
                     </div>
                 </div>
@@ -23,9 +23,9 @@
             <div class="col-md-9">
                 <div>
                     <select onchange="if(this.value) location.href=(this.value);">
-                        <option th:selected="${param.board == null}" value="/user/post?page=0&size=20">전체 글 보기</option>
-                        <option th:selected="${param.board != null && param.board.toString().equals('free')}" value="/user/post?page=0&size=20&board=free">자유게시판</option>
-                        <option th:selected="${param.board != null && param.board.toString().equals('multi')}" value="/user/post?page=0&size=20&board=multi">멀티-내전게시판</option>
+                        <option th:selected="${param.board == null}" value="/user/post?page=0">전체 글 보기</option>
+                        <option th:selected="${param.board != null && param.board.toString().equals('free')}" value="/user/post?page=0&board=free">자유게시판</option>
+                        <option th:selected="${param.board != null && param.board.toString().equals('multi')}" value="/user/post?page=0&board=multi">멀티-내전게시판</option>
                     </select>
                 </div>
                 <div class="container p-3 border" th:if="${#lists.isEmpty(info.contents)}">
@@ -40,13 +40,13 @@
                 <nav aria-label="Page">
                     <ul class="pagination center">
                         <li th:if="${info.nowPage > 4}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) - 1}, size=${info.size})}"><<</a>
+                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) - 1})}"><<</a>
                         </li>
                         <li th:each="num : ${#numbers.sequence(0, 4)}" th:classappend="${(info.nowPage % 5) == num} ? active" th:if="${(((info.nowPage / 5) * 5) + num + 1) <= info.totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + num}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + num + 1}"></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + num})}" th:text="${((info.nowPage / 5) * 5) + num + 1}"></a>
                         </li>
                         <li th:if="${(info.nowPage / 5) < ((info.totalPages - 1) / 5)}" class="page-item">
-                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 5}, size=${info.size})}">>></a>
+                            <a class="page-link" th:href="@{/user/post(page=${((info.nowPage / 5) * 5) + 5})}">>></a>
                         </li>
                     </ul>
                 </nav>
