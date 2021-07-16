@@ -45,7 +45,6 @@ public class AuthController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_GUEST')")
     @GetMapping("/authConfirm")
     public String authConfirm(@RequestParam String email, @RequestParam String authKey, Model model) {
         userService.authConfirm(email, authKey, model);
