@@ -1,5 +1,7 @@
 package com.mighty.ninda.config.auth;
 
+import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.domain.user.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,14 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.sendRedirect("/signup_auth");
+
+        SessionUser user = (SessionUser)request.getSession().getAttribute("user");
+
+        if (user.getRole() == Role.GUEST) {
+            response.sendRedirect("/signup_auth");
+            return;
+        }
+
+        response.sendRedirect("/");
     }
 }

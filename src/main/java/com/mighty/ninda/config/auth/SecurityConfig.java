@@ -3,6 +3,7 @@ package com.mighty.ninda.config.auth;
 import com.mighty.ninda.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -30,9 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
 
                 .and()
-                    .authorizeRequests() // antMatchers를 사용하기 위해 선언
-                        .antMatchers("/**").permitAll() // 지정 URL들은 전체 열람 권한
-//                        .antMatchers("/signup_auth").hasRole(Role.GUEST.name())
+                    .authorizeRequests()
+                        .antMatchers("/user/**").authenticated()
+                        .antMatchers("/admin/**").hasRole("ADMIN")
+                        .antMatchers("/api/users/**").permitAll()
+                        .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers("/**").permitAll()
                 .and()
                     .logout()
                         .logoutSuccessUrl("/")

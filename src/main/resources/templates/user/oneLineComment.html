@@ -36,7 +36,7 @@
                         <li th:if="${info.nowPage > 4}" class="page-item">
                             <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) - 1}, size=${info.size})}"><<</a>
                         </li>
-                        <li th:each="num : ${#numbers.sequence(0, 4)}" th:classappend="${(info.nowPage % 5) == num} ? active" th:if="${(((info.nowPage / 5) * 5 + num + 1) <= info.totalPages}" class="page-item">
+                        <li th:each="num : ${#numbers.sequence(0, 4)}" th:classappend="${(info.nowPage % 5) == num} ? active" th:if="${(((info.nowPage / 5) * 5) + num + 1) <= info.totalPages}" class="page-item">
                             <a class="page-link" th:href="@{/user/oneLineComment(page=${((info.nowPage / 5) * 5) + num}, size=${info.size})}" th:text="${((info.nowPage / 5) * 5) + num + 1}"></a>
                         </li>
                         <li th:if="${(info.nowPage / 5) < ((info.totalPages - 1) / 5)}" class="page-item">

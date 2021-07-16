@@ -13,7 +13,6 @@ var main = {
         if (_this.nicknameChk())
         {
             var data = {
-                birthday: $('#birthday').val(),
                 nickname: $('#nickname').val()
             };
             $.ajax({
@@ -32,7 +31,7 @@ var main = {
                     });
                 },
                 error: function(e) {
-                    alert(JSON.stringify(error));
+                    alert(JSON.stringify(e));
                 }
             });
         } else {

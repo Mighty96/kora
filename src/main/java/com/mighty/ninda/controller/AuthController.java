@@ -2,9 +2,11 @@ package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,32 +22,30 @@ public class AuthController {
     private final UserService userService;
     private final HttpSession httpSession;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/signin")
     public String login(@LoginUser SessionUser user) {
-
-        //이미 로그인되어있다면 홈으로 리다이렉트
-        if (user != null) {
-            return "redirect:/";
-        }
 
         return "auth/login";
     }
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/signup")
     public String signup() {
         return "auth/signup";
     }
 
+    @PreAuthorize("hasRole('ROLE_GUEST')")
     @GetMapping("/signup_auth")
-    public String auth() {
-//        if (user.getRegistrationId() == RegistrationId.NINDA) {
-//            return "auth/signup_ninda";
-//        } else {
-//            return "auth/signup_oauth";
-//        }
-        return "auth/signup_oauth";
+    public String auth(@LoginUser SessionUser user) {
+        if (user.getRegistrationId() == RegistrationId.NINDA) {
+            return "auth/signup_ninda";
+        } else {
+            return "auth/signup_oauth";
+        }
     }
 
+    @PreAuthorize("hasRole('ROLE_GUEST')")
     @GetMapping("/authConfirm")
     public String authConfirm(@RequestParam String email, @RequestParam String authKey, Model model) {
         userService.authConfirm(email, authKey, model);
@@ -53,6 +53,7 @@ public class AuthController {
         return "auth/authConfirm";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/newPassword")
     public String newPassword() {
         return "auth/newPassword";
