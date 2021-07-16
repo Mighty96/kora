@@ -42,7 +42,6 @@ public class PostController {
     public String board(@ModelAttribute("queryString") PostQueryString postQueryString,
                         Model model, Pageable pageable,
                         @PathVariable String board) {
-        log.info("start controller");
 
         Page<Post> pagePostList = getPosts(postQueryString, pageable, board);
 

@@ -2,6 +2,7 @@ package com.mighty.ninda.service;
 
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
+import com.mighty.ninda.domain.game.GameSpecs;
 import com.mighty.ninda.domain.hot.Hot;
 import com.mighty.ninda.domain.hot.HotRepository;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,25 +37,9 @@ public class GameService {
     }
 
     @Transactional
-    public Page<Game> findAll(Pageable pageable) {
+    public Page<Game> findAll(Map<String, Object> searchKeyword, Pageable pageable) {
 
-        return gameRepository.findAllByReleasedDateLessThanEqual(LocalDate.now().plusYears(10), pageable);
-    }
-
-    @Transactional
-    public Page<Game> findAllBefore(Pageable pageable) {
-
-        return gameRepository.findAllByReleasedDateLessThanEqual(LocalDate.now(), pageable);
-    }
-
-    @Transactional
-    public Page<Game> search(String q, Pageable pageable) {
-        return gameRepository.findByTitleContainingIgnoreCaseAndReleasedDateLessThanEqual(q, LocalDate.now().plusYears(10), pageable);
-    }
-
-    @Transactional
-    public Page<Game> searchBefore(String q, Pageable pageable) {
-        return gameRepository.findByTitleContainingIgnoreCaseAndReleasedDateLessThanEqual(q, LocalDate.now(), pageable);
+        return gameRepository.findAll(GameSpecs.searchGame(searchKeyword), pageable);
     }
 
     @Transactional
@@ -102,9 +88,5 @@ public class GameService {
 
 
         return game.getId();
-    }
-
-    public void gameCrawl() {
-        crawler.crawl();
     }
 }

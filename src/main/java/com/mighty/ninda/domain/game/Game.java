@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @NoArgsConstructor
 @Getter
@@ -32,6 +35,10 @@ public class Game {
     private int viewCount;
     private LocalDate releasedDate;
     private String language;
+    private String onSale;
+    private LocalDate startSale;
+    private LocalDate endSale;
+    private String salePrice;
 
     @Column(length= 100000)
     private String likeList;
@@ -43,19 +50,23 @@ public class Game {
     private List<OneLineComment> oneLineComments;
 
     @Builder
-    public Game(String title, String description, String imgUrl, String pageUrl, String price, LocalDate releasedDate, int viewCount, int reLike, int reHate, String language, String likeList, String hateList) {
+    public Game(String title, String description, String imgUrl, String pageUrl, String price, LocalDate releasedDate, String language) {
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
         this.pageUrl = pageUrl;
         this.price = price;
         this.releasedDate = releasedDate;
-        this.viewCount = viewCount;
-        this.reLike = reLike;
-        this.reHate = reHate;
         this.language = language;
-        this.likeList = likeList;
-        this.hateList = hateList;
+        this.salePrice = "";
+        this.viewCount = 0;
+        this.reLike = 0;
+        this.reHate = 0;
+        this.likeList = "";
+        this.hateList = "";
+        this.onSale = "";
+        this.startSale = null;
+        this.endSale = null;
     }
 
     public void viewCountUp() {
@@ -68,6 +79,27 @@ public class Game {
 
     public void reHateUp() {
         this.reHate++;
+    }
+
+    public void onSale(String saleDate, String salePrice) {
+        this.salePrice = salePrice;
+        Pattern pattern = Pattern.compile("([0-2][0-9]{3})\\.([0-9]+)\\.([0-9]+)");
+        Matcher matcher = pattern.matcher(saleDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.M.d");
+        if (matcher.find()) {
+            this.startSale = LocalDate.parse(matcher.group(), formatter);
+        }
+        if (matcher.find()) {
+            this.endSale = LocalDate.parse(matcher.group(), formatter);
+        }
+        this.onSale = "on";
+    }
+
+    public void offSale() {
+        this.salePrice = "";
+        this.onSale = "";
+        this.startSale = null;
+        this.endSale = null;
     }
 
     public void updateLikeList(String id) {

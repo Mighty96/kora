@@ -3,6 +3,7 @@ package com.mighty.ninda.controller.api;
 import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.service.GameService;
+import com.mighty.ninda.utils.Crawler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameApiController {
 
     private final GameService gameService;
+    private final Crawler crawler;
 
     @GetMapping("/api/gameCrawl")
     public void gameCrawl() {
-        gameService.gameCrawl();
+        crawler.crawl();
+    }
+
+    @GetMapping("/api/saleCrawl")
+    public void saleCrawl() {
+        crawler.crawlSaleGame();
     }
 
     @GetMapping("/api/games/{id}/like")

@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -35,28 +39,38 @@ public class GameController {
     private final OneLineCommentService oneLineCommentService;
 
     @GetMapping("/games")
-    public String gameList(Model model, Pageable pageable,
+    public String gameList(Model model, @PageableDefault(size = 12) Pageable pageable,
                            @ModelAttribute("queryString")GameQueryString gameQueryString) {
 
-        Page<Game> pageGameList;
-        if (gameQueryString.getQ().equals("")) {
-            if (gameQueryString.getList().equals("all")) {
-                pageGameList = gameService.findAll(pageable);
-            } else {
-                pageGameList = gameService.findAllBefore(pageable);
-            }
-        } else {
-            if (gameQueryString.getList().equals("all")) {
-                pageGameList = gameService.search(gameQueryString.getQ(), pageable);
-            } else {
-                pageGameList = gameService.searchBefore(gameQueryString.getQ(), pageable);
-            }
-        }
+        Page<Game> pageGameList = getGames(pageable, gameQueryString);
+
         List<GameListResponse> gameList = pageGameList.stream().map(GameListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pageGameList, gameList);
 
         model.addAttribute("info", info);
         return "game/gameList";
+    }
+
+    private Page<Game> getGames(Pageable pageable, GameQueryString gameQueryString) {
+        Page<Game> pageGameList;
+
+        Map<String, Object> searchKeyword = new HashMap<>();
+
+        if (gameQueryString.getQ().isPresent()) {
+            searchKeyword.put("q", gameQueryString.getQ().get());
+        }
+        if (gameQueryString.getList().isPresent()) {
+            searchKeyword.put("list", gameQueryString.getList().get());
+        }
+        if (gameQueryString.getOnSale().isPresent()) {
+            searchKeyword.put("onSale", gameQueryString.getOnSale().get());
+        }
+        if (gameQueryString.getOrder().isPresent()) {
+            searchKeyword.put("order", gameQueryString.getOrder().get());
+        }
+
+        pageGameList = gameService.findAll(searchKeyword, pageable);
+        return pageGameList;
     }
 
     @GetMapping("/games/{id}")

@@ -14,10 +14,21 @@
                         <a style="padding-right:0" class="nav-link white">출시 예정작 제외</a>
                     </li>
                     <li class="nav-item left-tap">
-                        <a style="padding-left:6px" class="nav-link white" th:if="${queryString.list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${queryString.q}, list='released')}">
+                        <a style="padding-left:6px" class="nav-link white" th:if="${param.list == null}" th:href="@{'/games' + ${queryString.releasedList()}}">
                             <img src="/images/unchecked_box.png" height="14" weight="14">
                         </a>
-                        <a style="padding-left:6px" class="nav-link white" th:unless="${queryString.list.toString().equals('all')}" th:href="@{/games(page=0, size=12, sort=${queryString.sort}, q=${queryString.q}, list='all')}">
+                        <a style="padding-left:6px" class="nav-link white" th:if="${param.list != null && param.list.toString.equals('released')}" th:href="@{'/games' + ${queryString.allList()}}">
+                            <img src="/images/checked_box.png" height="14" weight="14">
+                        </a>
+                    </li>
+                    <li class="nav-item left-tap">
+                        <a style="padding-right:0" class="nav-link white">할인 타이틀만 보기</a>
+                    </li>
+                    <li class="nav-item left-tap">
+                        <a style="padding-left:6px" class="nav-link white" th:if="${param.onSale == null}" th:href="@{'/games' + ${queryString.onSale()}}">
+                            <img src="/images/unchecked_box.png" height="14" weight="14">
+                        </a>
+                        <a style="padding-left:6px" class="nav-link white" th:if="${param.onSale != null && param.onSale.toString.equals('on')}" th:href="@{'/games' + ${queryString.offSale()}}">
                             <img src="/images/checked_box.png" height="14" weight="14">
                         </a>
                     </li>
@@ -28,22 +39,22 @@
                         <form id="search" action="games">
                             <input class="form-control mr-sm-2" style="background-color: black;" type="text" name="q" placeholder="제목으로 검색하기">
                             <input type="hidden" name="page" value="0">
-                            <input type="hidden" name="size" value="12">
-                            <input type="hidden" name="sort" value="title">
-                            <input type="hidden" name="list" value="all">
+                            <input th:if="${param.order != null}" type="hidden" name="order" value="${queryString.order}">
+                            <input th:if="${param.onSale != null}" type="hidden" name="onSale" value="${queryString.onSale}">
+                            <input th:if="${param.list != null}" type="hidden" name="list" value="${queryString.list}">
                         </form>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='reLike,desc', sort='title', q=${queryString.q}, list=${queryString.list})}">추천순</a>
+                        <a class="nav-link white" th:href="@{'/games' + ${queryString.defaultSort()}}">추천순</a>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='viewCount,desc', sort='title', q=${queryString.q}, list=${queryString.list})}">인기순</a>
+                        <a class="nav-link white" th:href="@{'/games' + ${queryString.sort('viewCount')}}">인기순</a>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='releasedDate,desc', sort='title', q=${queryString.q}, list=${queryString.list})}">최신순</a>
+                        <a class="nav-link white" th:href="@{'/games' + ${queryString.sort('releasedDate')}}">최신순</a>
                     </li>
                     <li class="nav-item right-tap">
-                        <a class="nav-link white" th:href="@{/games(page=0, size=12, sort='title', q=${queryString.q}, list=${queryString.list})}">이름순</a>
+                        <a class="nav-link white" th:href="@{'/games' + ${queryString.sort('title')}}">이름순</a>
                     </li>
                 </ul>
             </div>

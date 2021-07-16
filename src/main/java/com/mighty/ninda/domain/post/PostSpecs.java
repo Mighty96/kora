@@ -18,8 +18,6 @@ public class PostSpecs {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            query.orderBy(builder.desc(root.get("id")));
-
             Join<Post, User> joinUser = root.join("user", JoinType.INNER);
 
             searchKeyword.forEach((key, value) -> {
@@ -28,7 +26,7 @@ public class PostSpecs {
 
                 switch (key) {
                     case "board":
-                        predicates.add(builder.equal(root.get(key), likeValue));
+                        predicates.add(builder.equal(root.get(key), value.toString()));
                         break;
                     case "title":
                     case "context":
@@ -46,6 +44,9 @@ public class PostSpecs {
                 }
 
             });
+
+            query.orderBy(builder.desc(root.get("id")));
+
             return builder.and(predicates.toArray(new Predicate[0]));
         });
     }

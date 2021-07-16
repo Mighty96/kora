@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,8 @@ public class Crawler {
 
     private final GameRepository gameRepository;
 
+    @Scheduled(cron = "0 0 2 * * *")
+    @Transactional
     public void crawl() {
         try {
             String connUrl = "https://store.nintendo.co.kr/games";
@@ -37,7 +40,7 @@ public class Crawler {
                     break;
                 }
                 Elements title = g.getElementsByClass("category-product-item-title");
-                if (findByTitle(title.text())) {
+                if (isGame(title.text())) {
                     continue;
                 }
                 crawlGame(g, title);
@@ -59,10 +62,63 @@ public class Crawler {
         }
     }
 
+    @Scheduled(cron = "0 0 1 * * *")
     @Transactional
+    public void crawlSaleGame() {
+        try {
+            String connUrl = "https://store.nintendo.co.kr/games/sale";
+            Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
+
+            Elements gameList = doc.getElementsByClass("category-product-item");
+            int cnt = 0;
+            for (Element g : gameList) {
+                if (++cnt > 6 ) {
+                    break;
+                }
+                Elements title = g.getElementsByClass("category-product-item-title");
+
+                Game game = findByTitle(title.text());
+
+                String gameUrl = g.select("a[href]").attr("href");
+
+                Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
+
+                Elements prices = gameDoc.getElementsByClass("special-price");
+                String price = prices.select(".price").get(0).text();
+
+                String saleDate = gameDoc.getElementsByClass("special-period").get(0).text();
+
+                log.info(price + saleDate);
+
+                game.onSale(saleDate, price);
+
+                Random random = new Random();
+
+                try {
+                    Thread.sleep(random.nextInt(3000) + 2000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+        } catch (IOException e) {
+            // Exp : Connection Fail
+            e.printStackTrace();
+        }
+    }
+
     private void crawlGame(Element g, Elements title) throws IOException {
         Game game;
-        Element price = g.getElementsByClass("price").get(0);
+        Element price;
+        if (g.hasClass("old-price")) {
+            Elements prices = g.getElementsByClass("old-price");
+            price = prices.select(".price").get(0);
+        } else {
+            price = g.getElementsByClass("price").get(0);
+        }
+
         Elements tempDate = g.getElementsByClass("category-product-item-released");
         LocalDate releasedDate = LocalDate.of(Integer.parseInt("20" + tempDate.text().split("\\.")[0].split(" ")[1]),
                 Integer.parseInt(tempDate.text().split("\\.")[1]), Integer.parseInt(tempDate.text().split("\\.")[2]));
@@ -94,11 +150,6 @@ public class Crawler {
                 .imgUrl(imageUrl)
                 .pageUrl(gameUrl)
                 .description(des.toString())
-                .reLike(0)
-                .reHate(0)
-                .likeList("")
-                .hateList("")
-                .viewCount(0)
                 .language(supported_languages.text())
                 .build();
 
@@ -106,7 +157,12 @@ public class Crawler {
     }
 
     @Transactional
-    private boolean findByTitle(String title) {
+    private boolean isGame(String title) {
         return gameRepository.findByTitle(title).isPresent();
+    }
+
+    @Transactional
+    private Game findByTitle(String title) {
+        return gameRepository.findByTitle(title).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임입니다."));
     }
 }

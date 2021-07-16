@@ -1,9 +1,10 @@
 package com.mighty.ninda.domain.game;
 
+import com.sun.istack.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,9 +16,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     List<Game> findAll();
 
-    Page<Game> findAllByReleasedDateLessThanEqual(LocalDate localDate, Pageable pageable);
-
-    Page<Game> findByTitleContainingIgnoreCaseAndReleasedDateLessThanEqual(String q, LocalDate localDate, Pageable pageable);
+    Page<Game> findAll(@Nullable Specification<Game> spec, Pageable pageable);
 
     List<Game> findTop5ByReleasedDateLessThanEqualOrderByReleasedDateDesc(LocalDate localDate);
 }
