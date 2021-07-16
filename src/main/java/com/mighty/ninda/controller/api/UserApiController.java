@@ -24,7 +24,7 @@ public class UserApiController {
     @PreAuthorize("hasRole('GUEST')")
     @PostMapping("/api/users/signup/oauth")
     public Long save(@RequestBody SaveUserOauth requestDto, @LoginUser SessionUser user) {
-        log.info("oauth");
+
         return userService.oauthUpdate(user.getEmail(), requestDto);
     }
 

@@ -36,7 +36,7 @@ var main = {
                         icon: "success"
                     })
                     .then(() =>{
-                        window.location.href='/';
+                        window.location.href='/logout';
                     });
                 },
                 error: function(e) {

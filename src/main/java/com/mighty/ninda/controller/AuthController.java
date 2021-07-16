@@ -49,10 +49,9 @@ public class AuthController {
     public String authConfirm(@RequestParam String email, @RequestParam String authKey, Model model) {
         userService.authConfirm(email, authKey, model);
         httpSession.removeAttribute("user");
-        return "auth/authConfirm";
+        return "redirect:/logout";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/newPassword")
     public String newPassword() {
         return "auth/newPassword";
