@@ -30,7 +30,7 @@ public class Crawler {
     @Transactional
     public void crawl() {
         try {
-            String connUrl = "https://store.nintendo.co.kr/games";
+            String connUrl = "https://store.nintendo.co.kr/games/sale";
             Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
 
             Elements gameList = doc.getElementsByClass("category-product-item");
@@ -87,8 +87,6 @@ public class Crawler {
                 String price = prices.select(".price").get(0).text();
 
                 String saleDate = gameDoc.getElementsByClass("special-period").get(0).text();
-
-                log.info(price + saleDate);
 
                 game.onSale(saleDate, price);
 

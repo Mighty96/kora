@@ -23,9 +23,14 @@ public class GameResponse {
     private String language;
     private int reLike;
     private int reHate;
+    private String onSale;
+    private String salePrice;
+    private String startSaleDate;
+    private String endSaleDate;
 
     @Builder
-    public GameResponse(Long id, String title, String description, String pageUrl, String imgUrl, LocalDate releasedDate, String price, String language, int reLike, int reHate) {
+    public GameResponse(Long id, String title, String description, String pageUrl, String imgUrl, LocalDate releasedDate, String price, String language,
+                        int reLike, int reHate, String onSale, String salePrice, LocalDate startSaleDate, LocalDate endSaleDate) {
         this.id = id;
         this.title = title;
         this.description = description.replace("\n", "<br>");
@@ -36,6 +41,10 @@ public class GameResponse {
         this.language = language;
         this.reLike = reLike;
         this.reHate = reHate;
+        this.onSale = onSale;
+        this.salePrice = salePrice;
+        this.startSaleDate = startSaleDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        this.endSaleDate = endSaleDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 
     public static GameResponse of(Game game) {
@@ -50,6 +59,10 @@ public class GameResponse {
                 .language(game.getLanguage())
                 .reLike(game.getReLike())
                 .reHate(game.getReHate())
+                .onSale(game.getOnSale())
+                .salePrice(game.getSalePrice())
+                .startSaleDate(game.getStartSale())
+                .endSaleDate(game.getEndSale())
                 .build();
     }
 }

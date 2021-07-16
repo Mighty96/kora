@@ -24,18 +24,56 @@
                             <li th:if="${#lists.size(newGameList) > 4}" data-target="#demo" data-slide-to="4"></li>
                         </ul>
 
+                        <!-- The slideshow -->
                         <div class="carousel-inner">
-                            <div th:each="num : ${#numbers.sequence(0, 4)}" th:if="${#lists.size(newGameList) > num}" class="carousel-item active center">
-                                <a th:href="@{'/games/' + ${newGameList[num].id}}">
-                                    <img th:src="${newGameList[num].imgUrl}" th:alt="${newGameList[num].title}">
+                            <div th:if="${#lists.size(newGameList) > 0}" class="carousel-item active center">
+                                <a th:href="@{'/games/' + ${newGameList[0].id}}">
+                                    <img th:src="${newGameList[0].imgUrl}" th:alt="${newGameList[0].title}">
                                     <div class="carousel-caption">
-                                        <h3 th:text="${newGameList[num].title}"></h3>
-                                        <p th:text="${newGameList[num].releasedDate} + ' 발매'"></p>
+                                        <h3 th:text="${newGameList[0].title}"></h3>
+                                        <p th:text="${newGameList[0].releasedDate} + ' 발매'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 1}" class="carousel-item center">
+                                <a th:href="@{'/games/' + ${newGameList[1].id}}">
+                                    <img th:src="${newGameList[1].imgUrl}" th:alt="${newGameList[1].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[1].title}"></h3>
+                                        <p th:text="${newGameList[1].releasedDate} + ' 발매'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 2}" class="carousel-item center">
+                                <a th:href="@{'/games/' + ${newGameList[2].id}}">
+                                    <img th:src="${newGameList[2].imgUrl}" th:alt="${newGameList[2].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[2].title}"></h3>
+                                        <p th:text="${newGameList[2].releasedDate} + ' 발매'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 3}" class="carousel-item center">
+                                <a th:href="@{'/games/' + ${newGameList[3].id}}">
+                                    <img th:src="${newGameList[3].imgUrl}" th:alt="${newGameList[3].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[3].title}"></h3>
+                                        <p th:text="${newGameList[3].releasedDate} + ' 발매'"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div th:if="${#lists.size(newGameList) > 4}" class="carousel-item center">
+                                <a th:href="@{'/games/' + ${newGameList[4].id}}">
+                                    <img th:src="${newGameList[4].imgUrl}" th:alt="${newGameList[4].title}">
+                                    <div class="carousel-caption">
+                                        <h3 th:text="${newGameList[4].title}"></h3>
+                                        <p th:text="${newGameList[4].releasedDate} + ' 발매'"></p>
                                     </div>
                                 </a>
                             </div>
                         </div>
 
+                        <!-- Left and right controls -->
                         <a class="carousel-control-prev" href="#demo" data-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
                         </a>
