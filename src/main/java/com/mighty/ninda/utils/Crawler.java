@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,6 +26,7 @@ public class Crawler {
     @Scheduled(cron = "0 0 2 * * *")
     public void crawl() {
         try {
+            log.info ("<< start sale game crawl >>");
             String connUrl = "https://store.nintendo.co.kr/games";
             Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
 
@@ -54,7 +52,7 @@ public class Crawler {
 
             }
 
-
+            log.info ("<< end sale game crawl >>");
         } catch (IOException e) {
             // Exp : Connection Fail
             e.printStackTrace();
@@ -64,6 +62,7 @@ public class Crawler {
     @Scheduled(cron = "0 0 1 * * *")
     public void crawlSaleGame() {
         try {
+            log.info ("<< start sale game crawl >>");
             String connUrl = "https://store.nintendo.co.kr/games/sale";
             Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
 
@@ -87,6 +86,8 @@ public class Crawler {
 
             }
 
+            log.info ("<< end sale game crawl >>");
+
 
         } catch (IOException e) {
             // Exp : Connection Fail
@@ -96,7 +97,13 @@ public class Crawler {
 
     @Transactional
     private void getSales(Element g, Elements title) throws IOException {
-        Game game = gameRepository.findByTitle(title.text()).orElseThrow(() -> new IllegalArgumentException("해당 타이틀을 찾을 수 없습니다."));
+        Optional<Game> gameOp = gameRepository.findByTitle(title.text());
+
+        if (gameOp.isEmpty()) {
+            log.info ("Not find game: " + title.text());
+            return;
+        }
+        Game game = gameOp.get();
 
         String gameUrl = g.select("a[href]").attr("href");
 
@@ -108,6 +115,7 @@ public class Crawler {
         String saleDate = gameDoc.getElementsByClass("special-period").get(0).text();
 
         game.onSale(saleDate, price);
+        log.info ("Add game sale info: " + game.getTitle());
     }
 
     @Transactional
@@ -156,6 +164,7 @@ public class Crawler {
                 .build();
 
         gameRepository.save(game);
+        log.info ("Add game info: " + game.getTitle());
     }
 
     private boolean isGame(String title) {
