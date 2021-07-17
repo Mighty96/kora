@@ -97,13 +97,7 @@ public class Crawler {
 
     @Transactional
     private void getSales(Element g, Elements title) throws IOException {
-        Optional<Game> gameOp = gameRepository.findByTitle(title.text());
-
-        if (gameOp.isEmpty()) {
-            log.info ("Not find game: " + title.text());
-            return;
-        }
-        Game game = gameOp.get();
+        Game game = gameRepository.findByTitle(title.text()).orElseThrow();
 
         String gameUrl = g.select("a[href]").attr("href");
 
