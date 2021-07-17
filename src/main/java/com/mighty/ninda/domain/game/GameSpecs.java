@@ -17,7 +17,7 @@ public class GameSpecs {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            query.orderBy(builder.desc(root.get("reLike")), (builder.desc(root.get("title"))));
+            query.orderBy(builder.desc(root.get("reLike")), (builder.asc(root.get("title"))));
 
             searchKeyword.forEach((key, value) -> {
 
@@ -37,7 +37,7 @@ public class GameSpecs {
                         break;
                     case "order":
                         log.info(value.toString());
-                        query.orderBy(builder.desc(root.get(value.toString())), (builder.desc(root.get("title"))));
+                        query.orderBy(builder.desc(root.get(value.toString())), (builder.asc(root.get("title"))));
                         break;
                 }
 

@@ -27,7 +27,6 @@ public class Crawler {
     private final GameRepository gameRepository;
 
     @Scheduled(cron = "0 0 2 * * *")
-    @Transactional
     public void crawl() {
         try {
             String connUrl = "https://store.nintendo.co.kr/games";
@@ -63,7 +62,6 @@ public class Crawler {
     }
 
     @Scheduled(cron = "0 0 1 * * *")
-    @Transactional
     public void crawlSaleGame() {
         try {
             String connUrl = "https://store.nintendo.co.kr/games/sale";
@@ -77,18 +75,7 @@ public class Crawler {
 //                }
                 Elements title = g.getElementsByClass("category-product-item-title");
 
-                Game game = findByTitle(title.text());
-
-                String gameUrl = g.select("a[href]").attr("href");
-
-                Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
-
-                Elements prices = gameDoc.getElementsByClass("special-price");
-                String price = prices.select(".price").get(0).text();
-
-                String saleDate = gameDoc.getElementsByClass("special-period").get(0).text();
-
-                game.onSale(saleDate, price);
+                getSales(g, title);
 
                 Random random = new Random();
 
@@ -107,6 +94,23 @@ public class Crawler {
         }
     }
 
+    @Transactional
+    private void getSales(Element g, Elements title) throws IOException {
+        Game game = findByTitle(title.text());
+
+        String gameUrl = g.select("a[href]").attr("href");
+
+        Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
+
+        Elements prices = gameDoc.getElementsByClass("special-price");
+        String price = prices.select(".price").get(0).text();
+
+        String saleDate = gameDoc.getElementsByClass("special-period").get(0).text();
+
+        game.onSale(saleDate, price);
+    }
+
+    @Transactional
     private void crawlGame(Element g, Elements title) throws IOException {
         Game game;
         Element price;
