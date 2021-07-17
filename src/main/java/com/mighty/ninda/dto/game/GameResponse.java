@@ -43,8 +43,10 @@ public class GameResponse {
         this.reHate = reHate;
         this.onSale = onSale;
         this.salePrice = salePrice;
-        this.startSaleDate = startSaleDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-        this.endSaleDate = endSaleDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        if (onSale.equals("on")) {
+            this.startSaleDate = startSaleDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+            this.endSaleDate = endSaleDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        }
     }
 
     public static GameResponse of(Game game) {
