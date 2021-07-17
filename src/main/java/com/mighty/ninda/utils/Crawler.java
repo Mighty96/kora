@@ -96,7 +96,7 @@ public class Crawler {
 
     @Transactional
     private void getSales(Element g, Elements title) throws IOException {
-        Game game = findByTitle(title.text());
+        Game game = gameRepository.findByTitle(title.text()).orElseThrow(() -> new IllegalArgumentException("해당 타이틀을 찾을 수 없습니다."));
 
         String gameUrl = g.select("a[href]").attr("href");
 
@@ -158,13 +158,7 @@ public class Crawler {
         gameRepository.save(game);
     }
 
-    @Transactional
     private boolean isGame(String title) {
         return gameRepository.findByTitle(title).isPresent();
-    }
-
-    @Transactional
-    private Game findByTitle(String title) {
-        return gameRepository.findByTitle(title).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임입니다."));
     }
 }
