@@ -13,6 +13,14 @@
    padding: 5pt 15pt 5pt 5pt;
 }
 
+.card-sale {
+    position: absolute;
+    color: #e60012;
+    font-weight: 600;
+    font-size: 20pt;
+    -webkit-text-stroke-width: 1px;
+   	-webkit-text-stroke-color: #dddddd;
+}
 
 .white {
     color: white;

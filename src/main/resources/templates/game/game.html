@@ -30,13 +30,13 @@
                         </div>
                     </div>
                     <div style="padding-right: 3px; margin-top: 4px;" class="col-md-6">
-                        <div th:if="${game.onSale.toString().equals('on')}" class="container p-3 border">
+                        <div th:if="${game.onSale.toString().equals('on')}" class="container p-3 border sale-container">
                             <p>&nbsp;할인기간</p>
                             <a th:text="${game.startSaleDate + ' ~ ' + game.endSaleDate}"></a>
                         </div>
                     </div>
                     <div style="padding-left: 3px; margin-top: 4px;" class="col-md-6">
-                        <div th:if="${game.onSale.toString().equals('on')}" class="container p-3 border">
+                        <div th:if="${game.onSale.toString().equals('on')}" class="container p-3 border sale-container">
                             <p>&nbsp;할인가</p>
                             <a th:text="${game.salePrice}"></a>
                         </div>

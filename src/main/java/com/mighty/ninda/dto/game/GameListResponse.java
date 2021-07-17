@@ -12,12 +12,14 @@ public class GameListResponse {
 
     private Long id;
     private String title;
+    private String onSale;
     private String imgUrl;
 
     @Builder
-    public GameListResponse(Long id, String title, String imgUrl) {
+    public GameListResponse(Long id, String title, String onSale, String imgUrl) {
         this.id = id;
         this.title = title;
+        this.onSale = onSale;
         this.imgUrl = imgUrl;
     }
 
@@ -25,6 +27,7 @@ public class GameListResponse {
         return GameListResponse.builder()
                 .id(game.getId())
                 .imgUrl(game.getImgUrl())
+                .onSale(game.getOnSale())
                 .title(game.getTitle())
                 .build();
     }

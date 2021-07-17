@@ -11,6 +11,11 @@
     margin-right: 20pt;
 }
 
+.sale-container {
+    background-color: #060f22;
+    color: #fffec7;
+}
+
 p {
     margin-bottom: 0;
 }

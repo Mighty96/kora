@@ -61,6 +61,7 @@
             <div class="col-md-3" th:each="game: ${info.contents}">
                 <div class="card mb-4">
                     <a th:href="@{'/games/' + ${game.id}}">
+                        <span th:if="${game.onSale != null && game.onSale.toString().equals('on')}" class="card-sale">Sale!!</span>
                         <img  class="card-img-top" th:src="${game.imgUrl}" alt="Card image">
                     </a>
                 </div>
