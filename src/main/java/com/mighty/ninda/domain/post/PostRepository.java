@@ -12,8 +12,6 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
 
-    Page<Post> findByBoardOrderByCreatedDateDesc(String board, Pageable pageable);
-
     List<Post> findTop10ByBoardOrderByCreatedDateDesc(String board);
 
     Page<Post> findAll(@Nullable Specification<Post> spec, Pageable pageable);

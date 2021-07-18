@@ -18,7 +18,7 @@ public class PostSpecs {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            Join<Post, User> joinUser = root.join("user", JoinType.INNER);
+            root.fetch("user", JoinType.LEFT);
 
             searchKeyword.forEach((key, value) -> {
 
@@ -36,10 +36,10 @@ public class PostSpecs {
                         predicates.add(builder.or(builder.like(root.get("title"), likeValue), builder.like(root.get("context"), likeValue)));
                         break;
                     case "userId":
-                        predicates.add(builder.equal(joinUser.get("id"), Long.valueOf(value.toString())));
+                        predicates.add(builder.equal(root.get("user").get("user_id"), Long.valueOf(value.toString())));
                         break;
                     case "userName":
-                        predicates.add(builder.equal(joinUser.get("nickname"), value.toString()));
+                        predicates.add(builder.equal(root.get("user").get("nickname"), value.toString()));
                         break;
                 }
 

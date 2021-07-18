@@ -6,6 +6,7 @@ import com.mighty.ninda.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Comment> comments;
 
     private int viewCount;
