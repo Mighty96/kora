@@ -1,3 +1,31 @@
+@font-face {
+    font-family: "GmarketSans";
+    src:url("../font/GmarketSansMedium.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GmarketSans";
+    src:url("../font/GmarketSansBold.otf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GmarketSans";
+    src:url("../font/GmarketSansLight.otf");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "BMHANNA_11yrs";
+    src:url("../font/BMHANNA_11yrs_otf.otf");
+    font-weight: 300;
+    font-style: normal;
+}
+
 .bg-color {
     background-color: #0e1015;
     overflow-x: hidden;

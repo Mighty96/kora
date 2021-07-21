@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/h2-console/**");
+                .antMatchers("/css/**", "/js/**", "/images/**", "/font/**", "/h2-console/**");
     }
 
     // 비밀번호 암호화
