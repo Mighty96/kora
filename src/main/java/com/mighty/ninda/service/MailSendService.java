@@ -39,7 +39,7 @@ public class MailSendService {
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             String mailContent = "<h1>Ninda에 오신것을 환영합니다~!!</h1><br><p>아래 링크를 클릭하시면 이메일 인증이 완료되어 모든 서비스를 정상적으로 이용하실 수 있습니다.</p>"
-                    + "<a href='http://localhost:8080/authConfirm?email="
+                    + "<a href='http://http://ec2-52-78-36-116.ap-northeast-2.compute.amazonaws.com/authConfirm?email="
                     + email + "&authKey=" + authKey + "' target='_blenk'>이메일 인증 확인</a>";
 
             mail.setSubject("회원가입 이메일 인증 ", "utf-8");

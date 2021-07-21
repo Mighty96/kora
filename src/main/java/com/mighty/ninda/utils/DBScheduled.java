@@ -23,7 +23,7 @@ public class DBScheduled {
         List<Game> games = gameRepository.findAll();
 
         for (Game game : games) {
-            if (game.getEndSale().isBefore(LocalDate.now())) {
+            if (game.getOnSale().equals("on") && game.getEndSale().isBefore(LocalDate.now())) {
                 game.offSale();
             }
         }
