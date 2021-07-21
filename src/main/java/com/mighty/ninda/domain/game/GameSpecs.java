@@ -36,7 +36,6 @@ public class GameSpecs {
                         predicates.add(builder.equal(root.get(key), value));
                         break;
                     case "order":
-                        log.info(value.toString());
                         query.orderBy(builder.desc(root.get(value.toString())), (builder.asc(root.get("title"))));
                         break;
                 }

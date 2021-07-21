@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 application-oauth.properties
 application-mail.properties
+application-local-real.properties
 
 ### STS ###
 .apt_generated
