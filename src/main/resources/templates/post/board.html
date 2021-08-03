@@ -9,10 +9,19 @@
     <div class="main-container" style="padding-top: 10pt">
         <div class="row">
             <div class="col-md-1"></div>
-            <a th:href="@{'/board/' + ${board}(page=0)}">
-                <span th:if="${board.toString().equals('free')}" class="board-title">자유게시판</span>
-                <span th:if="${board.toString().equals('multi')}" class="board-title">멀티-내전게시판</span>
-            </a>
+            <div class="col-md-11">
+                <a th:href="@{'/board/' + ${board}(page=0)}">
+                    <span th:if="${board.toString().equals('free')}" class="board-title">자유게시판</span>
+                    <span th:if="${board.toString().equals('multi')}" class="board-title">멀티-내전게시판</span>
+                    <span th:if="${board.toString().equals('friendCode')}" class="board-title">친구코드교환</span>
+                    <br>
+                </a>
+                <a>
+                    <span th:if="${board.toString().equals('free')}" class="board-description">닌텐도 게임에 대해 자유롭게 대화를 나눠보세요.</span>
+                    <span th:if="${board.toString().equals('multi')}" class="board-description">함께 멀티게임을 즐길 친구를 모집해보세요.</span>
+                    <span th:if="${board.toString().equals('friendCode')}" class="board-description">좋아하는 게임을 알리고 친구를 만들어 보세요.</span>
+                </a>
+            </div>
         </div>
         <div class="post-board">
             <div class="post-item post-top">

@@ -104,6 +104,13 @@ a:hover {
     font-family: 'BMHANNA_11yrs', sans-serif;
 }
 
+.board-description {
+    color: #5db8ff;
+    font-size: 12pt;
+    font-weight: 300;
+    font-family: 'BMHANNA_11yrs', sans-serif;
+}
+
 .board-button-container {
     width: 1050px;
     margin-left: 50px;
