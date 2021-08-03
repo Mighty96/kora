@@ -39,9 +39,9 @@
                         <form id="search" action="games">
                             <input class="form-control mr-sm-2" style="background-color: black;" type="text" name="q" placeholder="제목으로 검색하기">
                             <input type="hidden" name="page" value="0">
-                            <input th:if="${param.order != null}" type="hidden" name="order" value="${queryString.order}">
-                            <input th:if="${param.onSale != null}" type="hidden" name="onSale" value="${queryString.onSale}">
-                            <input th:if="${param.list != null}" type="hidden" name="list" value="${queryString.list}">
+                            <input th:if="${param.order != null}" type="hidden" name="order" th:value="${queryString.order.get}">
+                            <input th:if="${param.onSale != null}" type="hidden" name="onSale" th:value="${queryString.onSale.get}">
+                            <input th:if="${param.list != null}" type="hidden" name="list" th:value="${queryString.list.get}">
                         </form>
                     </li>
                     <li class="nav-item right-tap">
