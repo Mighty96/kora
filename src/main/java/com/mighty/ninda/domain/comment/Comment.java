@@ -7,11 +7,13 @@ import com.mighty.ninda.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
+@ToString
 @Entity
 public class Comment extends BaseTimeEntity {
 

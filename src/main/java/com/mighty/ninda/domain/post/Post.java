@@ -6,6 +6,7 @@ import com.mighty.ninda.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
+@ToString
 @Entity
 public class Post extends BaseTimeEntity {
 

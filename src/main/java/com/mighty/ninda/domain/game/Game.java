@@ -4,6 +4,7 @@ import com.mighty.ninda.domain.comment.OneLineComment;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 
 @NoArgsConstructor
 @Getter
+@ToString
 @Entity
 public class Game {
 

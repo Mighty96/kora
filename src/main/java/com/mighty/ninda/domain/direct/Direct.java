@@ -4,12 +4,14 @@ import com.mighty.ninda.domain.comment.Impression;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
+@ToString
 @Entity
 public class Direct {
 

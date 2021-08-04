@@ -3,10 +3,7 @@ package com.mighty.ninda.domain.user;
 import com.mighty.ninda.domain.comment.Comment;
 import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.post.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@ToString
 @Entity
 public class User {
 

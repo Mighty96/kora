@@ -6,11 +6,13 @@ import com.mighty.ninda.domain.game.Game;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
+@ToString
 @Entity
 public class Hot extends BaseTimeEntity {
 
