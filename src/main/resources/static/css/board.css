@@ -31,6 +31,26 @@ a:hover {
     text-decoration: none;
 }
 
+.best-title {
+    width: 100%;
+    font-size: 14pt;
+    border-bottom: 1px solid #575757;
+    display: table;
+    margin-bottom: 5px;
+}
+
+.best-post {
+    max-width: 80%;
+    height: 20pt;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    word-wrap: normal;
+    white-space: nowrap;
+    text-align: left;
+    vertical-align: middle;
+}
+
 .post-item {
     width: 100%;
     display: table;
@@ -56,17 +76,19 @@ a:hover {
 
 .post-title {
     padding-left: 10px;
-    text-align: left;
+    text-align: left!important;
     padding-right: 100px;
 }
 
-.post-title a {
+.post-title-re {
+    max-width: 90%;
     text-overflow: ellipsis;
     overflow: hidden;
-    display: block;
+    display: inline-block;
     word-wrap: normal;
     white-space: nowrap;
     text-align: left;
+    vertical-align: middle;
 }
 
 .post-comment {

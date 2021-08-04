@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
@@ -15,4 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
     List<Post> findTop10ByBoardOrderByCreatedDateDesc(String board);
 
     Page<Post> findAll(@Nullable Specification<Post> spec, Pageable pageable);
+
+    List<Post> findTop5ByBoardAndCreatedDateAfterOrderByReLikeDesc(String board, LocalDateTime createdDate);
+
 }

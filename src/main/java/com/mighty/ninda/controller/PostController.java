@@ -47,8 +47,14 @@ public class PostController {
         Page<Post> pagePostList = getPosts(postQueryString, pageable, board);
 
         List<PostListResponse> postList = pagePostList.stream().map(PostListResponse::of).collect(Collectors.toList());
+        List<PostListResponse> top5Daily = postService.findTop5DailyPost(board).stream().map(PostListResponse::of).collect(Collectors.toList());
+        List<PostListResponse> top5Weekly = postService.findTop5WeeklyPost(board).stream().map(PostListResponse::of).collect(Collectors.toList());
+        List<PostListResponse> top5Monthly = postService.findTop5MonthlyPost(board).stream().map(PostListResponse::of).collect(Collectors.toList());
         PageResponse<GameListResponse> info = PageResponse.of(pagePostList, postList);
 
+        model.addAttribute("top5Daily", top5Daily);
+        model.addAttribute("top5Weekly", top5Weekly);
+        model.addAttribute("top5Monthly", top5Monthly);
         model.addAttribute("info", info);
         model.addAttribute("board", board);
         return "post/board";

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,21 @@ public class PostService {
     @Transactional
     public Page<Post> findAll(Map<String, Object> searchKeyword, Pageable pageable) {
         return postRepository.findAll(PostSpecs.searchPost(searchKeyword), pageable);
+    }
+
+    @Transactional
+    public List<Post> findTop5DailyPost(String board) {
+        return postRepository.findTop5ByBoardAndCreatedDateAfterOrderByReLikeDesc(board, LocalDateTime.now().minusDays(1));
+    }
+
+    @Transactional
+    public List<Post> findTop5WeeklyPost(String board) {
+        return postRepository.findTop5ByBoardAndCreatedDateAfterOrderByReLikeDesc(board, LocalDateTime.now().minusWeeks(1));
+    }
+
+    @Transactional
+    public List<Post> findTop5MonthlyPost(String board) {
+        return postRepository.findTop5ByBoardAndCreatedDateAfterOrderByReLikeDesc(board, LocalDateTime.now().minusMinutes(1));
     }
 
     @Transactional

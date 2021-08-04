@@ -96,7 +96,7 @@
                     </div>
                     <div class="post-title">
                         <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage})}">
-                            <span th:text="${post.title}"></span>
+                            <span class="post-title-re" th:text="${post.title}"></span>
                             <span class="post-comment" th:text="' [' + ${post.commentCount} + ']'"></span>
                         </a>
                     </div>

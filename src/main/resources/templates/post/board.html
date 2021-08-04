@@ -23,6 +23,44 @@
                 </a>
             </div>
         </div>
+        <div th:if="${board.toString().equals('free')}" class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3 p-3 container border">
+                <a class="best-title">일간 베스트 5</a>
+                <ul>
+                    <li th:each="daily: ${top5Daily}">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${daily.id}(page=${info.nowPage})}">
+                            <span class="best-post" th:text="${daily.title}"></span>
+                            <span class="post-comment" th:text="' [' + ${daily.commentCount} + ']'"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 p-3 container border">
+                <a class="best-title">주간 베스트 5</a>
+                <ul>
+                    <li th:each="weekly: ${top5Weekly}">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${weekly.id}(page=${info.nowPage})}">
+                            <span class="best-post" th:text="${weekly.title}"></span>
+                            <span class="post-comment" th:text="' [' + ${weekly.commentCount} + ']'"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 p-3 container border">
+                <a class="best-title">월간 베스트 5</a>
+                <ul>
+                    <li th:each="monthly: ${top5Monthly}">
+                        <a th:href="@{'/board/' + ${board} + '/' + ${monthly.id}(page=${info.nowPage})}">
+                            <span class="best-post" th:text="${monthly.title}"></span>
+                            <span class="post-comment" th:text="' [' + ${monthly.commentCount} + ']'"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
         <div class="post-board">
             <div class="post-item post-top">
                 <div class="post-id">
@@ -54,7 +92,7 @@
                     </div>
                     <div class="post-title">
                         <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage})}">
-                            <span th:text="${post.title}"></span>
+                            <span class="post-title-re" th:text="${post.title}"></span>
                             <span class="post-comment" th:text="' [' + ${post.commentCount} + ']'"></span>
                         </a>
                     </div>
