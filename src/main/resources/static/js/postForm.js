@@ -6,6 +6,9 @@ var main = {
         }),
         $('#btn-modify').on('click', function() {
             _this.modify();
+        }),
+        $('#btn-img').on('click', function() {
+            _this.img();
         });
     },
     save : function () {
@@ -47,6 +50,25 @@ var main = {
             },
             error: function(e) {
                 alert('몰라');
+            }
+        });
+    },
+    img : function () {
+        var file = $('#img')[0].files[0];
+        var formData = new FormData();
+        formData.append('data', file);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/upload',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                $('#result-image').attr("src", data);
+            },
+            error: function(error) {
+                alert(error);
             }
         });
     }

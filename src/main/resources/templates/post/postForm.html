@@ -28,6 +28,17 @@
                 <input class="input-button" type="button" onClick="history.go(-1)" value="취소">
                 <input class="input-button" type="button" style="margin-right: 10px;" id="btn-create" value="등록">
             </div>
+            <form>
+                <div class="form-group">
+                    <label for="img">파일 업로드</label>
+                    <input type="file" id="img">
+                </div>
+                <input class="input-button" type="button" style="margin-right: 10px;" id="btn-img" value="이미지등록">
+            </form>
+            <div>
+                <p><strong>결과 이미지입니다.</strong></p>
+                <img src="" id="result-image">
+            </div>
         </div>
     </div>
     <script src="/js/postForm.js"></script>
