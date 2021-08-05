@@ -79,7 +79,7 @@ public class PostService {
 
     @Transactional
     public List<Post> findTop5MonthlyPost(String board) {
-        return postRepository.findTop5ByBoardAndCreatedDateAfterOrderByReLikeDesc(board, LocalDateTime.now().minusMinutes(1));
+        return postRepository.findTop5ByBoardAndCreatedDateAfterOrderByReLikeDesc(board, LocalDateTime.now().minusMonths(1));
     }
 
     @Transactional
