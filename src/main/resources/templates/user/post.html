@@ -15,7 +15,7 @@
                         <button th:if="${session.user.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='http://localhost:8080/user/password'" class="btn btn-dark">비밀번호 변경</button>
                         <button type="button" onclick="location.href='/user/post?page=0'" class="btn btn-dark active">내가 작성한 글</button>
                         <button type="button" onclick="location.href='/user/oneLineComment?page=0'" class="btn btn-dark">내가 작성한 한줄평</button>
-                        <button type="button" onclick="location.href='/user/book'" class="btn btn-dark">북마크</button>
+                        <button type="button" onclick="location.href='/user/favorite'" class="btn btn-dark">내가 관심있는 게임</button>
                     </div>
                 </div>
 
@@ -26,6 +26,7 @@
                         <option th:selected="${param.board == null}" value="/user/post?page=0">전체 글 보기</option>
                         <option th:selected="${param.board != null && param.board.toString().equals('free')}" value="/user/post?page=0&board=free">자유게시판</option>
                         <option th:selected="${param.board != null && param.board.toString().equals('multi')}" value="/user/post?page=0&board=multi">멀티-내전게시판</option>
+                        <option th:selected="${param.board != null && param.board.toString().equals('friendCode')}" value="/user/post?page=0&board=friendCode">멀티-내전게시판</option>
                     </select>
                 </div>
                 <div class="container p-3 border" th:if="${#lists.isEmpty(info.contents)}">

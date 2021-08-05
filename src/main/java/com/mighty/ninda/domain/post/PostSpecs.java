@@ -36,7 +36,7 @@ public class PostSpecs {
                         predicates.add(builder.or(builder.like(root.get("title"), likeValue), builder.like(root.get("context"), likeValue)));
                         break;
                     case "userId":
-                        predicates.add(builder.equal(root.get("user").get("user_id"), Long.valueOf(value.toString())));
+                        predicates.add(builder.equal(root.get("user").get("id"), Long.valueOf(value.toString())));
                         break;
                     case "userName":
                         predicates.add(builder.equal(root.get("user").get("nickname"), value.toString()));
