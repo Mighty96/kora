@@ -2,6 +2,7 @@ package com.mighty.ninda.domain.post;
 
 import com.mighty.ninda.domain.BaseTimeEntity;
 import com.mighty.ninda.domain.comment.Comment;
+import com.mighty.ninda.domain.file.Photo;
 import com.mighty.ninda.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +36,12 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name="user_id")
     private User user;
 
+    @OneToMany(
+            mappedBy = "post",
+            orphanRemoval = true
+    )
+    private List<Photo> photos;
+
     @BatchSize(size = 100)
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Comment> comments;
@@ -56,6 +63,7 @@ public class Post extends BaseTimeEntity {
         this.context = context;
         this.user = user;
         this.viewCount = viewCount;
+        this.photos = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.reLike = reLike;
         this.reHate = reHate;

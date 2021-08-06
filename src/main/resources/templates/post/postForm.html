@@ -20,27 +20,28 @@
         <div class="input-container">
             <div style="width:100%">
                 <input class="input-title" type="text" id="title" maxlength="50">
+                <p><br></p>
             </div>
             <div style="width:100%;">
                 <textarea class="input-context" id="context" spellcheck = "false"></textarea>
+                <p><br></p>
             </div>
             <div class="button-container">
                 <input class="input-button" type="button" onClick="history.go(-1)" value="취소">
                 <input class="input-button" type="button" style="margin-right: 10px;" id="btn-create" value="등록">
             </div>
-            <form>
-                <div class="form-group">
-                    <label for="img">파일 업로드</label>
-                    <input type="file" id="img">
-                </div>
-                <input class="input-button" type="button" style="margin-right: 10px;" id="btn-img" value="이미지등록">
-            </form>
-            <div>
-                <p><strong>결과 이미지입니다.</strong></p>
-                <img src="" id="result-image">
-            </div>
+<!--            <form>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="img">파일 업로드</label>-->
+<!--                    <input multiple="multiple" type="file" id="img">-->
+<!--                </div>-->
+<!--                <input class="input-button" type="button" style="margin-right: 10px;" id="btn-add-img" value="이미지등록">-->
+<!--            </form>-->
+<!--            <div id="thumbnail">-->
+<!--            </div>-->
         </div>
     </div>
     <script src="/js/postForm.js"></script>
+    <script src="/js/ckeditor/ckeditor.js"></script>
 </th:block>
 </html>

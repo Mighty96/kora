@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="post-context">
-                <a th:text="${post.context}"></a>
+                <a th:utext="${post.context}"></a>
             </div>
             <div th:if="${board.toString().equals('free')}" class="post-button-container">
                 <input th:onclick="'postLikeUp()'" class="like-button" type="button" id="btn-like" style="margin-right: 10px;" th:value="'추천 ' + ${post.reLike}">
