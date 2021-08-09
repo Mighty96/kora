@@ -102,11 +102,8 @@ public class PostService {
 
     @Transactional
     public Long delete(Long id) {
-
         parseContextAndDeleteImages(postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(id + "찾을 수 없습니다.")));
         postRepository.deleteById(id);
-
-
 
         return id;
     }

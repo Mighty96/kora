@@ -1,6 +1,11 @@
 package com.mighty.ninda.utils;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.CopyObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
@@ -8,9 +13,10 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,13 +27,33 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
-@Component
+@Service
 public class S3Uploader {
 
-    private final AmazonS3Client amazonS3Client;
+    private AmazonS3 s3Client;
+
+    @Value("${cloud.aws.credentials.accessKey}")
+    private String accessKey;
+
+    @Value("${cloud.aws.credentials.secretKey}")
+    private String secretKey;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
+
+    @PostConstruct
+    public void setS3Client() {
+        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+
+        s3Client = AmazonS3ClientBuilder.standard()
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withRegion(this.region)
+                .build();
+    }
+
 
     // MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
     public String upload(MultipartFile multipartFile, String fileName, String dirName) throws IOException {
@@ -62,21 +88,19 @@ public class S3Uploader {
     }
 
     private String putS3(File uploadFile, String fileName) {
-        amazonS3Client.putObject(
+        s3Client.putObject(
                 new PutObjectRequest(bucket, fileName, uploadFile)
-                        .withCannedAcl(CannedAccessControlList.PublicRead)	// PublicRead 권한으로 업로드 됨
+                        .withCannedAcl(CannedAccessControlList.PublicRead)
         );
-        return amazonS3Client.getUrl(bucket, fileName).toString();
+        return s3Client.getUrl(bucket, fileName).toString();
     }
 
     private void moveS3(String oldSource, String newSource) {
-        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, oldSource, bucket, newSource);
-        amazonS3Client.copyObject(copyObjectRequest);
+        s3Client.copyObject(bucket, oldSource, bucket, newSource);
     }
 
     private void deleteS3(String source) {
-        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, source);
-        amazonS3Client.deleteObject(deleteObjectRequest);
+        s3Client.deleteObject(bucket, source);
     }
 
     private void removeNewFile(File targetFile) {
