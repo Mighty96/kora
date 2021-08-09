@@ -4,9 +4,23 @@ $(function() {
         font_names : "GmarketSans/GmarketSans",
         font_defaultLabel : "GmarketSans/GmarketSans",
         fontSize_defaultLabel : "12",
+        height: 600,
         language : "ko"
+    }),
+    CKEDITOR.on('dialogDefinition', function (ev) {
+        var dialogName = ev.data.name;
+        var dialog = ev.data.definition.dialog;
+        var dialogDefinition = ev.data.definition;
+        if (dialogName == 'image') {
+            dialog.on('show', function (obj) {
+                this.selectPage('Upload'); //업로드텝으로 시작
+            });
+            dialogDefinition.removeContents('advanced'); // 자세히탭 제거
+            dialogDefinition.removeContents('Link'); // 링크탭 제거
+        }
     });
 });
+
 
 var main = {
     init : function () {
@@ -31,14 +45,14 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function(data) {
-                window.location.href='/board/' + $('#board-id').val() + '/' + data + '?page=0&size=30';
+                window.location.href='/board/' + $('#board-id').val() + '/' + data + '?page=0';
             }
         });
     },
     modify : function () {
         var data = {
             title: $('#title').val(),
-            context: $('#context').val()
+            context: CKEDITOR.instances.context.getData(),
         };
         $.ajax({
             type: 'POST',
@@ -52,7 +66,7 @@ var main = {
                     icon: "success"
                 })
                 .then(() =>{
-                    window.location.href= '/board/' + $('#board').val() + '/' + $('#id').val();
+                    window.location.href= '/board/' + $('#board').val() + '/' + $('#id').val() + '?page=0';
                 });
             },
             error: function(e) {

@@ -20,18 +20,18 @@ public class Photo {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    private String UUID;
+
     private String fileName;
 
     private String filePath;
 
-    private Long fileSize;
-
     @Builder
-    public Photo(Post post, String fileName, String filePath, Long fileSize) {
+    public Photo(Post post, String UUID, String fileName, String filePath) {
         this.post = post;
+        this.UUID = UUID;
         this.fileName = fileName;
         this.filePath = filePath;
-        this.fileSize = fileSize;
     }
 
 }

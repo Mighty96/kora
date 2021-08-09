@@ -1,6 +1,7 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.domain.post.Board;
+import com.mighty.ninda.domain.file.Photo;
+import com.mighty.ninda.domain.file.PhotoRepository;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.domain.post.PostRepository;
 import com.mighty.ninda.domain.post.PostSpecs;
@@ -9,13 +10,21 @@ import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
+import com.mighty.ninda.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +35,58 @@ import java.util.Map;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PhotoRepository photoRepository;
+    private final S3Uploader s3Uploader;
 
     @Transactional
     public Long save(SavePost requestDto, User user) {
-        return postRepository.save(requestDto.toEntity(user)).getId();
+
+
+        Post post = requestDto.toEntity(user);
+        post = parseContextAndMoveImages(post);
+        return postRepository.save(post).getId();
     }
+
+    public Post parseContextAndMoveImages(Post post) {
+        Document doc = Jsoup.parse(post.getContext());
+        String context = post.getContext();
+        Elements images = doc.getElementsByTag("img");
+
+        if (images.size() > 0) {
+            for (Element image : images) {
+                String source = image.attr("src");
+
+                if (!source.contains("/temp/")) {
+                    continue;
+                }
+
+                source = source.replace("https://ninda-file.s3.ap-northeast-2.amazonaws.com/", "");
+                String newSource = LocalDate.now().toString() + "/" + source.split("/")[2];
+
+                context = context.replace(source, newSource);
+
+                s3Uploader.move(source, newSource);
+
+                try {
+                    Photo photo = Photo.builder()
+                            .UUID(newSource.split("/")[1].split("_")[0])
+                            .fileName(URLDecoder.decode(newSource.split("/")[1].split("_")[1], "UTF-8"))
+                            .filePath(newSource.split("/")[0] + "/")
+                            .post(post)
+                            .build();
+                    photoRepository.save(photo);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        post.update(post.getTitle(), context);
+        return post;
+    }
+
+
 
     @Transactional
     public Long update(Long id, UpdatePost requestDto) {
@@ -39,14 +95,35 @@ public class PostService {
 
         post.update(requestDto.getTitle(), requestDto.getContext());
 
+        parseContextAndMoveImages(post);
+
         return id;
     }
 
     @Transactional
     public Long delete(Long id) {
+
+        parseContextAndDeleteImages(postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(id + "찾을 수 없습니다.")));
         postRepository.deleteById(id);
 
+
+
         return id;
+    }
+
+    public void parseContextAndDeleteImages(Post post) {
+        Document doc = Jsoup.parse(post.getContext());
+        Elements images = doc.getElementsByTag("img");
+
+        if (images.size() > 0) {
+            for (Element image : images) {
+                String source = image.attr("src");
+
+                source = source.replace("https://ninda-file.s3.ap-northeast-2.amazonaws.com/", "");
+
+                s3Uploader.delete(source);
+            }
+        }
     }
 
     @Transactional

@@ -27,7 +27,6 @@ public class PostApiController {
 
     @PostMapping("/api/posts/{id}")
     public Long updatePost(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
-        log.info("asd");
         return postService.update(id, requestDto);
     }
 
