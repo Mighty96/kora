@@ -21,7 +21,8 @@
                 <span class="post-title" th:text="${post.title}"></span>
                 <div th:if="${session.user != null && post.userId.toString().equals(session.user.id.toString())}" class="post-button">
                     <a th:href="@{'/board/' + ${board} + '/' + ${post.id} + '/modify'}">수정</a>
-                    <span th:onclick="post_del()" >삭제</span>
+                    <input type="hidden" th:value="${board}" id="board">
+                    <span style="cursor: pointer;" th:onclick="post_del() ">삭제</span>
                 </div>
 
                 <a><br></a>

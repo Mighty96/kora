@@ -114,12 +114,15 @@ public class PostService {
     public void parseContextAndDeleteImages(Post post) {
         Document doc = Jsoup.parse(post.getContext());
         Elements images = doc.getElementsByTag("img");
+        String source = "";
 
         if (images.size() > 0) {
             for (Element image : images) {
-                String source = image.attr("src");
-
-                source = source.replace("https://ninda-file.s3.ap-northeast-2.amazonaws.com/", "");
+                try {
+                    source = URLDecoder.decode(image.attr("src").replace("https://ninda-file.s3.ap-northeast-2.amazonaws.com/", ""), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
                 s3Uploader.delete(source);
             }
