@@ -1,4 +1,4 @@
-package com.mighty.ninda.utils;
+package com.mighty.ninda.service;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -26,9 +26,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-@RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
 @Service
-public class S3Uploader {
+public class S3Service {
 
     private AmazonS3 s3Client;
 
@@ -54,18 +53,16 @@ public class S3Uploader {
                 .build();
     }
 
-
-    // MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
     public String upload(MultipartFile multipartFile, String fileName, String dirName) throws IOException {
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("파일변환실패"));
 
-        fileName = dirName + UUID.randomUUID() + fileName;
+        fileName = dirName + fileName;
         String uploadImageUrl = putS3(uploadFile, fileName);
-        removeNewFile(uploadFile);  // 로컬에 생성된 File 삭제 (MultipartFile -> File 전환 하며 로컬에 파일 생성됨)
-        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
+        removeNewFile(uploadFile);
+        return uploadImageUrl;
     }
 
-    public void move(String oldSource, String newSource) {
+    public void update(String oldSource, String newSource) {
         try {
             oldSource = URLDecoder.decode(oldSource, "UTF-8");
             newSource = URLDecoder.decode(newSource, "UTF-8");

@@ -10,7 +10,6 @@ import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
-import com.mighty.ninda.utils.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -36,7 +35,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PhotoRepository photoRepository;
-    private final S3Uploader s3Uploader;
+    private final S3Service s3Service;
 
     @Transactional
     public Long save(SavePost requestDto, User user) {
@@ -65,7 +64,7 @@ public class PostService {
 
                 context = context.replace(source, newSource);
 
-                s3Uploader.move(source, newSource);
+                s3Service.update(source, newSource);
 
                 try {
                     Photo photo = Photo.builder()
@@ -121,7 +120,7 @@ public class PostService {
                     e.printStackTrace();
                 }
 
-                s3Uploader.delete(source);
+                s3Service.delete(source);
             }
         }
     }
