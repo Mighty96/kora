@@ -30,7 +30,7 @@
                                 <a th:href="@{'/games/' + ${newGameList[0].id}}">
                                     <img th:src="${newGameList[0].imgUrl}" th:alt="${newGameList[0].title}">
                                     <div class="carousel-caption">
-                                        <h3 th:text="${newGameList[0].title}"></h3>
+                                        <a class="slide-title" th:text="${newGameList[0].title}"></a>
                                         <p th:text="${newGameList[0].releasedDate} + ' 발매'"></p>
                                     </div>
                                 </a>
@@ -39,7 +39,7 @@
                                 <a th:href="@{'/games/' + ${newGameList[1].id}}">
                                     <img th:src="${newGameList[1].imgUrl}" th:alt="${newGameList[1].title}">
                                     <div class="carousel-caption">
-                                        <h3 th:text="${newGameList[1].title}"></h3>
+                                        <a class="slide-title" th:text="${newGameList[1].title}"></a>
                                         <p th:text="${newGameList[1].releasedDate} + ' 발매'"></p>
                                     </div>
                                 </a>
@@ -48,7 +48,7 @@
                                 <a th:href="@{'/games/' + ${newGameList[2].id}}">
                                     <img th:src="${newGameList[2].imgUrl}" th:alt="${newGameList[2].title}">
                                     <div class="carousel-caption">
-                                        <h3 th:text="${newGameList[2].title}"></h3>
+                                        <a class="slide-title" th:text="${newGameList[2].title}"></a>
                                         <p th:text="${newGameList[2].releasedDate} + ' 발매'"></p>
                                     </div>
                                 </a>
@@ -57,7 +57,7 @@
                                 <a th:href="@{'/games/' + ${newGameList[3].id}}">
                                     <img th:src="${newGameList[3].imgUrl}" th:alt="${newGameList[3].title}">
                                     <div class="carousel-caption">
-                                        <h3 th:text="${newGameList[3].title}"></h3>
+                                        <a class="slide-title" th:text="${newGameList[3].title}"></a>
                                         <p th:text="${newGameList[3].releasedDate} + ' 발매'"></p>
                                     </div>
                                 </a>
@@ -66,7 +66,7 @@
                                 <a th:href="@{'/games/' + ${newGameList[4].id}}">
                                     <img th:src="${newGameList[4].imgUrl}" th:alt="${newGameList[4].title}">
                                     <div class="carousel-caption">
-                                        <h3 th:text="${newGameList[4].title}"></h3>
+                                        <a class="slide-title" th:text="${newGameList[4].title}"></a>
                                         <p th:text="${newGameList[4].releasedDate} + ' 발매'"></p>
                                     </div>
                                 </a>

@@ -9,6 +9,10 @@
     border-bottom: 1px solid #575757;
 }
 
+.slide-title {
+    font-size: 15pt;
+}
+
 .carousel-inner {
     text-align: center;
     margin: 0 auto;

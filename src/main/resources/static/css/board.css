@@ -81,6 +81,8 @@ a:hover {
 }
 
 .post-title-re {
+    height: 13pt;
+    line-height: 15pt;
     max-width: 90%;
     text-overflow: ellipsis;
     overflow: hidden;
