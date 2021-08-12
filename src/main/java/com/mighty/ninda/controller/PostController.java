@@ -149,6 +149,10 @@ public class PostController {
             }
         }
 
+        if (postQueryString.getRecommended().isPresent()) {
+            searchKeyword.put("recommended", postQueryString.getRecommended().get());
+        }
+
         searchKeyword.put("board", board);
         pagePostList = postService.findAll(searchKeyword, pageable);
 

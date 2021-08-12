@@ -41,6 +41,8 @@ public class PostSpecs {
                     case "userName":
                         predicates.add(builder.equal(root.get("user").get("nickname"), value.toString()));
                         break;
+                    case "recommended":
+                        predicates.add(builder.greaterThanOrEqualTo(root.get("reLike"), 2));
                 }
 
             });

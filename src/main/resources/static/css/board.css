@@ -139,7 +139,20 @@ a:hover {
     display: inline-block;
 }
 
-.board-button {
+.board-button-left {
+    text-align: center;
+    width: 100px;
+    background-color: #313131;
+    border: 2px solid #606060;
+    border-radius: 5px;
+    color: #dddddd;
+    float: left;
+    padding-top: 5px;
+    font-size: 15pt;
+    padding-bottom: 5px;
+}
+
+.board-button-right {
     text-align: center;
     width: 100px;
     background-color: #313131;

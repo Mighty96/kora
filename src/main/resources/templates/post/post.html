@@ -74,7 +74,7 @@
                 <div class="post-id">
                     <span>글번호</span>
                 </div>
-                <div class="post-title">
+                <div style="text-align: center!important" class="post-title">
                     <span>제목</span>
                 </div>
                 <div class="post-nickname">
@@ -90,6 +90,9 @@
                     <span>추천</span>
                 </div>
             </div>
+            <div class="container p-3 border" th:if="${#lists.isEmpty(info.contents)}">
+                <a>검색결과가 없습니다.</a>
+            </div>
             <ul>
                 <li class="post-item" th:each="post: ${info.contents}">
                     <div class="post-id">
@@ -97,6 +100,9 @@
                     </div>
                     <div class="post-title">
                         <a th:href="@{'/board/' + ${board} + '/' + ${post.id}(page=${info.nowPage})}">
+                            <span th:if="${post.reLike >= 2}">
+                                <img src="/images/recommend.png" height="17" width="17">
+                            </span>
                             <span class="post-title-re" th:text="${post.title}"></span>
                             <span class="post-comment" th:text="' [' + ${post.commentCount} + ']'"></span>
                         </a>
@@ -119,7 +125,23 @@
             </ul>
         </div>
         <div class="board-button-container">
-            <a class="board-button" th:href="@{'/board/' + ${board} + '/write'}">등록</a>
+            <a class="board-button-left" th:href="@{'/board/' + ${board} + '?page=0'}">전체글</a>
+            <a class="board-button-left" th:href="@{'/board/' + ${board} + '?page=0&recommended=true'}">추천글</a>
+            <a class="board-button-right" th:href="@{'/board/' + ${board} + '/write'}">등록</a>
+        </div>
+        <div class="board-search-container">
+            <form th:action="@{'/board/' + ${board}}">
+                <input type="hidden" name="page" th:value="${info.nowPage}">
+                <input th:if="${param.recommended != null}" type="hidden" name="recommended" value="true">
+                <select name="s_type" class="board-search-select">
+                    <option th:selected="${param.s_type == null || param.s_type.toString().equals('title_context')}" value="title_context">제목+내용</option>
+                    <option th:selected="${param.s_type != null && param.s_type.toString().equals('title')}" value="title">제목</option>
+                    <option th:selected="${param.s_type != null && param.s_type.toString().equals('context')}" value="context">내용</option>
+                    <option th:selected="${param.s_type != null && param.s_type.toString().equals('author')}" value="author">글쓴이</option>
+                </select>
+                <input class="board-search-input" type="text" name="s_keyword" placeholder="검색어" th:value="${param.s_keyword}">
+                <button class="board-search-button" th:action="@{'/board/' + ${board}}" type="submit">검색</button>
+            </form>
         </div>
         <nav aria-label="Page">
             <ul class="pagination center">

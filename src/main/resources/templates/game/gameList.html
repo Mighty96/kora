@@ -15,10 +15,10 @@
                     </li>
                     <li class="nav-item left-tap">
                         <a style="padding-left:6px" class="nav-link white" th:if="${param.list == null}" th:href="@{'/games' + ${queryString.releasedList()}}">
-                            <img src="/images/unchecked_box.png" height="14" weight="14">
+                            <img src="/images/unchecked_box.png" height="14" width="14">
                         </a>
                         <a style="padding-left:6px" class="nav-link white" th:if="${param.list != null && param.list.toString.equals('released')}" th:href="@{'/games' + ${queryString.allList()}}">
-                            <img src="/images/checked_box.png" height="14" weight="14">
+                            <img src="/images/checked_box.png" height="14" width="14">
                         </a>
                     </li>
                     <li class="nav-item left-tap">
@@ -26,10 +26,10 @@
                     </li>
                     <li class="nav-item left-tap">
                         <a style="padding-left:6px" class="nav-link white" th:if="${param.onSale == null}" th:href="@{'/games' + ${queryString.onSale()}}">
-                            <img src="/images/unchecked_box.png" height="14" weight="14">
+                            <img src="/images/unchecked_box.png" height="14" width="14">
                         </a>
                         <a style="padding-left:6px" class="nav-link white" th:if="${param.onSale != null && param.onSale.toString.equals('on')}" th:href="@{'/games' + ${queryString.offSale()}}">
-                            <img src="/images/checked_box.png" height="14" weight="14">
+                            <img src="/images/checked_box.png" height="14" width="14">
                         </a>
                     </li>
                     <li class="nav-item right-tap">
