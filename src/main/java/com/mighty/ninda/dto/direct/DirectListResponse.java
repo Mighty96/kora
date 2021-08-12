@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,17 @@ public class DirectListResponse {
 
     private Long id;
     private String title;
+    private int viewCount;
+    private int reLike;
+    private String releasedDate;
 
     @Builder
-    public DirectListResponse(Long id, String title) {
+    public DirectListResponse(Long id, String title, int viewCount, int reLike, LocalDate releasedDate) {
         this.id = id;
         this.title = title;
+        this.viewCount = viewCount;
+        this.reLike = reLike;
+        this.releasedDate = Integer.toString(releasedDate.getYear()).substring(2) + "." + releasedDate.getMonthValue() + "." + releasedDate.getDayOfMonth();
     }
 
     public static List<DirectListResponse> of(List<Direct> directs) {
@@ -29,6 +36,9 @@ public class DirectListResponse {
             response.add(DirectListResponse.builder()
                     .title(direct.getTitle())
                     .id(direct.getId())
+                    .releasedDate(direct.getReleasedDate())
+                    .viewCount(direct.getViewCount())
+                    .reLike(direct.getReLike())
                     .build());
         }
 

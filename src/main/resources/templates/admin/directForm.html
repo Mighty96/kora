@@ -7,12 +7,26 @@
 </head>
 <th:block layout:fragment="content">
     <div class="main-container" style="padding-top: 10pt">
-        <label for="title">타이틀</label>
-        <input type="text" id="title">
-        <label for="japanUrl">일본주소</label>
-        <input type="text" id="japanUrl">
-        <label for="americaUrl">북미주소</label>
-        <input type="text" id="americaUrl">
+        <p>
+            <label class="title" for="title">타이틀</label>
+            <input type="text" id="title">
+        </p>
+        <p>
+            <label class="title" for="title">개최일(yyyyMMdd)</label>
+            <input type="text" id="date">
+        </p>
+        <p>
+            <label class="title" for="koreaUrl">한국</label>
+            <input type="text" id="koreaUrl">
+        </p>
+        <p>
+            <label class="title" for="japanUrl">일본</label>
+            <input type="text" id="japanUrl">
+        </p>
+        <p>
+            <label class="title" for="americaUrl">북미</label>
+            <input type="text" id="americaUrl">
+        </p>
         <input type="button" id="btn-create" value="등록">
     </div>
     <script src="/js/directForm.js"></script>

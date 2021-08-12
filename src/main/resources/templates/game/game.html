@@ -59,12 +59,7 @@
             </div>
         </div>
         <div class="row">
-            <div style="padding-right: 3px;" class="col-md-3">
-                <div class="container p-2 my-2 border">
-                    <p>커뮤니티영역</p>
-                </div>
-            </div>
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <input type="hidden" id="id" th:value="${game.id}">
                 <div class="container p-2 my-2 border">
                     <p th:text="'한줄평 수: ' + ${#lists.size(commentList)}"></p>

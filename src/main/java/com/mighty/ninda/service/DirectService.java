@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,20 +27,23 @@ public class DirectService {
         return direct;
     }
 
-    public List<Direct> findAll() {
-        return directRepository.findAll();
+    public List<Direct> findAllOrderByReleasedDateDesc() {
+        return directRepository.findAllByOrderByReleasedDateDesc();
     }
 
     @Transactional
     public Long save(SaveDirect requestDto) {
         Direct direct = Direct.builder()
                 .title(requestDto.getTitle())
+                .releasedDate(LocalDate.parse(requestDto.getReleasedDate(), DateTimeFormatter.ofPattern("yyyyMMdd")))
+                .koreaUrl(requestDto.getKoreaUrl())
                 .japanUrl(requestDto.getJapanUrl())
                 .americaUrl(requestDto.getAmericaUrl())
                 .likeList("")
                 .hateList("")
                 .reHate(0)
                 .reLike(0)
+                .viewCount(0)
                 .build();
 
         directRepository.save(direct);
@@ -79,5 +84,13 @@ public class DirectService {
 
 
         return direct.getId();
+    }
+
+    @Transactional
+    public void viewCountUp(Long directId) {
+        Direct direct = directRepository.findById(directId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 다이렉트가 없습니다. id = " + directId));
+
+        direct.viewCountUp();
     }
 }

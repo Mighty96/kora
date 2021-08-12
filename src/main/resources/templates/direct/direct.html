@@ -7,22 +7,43 @@
 </head>
 <th:block layout:fragment="content">
     <div class="main-container" style="padding-top: 20pt">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="container p-2 my-2 border">
-                    <div class="videoContainer">
-                        <iframe class="videoSize" th:src="${direct.japanUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="container p-2 my-2 border">
-                    <div class="videoContainer">
-                        <iframe class="videoSize" th:src="${direct.americaUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+        <div style="display: none" id="ko">
+            <ul class="list-group list-group-horizontal">
+                <a class="list-group-item list-group-item-action list-group-item-dark active">한글 자막</a>
+                <a href="javascript:show_lang('jp')" class="list-group-item list-group-item-action list-group-item-dark">일본</a>
+                <a th:classappend="${direct.americaUrl} == '' ? disabled" href="javascript:show_lang('us')" class="list-group-item list-group-item-action list-group-item-dark">북미</a>
+            </ul>
+            <div class="container p-2 my-2 border">
+                <div class="videoContainer">
+                    <iframe class="videoSize" th:src="${direct.koreaUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
+        <div id="jp">
+            <ul class="list-group list-group-horizontal">
+                <a th:classappend="${direct.koreaUrl} == '' ? disabled" href="javascript:show_lang('ko')" class="list-group-item list-group-item-action list-group-item-dark">한글 자막</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark active">일본</a>
+                <a th:classappend="${direct.americaUrl} == '' ? disabled" href="javascript:show_lang('us')" class="list-group-item list-group-item-action list-group-item-dark">북미</a>
+            </ul>
+            <div class="container p-2 my-2 border">
+                <div class="videoContainer">
+                    <iframe class="videoSize" th:src="${direct.japanUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div style="display: none" id="us">
+            <ul class="list-group list-group-horizontal">
+                <a th:classappend="${direct.koreaUrl} == '' ? disabled" href="javascript:show_lang('ko')" class="list-group-item list-group-item-action list-group-item-dark">한글 자막</a>
+                <a href="javascript:show_lang('jp')" class="list-group-item list-group-item-action list-group-item-dark">일본</a>
+                <a class="list-group-item list-group-item-action list-group-item-dark active">북미</a>
+            </ul>
+            <div class="container p-2 my-2 border">
+                <div class="videoContainer">
+                    <iframe class="videoSize" th:src="${direct.americaUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
         <p><br></p>
         <div class="btn-wrap">
             <button th:onclick="'directLikeUp()'" type="button" class="btn btn-success" id="btn-like" th:text="'추천 ' + ${direct.reLike}"></button>

@@ -23,13 +23,15 @@ public class DirectController {
 
     @GetMapping("/directs")
     public String directList(Model model) {
-        model.addAttribute("directList", DirectListResponse.of(directService.findAll()));
+        model.addAttribute("directList", DirectListResponse.of(directService.findAllOrderByReleasedDateDesc()));
         return "direct/directList";
     }
 
     @GetMapping("/directs/{id}")
     public String direct(Model model, @PathVariable Long id) {
         Direct direct = directService.findById(id);
+        directService.viewCountUp(id);
+
         model.addAttribute("direct", DirectResponse.of(direct));
         model.addAttribute("impressionList", DirectImpressionListResponse.of(impressionService.findAllImpressionByDirectId(direct.getId())));
         return "direct/direct";

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -21,6 +23,9 @@ public class Direct {
 
     private String title;
 
+    private LocalDate releasedDate;
+
+    private String koreaUrl;
     private String japanUrl;
     private String americaUrl;
 
@@ -30,6 +35,8 @@ public class Direct {
     private int reLike;
     private int reHate;
 
+    private int viewCount;
+
     @Column(length= 100000)
     private String likeList;
 
@@ -37,12 +44,16 @@ public class Direct {
     private String hateList;
 
     @Builder
-    public Direct(String title, String japanUrl, String americaUrl, int reLike, int reHate, String likeList, String hateList) {
+    public Direct(String title, LocalDate releasedDate, String koreaUrl, String japanUrl, String americaUrl, int reLike, int reHate, int viewCount, String likeList, String hateList) {
         this.title = title;
+        this.releasedDate = releasedDate;
+        this.koreaUrl = koreaUrl;
         this.japanUrl = japanUrl;
         this.americaUrl = americaUrl;
+        this.impression = new ArrayList<>();
         this.reHate = reHate;
-        this. reLike = reLike;
+        this.reLike = reLike;
+        this.viewCount = viewCount;
         this.likeList = likeList;
         this.hateList = hateList;
     }
@@ -53,6 +64,10 @@ public class Direct {
 
     public void reHateUp() {
         this.reHate++;
+    }
+
+    public void viewCountUp() {
+        this.viewCount++;
     }
 
     public void updateLikeList(String id) {

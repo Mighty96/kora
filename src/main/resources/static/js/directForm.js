@@ -8,6 +8,8 @@ var main = {
     save : function () {
         var data = {
             title: $('#title').val(),
+            releasedDate: $('#date').val(),
+            koreaUrl: $('#koreaUrl').val(),
             japanUrl: $('#japanUrl').val(),
             americaUrl: $('#americaUrl').val()
         };

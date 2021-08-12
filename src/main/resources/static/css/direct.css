@@ -8,6 +8,19 @@
     border: 0;
 }
 
+.list-group-item.disabled {
+    background-color: #c6c8ca;
+}
+
+.list-group {
+    justify-content: center;
+}
+
+.list-group-item {
+    width: 20%;
+    text-align: center;
+}
+
 .btn-wrap {
    margin: auto;
    width: 20%;

@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class SaveDirect {
 
     private String title;
+    private String releasedDate;
+    private String koreaUrl;
     private String japanUrl;
     private String americaUrl;
 

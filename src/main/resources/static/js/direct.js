@@ -174,4 +174,26 @@ function reHateUp(impressionId) {
     });
 }
 
+function show_lang(langCode) {
+    switch(langCode) {
+        case 'ko':
+        document.getElementById('ko').style.display="";
+        document.getElementById('jp').style.display="none";
+        document.getElementById('us').style.display="none";
+        break;
+
+        case 'jp':
+        document.getElementById('ko').style.display="none";
+        document.getElementById('jp').style.display="";
+        document.getElementById('us').style.display="none";
+        break;
+
+        case 'us':
+        document.getElementById('ko').style.display="none";
+        document.getElementById('jp').style.display="none";
+        document.getElementById('us').style.display="";
+        break;
+    }
+}
+
 main.init();

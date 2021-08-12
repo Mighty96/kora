@@ -11,14 +11,16 @@ import lombok.NoArgsConstructor;
 public class DirectResponse {
 
     private Long id;
+    private String koreaUrl;
     private String japanUrl;
     private String americaUrl;
     private int reLike;
     private int reHate;
 
     @Builder
-    public DirectResponse(Long id, String japanUrl, String americaUrl, int reLike, int reHate) {
+    public DirectResponse(Long id, String koreaUrl, String japanUrl, String americaUrl, int reLike, int reHate) {
         this.id = id;
+        this.koreaUrl = koreaUrl;
         this.japanUrl = japanUrl;
         this.americaUrl = americaUrl;
         this.reLike = reLike;
@@ -28,6 +30,7 @@ public class DirectResponse {
     public static DirectResponse of(Direct direct) {
         return DirectResponse.builder()
                 .id(direct.getId())
+                .koreaUrl(direct.getKoreaUrl())
                 .japanUrl(direct.getJapanUrl())
                 .americaUrl(direct.getAmericaUrl())
                 .reLike(direct.getReLike())
