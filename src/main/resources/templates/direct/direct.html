@@ -10,7 +10,7 @@
         <div style="display: none" id="ko">
             <ul class="list-group list-group-horizontal">
                 <a class="list-group-item list-group-item-action list-group-item-dark active">한글 자막</a>
-                <a href="javascript:show_lang('jp')" class="list-group-item list-group-item-action list-group-item-dark">일본</a>
+                <a th:classappend="${direct.japanUrl} == '' ? disabled" href="javascript:show_lang('jp')" class="list-group-item list-group-item-action list-group-item-dark">일본</a>
                 <a th:classappend="${direct.americaUrl} == '' ? disabled" href="javascript:show_lang('us')" class="list-group-item list-group-item-action list-group-item-dark">북미</a>
             </ul>
             <div class="container p-2 my-2 border">
@@ -34,7 +34,7 @@
         <div id="us">
             <ul class="list-group list-group-horizontal">
                 <a th:classappend="${direct.koreaUrl} == '' ? disabled" href="javascript:show_lang('ko')" class="list-group-item list-group-item-action list-group-item-dark">한글 자막</a>
-                <a href="javascript:show_lang('jp')" class="list-group-item list-group-item-action list-group-item-dark">일본</a>
+                <a th:classappend="${direct.japanUrl} == '' ? disabled" href="javascript:show_lang('jp')" class="list-group-item list-group-item-action list-group-item-dark">일본</a>
                 <a class="list-group-item list-group-item-action list-group-item-dark active">북미</a>
             </ul>
             <div class="container p-2 my-2 border">
