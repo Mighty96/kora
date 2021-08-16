@@ -18,15 +18,17 @@ public class PostCommentListResponse {
     private Long userId;
     private String context;
     private String userName;
+    private int orders;
     private int reLike;
     private int reHate;
 
     @Builder
-    public PostCommentListResponse(Long id, Long userId, String context, String userName, int reLike, int reHate) {
+    public PostCommentListResponse(Long id, Long userId, String context, String userName, int orders, int reLike, int reHate) {
         this.id = id;
         this.userId = userId;
         this.context = context;
         this.userName = userName;
+        this.orders = orders;
         this.reLike = reLike;
         this.reHate = reHate;
     }
@@ -40,6 +42,7 @@ public class PostCommentListResponse {
                     .userId(comment.getUser().getId())
                     .context(comment.getContext())
                     .userName(comment.getUser().getNickname())
+                    .orders(comment.getOrders())
                     .reHate(comment.getReHate())
                     .reLike(comment.getReLike())
                     .build());

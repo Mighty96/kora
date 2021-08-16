@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,15 +35,41 @@ public class CommentService {
         Post post = postRepository.findById(requestDto.getPostId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + requestDto.getPostId()));
 
-        Comment comment = Comment.builder()
-                .user(user)
-                .context(requestDto.getContext())
-                .post(post)
-                .reLike(0)
-                .reHate(0)
-                .likeList("")
-                .hateList("")
-                .build();
+
+        Comment comment;
+
+        if (requestDto.getCommentId() == 0)
+        {
+            comment = Comment.builder()
+                    .user(user)
+                    .context(requestDto.getContext())
+                    .post(post)
+                    .orders(1)
+                    .parent(null)
+                    .children(new ArrayList<>())
+                    .reLike(0)
+                    .reHate(0)
+                    .likeList("")
+                    .hateList("")
+                    .build();
+        } else {
+
+            Comment parentComment = commentRepository.findById(requestDto.getCommentId())
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + requestDto.getCommentId()));
+
+            comment = Comment.builder()
+                    .user(user)
+                    .context(requestDto.getContext())
+                    .post(post)
+                    .orders(parentComment.getChildren().size() + 1)
+                    .parent(parentComment)
+                    .children(null)
+                    .reLike(0)
+                    .reHate(0)
+                    .likeList("")
+                    .hateList("")
+                    .build();
+        }
 
         commentRepository.save(comment);
 
@@ -50,8 +77,8 @@ public class CommentService {
     }
 
     @Transactional
-    public List<Comment> findAllCommentByPostId(Long postId) {
-        return commentRepository.findByPostId(postId);
+    public List<Comment> findByPostIdOrderByParentIdAscOrdersAsc(Long postId) {
+        return commentRepository.findByPostIdOrderByParentIdAscOrdersAsc(postId);
     }
 
     @Transactional

@@ -41,31 +41,58 @@
         </div>
         <p style="color: #dddddd; margin-top: 50px; margin-bottom: 5px; margin-left: 50px;" th:text="'댓글 수: ' + ${#lists.size(commentList)}"></p>
         <div class="comment-container border">
-            <div class="comment-mini-container p-2" th:each="comment: ${commentList}">
-                <div class="row">
-                    <div class="col-md-2">
+            <div th:each="comment: ${commentList}">
+                <div th:if="${comment.orders == 1}" th:id="${comment.id}" class="comment-mini-container p-2">
+                    <div class="comment-user-container">
                         <p th:text="${comment.userName}"></p>
                     </div>
-                    <div class="col-md-8">
-                        <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
+                    <div class="comment-context-container">
+                        <p style="cursor: pointer;" th:onclick="'reCommentBox(' + ${comment.id} + ')'" th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
                     </div>
-                    <div class="col-md-2" style="display: inline-block;">
+                    <div class="comment-button-container" style="display: inline-block;">
                         <div class="comment-update-button">
-                        <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}" id="btn-update-mode">수정</span>
-                        <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">삭제</span>
+                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">수정</span>
+                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">삭제</span>
                         </div>
 
                         <div th:if="${board.toString().equals('free')}" class="comment-button-container">
-                            <input th:onclick="'reLikeUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" id="btn-comment-like" th:value="'추천 ' + ${comment.reLike}">
-                            <input th:onclick="'reHateUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" id="btn-comment-hate" th:value="'비추천 ' + ${comment.reHate}">
+                            <input th:onclick="'reLikeUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" th:value="'추천 ' + ${comment.reLike}">
+                            <input th:onclick="'reHateUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" th:value="'비추천 ' + ${comment.reHate}">
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${comment.orders > 1}" class="re-comment-mini-container p-2">
+                    <div class="comment-user-container">
+                        <p th:text="${comment.userName}"></p>
+                    </div>
+                    <div class="comment-re-context-container">
+                        <p th:text="${comment.context}" th:id="'rid' + ${comment.id}"></p>
+                    </div>
+                    <div class="comment-button-container" style="display: inline-block;">
+                        <div class="comment-update-button">
+                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">수정</span>
+                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">삭제</span>
+                        </div>
+
+                        <div th:if="${board.toString().equals('free')}" class="comment-button-container">
+                            <input th:onclick="'reLikeUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" th:value="'추천 ' + ${comment.reLike}">
+                            <input th:onclick="'reHateUp(' + ${comment.id} + ')'" type="button" class="comment-like-button" th:value="'비추천 ' + ${comment.reHate}">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="comment-mini-container p-2" style="border-bottom: none!important;">
+            <div id="re-comment-box" style="display: none;" class="re-comment-form row">
+                <div class="re-comment-mini-container p-2" style="border-bottom: none!important;">
+                    <textarea class="comment-context" id="re-context" placeholder="대댓글"></textarea>
+                </div>
+                <div style="display: inline-block; width: 100%;">
+                    <input type="button" class="comment-input-button" id="btn-re-comment" value="댓글 남기기">
+                </div>
+            </div>
+            <div th:if="${session.user != null}" class="comment-mini-container p-2" style="border-bottom: none!important;">
                 <textarea class="comment-context" id="context" placeholder="댓글"></textarea>
             </div>
-            <div style="display: inline-block; width: 100%;">
+            <div th:if="${session.user != null}" style="display: inline-block; width: 100%;">
                 <input type="button" class="comment-input-button" id="btn-comment" value="댓글 남기기">
             </div>
         </div>

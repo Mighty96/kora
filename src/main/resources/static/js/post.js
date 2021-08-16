@@ -8,7 +8,8 @@ var main = {
     save : function () {
         var data = {
             context: $('#context').val(),
-            postId: $('#post-id').val()
+            postId: $('#post-id').val(),
+            commentId: 0
         };
         $.ajax({
             type: 'POST',
@@ -31,6 +32,33 @@ var main = {
         });
     }
 };
+
+function re_save(commentId) {
+    var data = {
+        context: $('#re-context').val(),
+        postId: $('#post-id').val(),
+        commentId: commentId
+    };
+    $.ajax({
+        type: 'POST',
+        url: '/api/comments',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data),
+        success: function() {
+            Swal.fire({
+                title: "대댓글을 등록했어요!",
+                icon: "success"
+            })
+            .then(() =>{
+                window.location.reload();
+            });
+        },
+        error: function(e) {
+            alert('몰라');
+        }
+    });
+}
 
 function post_del() {
     var board = $('#board').val();
@@ -206,6 +234,22 @@ function reHateUp(commentId) {
             });
         }
     });
+}
+
+function reCommentBox(commentId) {
+    $('#re-comment-box').remove();
+
+    var reCommentBoxHtml =
+    '<div id="re-comment-box" class="re-comment-form">' +
+        '<div class="re-comment-mini-container p-2" style="border-bottom: none!important; border-left: none!important;">' +
+            '<textarea class="comment-context" id="re-context" placeholder="대댓글"></textarea>' +
+        '</div>' +
+        '<div style="display: inline-block; width: 100%;">' +
+             '<input onclick="re_save(' + commentId + ')" type="button" class="comment-input-button" id="btn-re-comment" value="댓글 남기기">' +
+        '</div>' +
+    '</div>'
+
+    $('#' + commentId).after(reCommentBoxHtml);
 }
 
 main.init();

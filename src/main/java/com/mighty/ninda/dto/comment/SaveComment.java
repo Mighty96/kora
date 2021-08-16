@@ -10,4 +10,5 @@ public class SaveComment {
 
     private String context;
     private Long postId;
+    private Long commentId;
 }

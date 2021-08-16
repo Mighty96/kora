@@ -77,9 +77,8 @@ public class PostController {
 
         viewCountUp(id, request, response);
         model.addAttribute("post", PostResponse.of(postService.findById(id)));
-        model.addAttribute("commentList", PostCommentListResponse.of(commentService.findAllCommentByPostId(id)));
+        model.addAttribute("commentList", PostCommentListResponse.of(commentService.findByPostIdOrderByParentIdAscOrdersAsc(id)));
         model.addAttribute("board", board);
-
         return "post/post";
     }
 
