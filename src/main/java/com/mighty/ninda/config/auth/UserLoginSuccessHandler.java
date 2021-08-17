@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/*
-로그인 성공시 리다이렉트 지점 지정
- */
-
 @Service
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 
