@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final HttpSession httpSession;
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -37,6 +38,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().getKey()));
+
+        httpSession.setAttribute("name", user.getNickname());
 
         return CustomUserDetails.builder()
                 .id(user.getId())

@@ -35,7 +35,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(@LoginUser CurrentUser currentUser, Model model) {
-
         model.addAttribute("commentList", IndexOneLineCommentListResponse.of(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
         model.addAttribute("newGameList", IndexNewGameListResponse.of(gameService.findNewGame()));
         model.addAttribute("freeBoard", IndexNewBoardListResponse.of(postService.findTop10ByBoardOrderByCreatedDateDesc(Board.FREE.getValue())));
