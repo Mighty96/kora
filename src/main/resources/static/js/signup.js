@@ -34,7 +34,7 @@ var main = {
             $.ajax({
                 type: 'POST',
                 url: '/api/users/signup/ninda',
-                dataType: 'json',
+                dataType: 'text',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
@@ -49,7 +49,7 @@ var main = {
                 error: function(e) {
                     $('#btn-signup').prop('disabled', false);
                     $('#btn-signup').prop('value', "등록");
-                    alert(JSON.stringify(error));
+                    alert(JSON.stringify(e));
                 }
             });
         } else {

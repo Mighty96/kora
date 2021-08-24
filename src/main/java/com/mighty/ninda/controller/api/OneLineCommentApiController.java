@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.dto.oneLineComment.SaveOneLineComment;
 import com.mighty.ninda.dto.oneLineComment.UpdateOneLineComment;
 import com.mighty.ninda.service.OneLineCommentService;
@@ -19,38 +19,38 @@ public class OneLineCommentApiController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/oneLineComments")
-    public void saveOneLineComment(@LoginUser SessionUser sessionUser,
+    public void saveOneLineComment(@LoginUser CurrentUser currentUser,
                                    @RequestBody SaveOneLineComment requestDto) {
 
-        oneLineCommentService.save(sessionUser, requestDto);
+        oneLineCommentService.save(currentUser, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/oneLineComments/{id}")
-    public void updateOneLineComment(@LoginUser SessionUser sessionUser,
+    public void updateOneLineComment(@LoginUser CurrentUser currentUser,
                                      @RequestBody UpdateOneLineComment requestDto,
                                      @PathVariable Long id) {
 
 
-        oneLineCommentService.update(sessionUser, id, requestDto);
+        oneLineCommentService.update(currentUser, id, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/api/oneLineComments/{id}")
-    public void deleteOneLineComment(@LoginUser SessionUser sessionUser,
+    public void deleteOneLineComment(@LoginUser CurrentUser currentUser,
                                      @PathVariable Long id) {
-        oneLineCommentService.deleteOneLineComment(sessionUser, id);
+        oneLineCommentService.deleteOneLineComment(currentUser, id);
     }
 
     @GetMapping("/api/oneLineComments/{id}/like")
-    public void reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser CurrentUser currentUser,
                              @PathVariable Long id) {
-        oneLineCommentService.reLikeUp(sessionUser, id);
+        oneLineCommentService.reLikeUp(currentUser, id);
     }
 
     @GetMapping("/api/oneLineComments/{id}/hate")
-    public void reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        oneLineCommentService.reHateUp(sessionUser, id);
+        oneLineCommentService.reHateUp(currentUser, id);
     }
 }

@@ -1,6 +1,6 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.comment.Comment;
 import com.mighty.ninda.domain.comment.CommentRepository;
 import com.mighty.ninda.domain.post.Post;
@@ -31,9 +31,9 @@ public class CommentService {
     private final PostRepository postRepository;
 
     @Transactional
-    public void saveComment(SessionUser sessionUser, SaveComment requestDto) {
+    public void saveComment(CurrentUser currentUser, SaveComment requestDto) {
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User가 존재하지 않습니다. id = " + userId));
@@ -96,38 +96,38 @@ public class CommentService {
     }
 
     @Transactional
-    public void updateComment(SessionUser sessionUser, Long commentId, UpdateComment requestDto) {
+    public void updateComment(CurrentUser currentUser, Long commentId, UpdateComment requestDto) {
         Comment comment = findById(commentId);
 
-        if (!sessionUser.getId().equals(comment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
-            throw new HandleAccessDenied("작성자만 변경할 수 있습니다.");
-        }
+//        if (!sessionUser.getId().equals(comment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+//            throw new HandleAccessDenied("작성자만 변경할 수 있습니다.");
+//        }
 
         comment.update(requestDto.getContext());
     }
 
     @Transactional
-    public void deleteComment(SessionUser sessionUser, Long commentId) {
+    public void deleteComment(CurrentUser currentUser, Long commentId) {
         Comment comment = findById(commentId);
 
-        if (!sessionUser.getId().equals(comment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
-            throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
-        }
+//        if (!sessionUser.getId().equals(comment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+//            throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
+//        }
 
         commentRepository.delete(comment);
     }
 
     @Transactional
-    public void reLikeUp(SessionUser sessionUser, Long commentId) {
+    public void reLikeUp(CurrentUser currentUser, Long commentId) {
         Comment comment = findById(commentId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -140,16 +140,16 @@ public class CommentService {
     }
 
     @Transactional
-    public void reHateUp(SessionUser sessionUser, Long commentId) {
+    public void reHateUp(CurrentUser currentUser, Long commentId) {
         Comment comment = findById(commentId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 

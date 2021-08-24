@@ -1,33 +1,36 @@
 package com.mighty.ninda.config.auth;
 
 import com.mighty.ninda.domain.user.RegistrationId;
+import com.mighty.ninda.domain.user.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CustomUserDetails implements UserDetails {
 
+    private Map<String, Object> attributes = new HashMap<>();
     private Long id;
-    private String email;
     private String password;
-    private String nickname;
     private Collection<GrantedAuthority> authorities;
-    private RegistrationId registrationId;
 
 
     @Builder
-    public CustomUserDetails(Long id, String email, String password, String nickname, Collection<GrantedAuthority> authorities, RegistrationId registrationId) {
+    public CustomUserDetails(Long id, String password, String email, String nickname, Collection<GrantedAuthority> authorities, RegistrationId registrationId) {
         this.id = id;
-        this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.attributes.put("id", id);
+        this.attributes.put("email", email);
+        this.attributes.put("nickname", nickname);
+        this.attributes.put("registrationId", registrationId);
         this.authorities = authorities;
-        this.registrationId = registrationId;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return (String)attributes.get("email");
     }
 
     @Override

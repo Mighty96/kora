@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 public class AuthController {
 
     private final UserService userService;
-    private final HttpSession httpSession;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/signin")
@@ -37,7 +36,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_GUEST')")
     @GetMapping("/signup_auth")
-    public String auth(@LoginUser SessionUser user) {
+    public String auth(@LoginUser CurrentUser user) {
         if (user.getRegistrationId() == RegistrationId.NINDA) {
             return "auth/signup_ninda";
         } else {
@@ -48,7 +47,6 @@ public class AuthController {
     @GetMapping("/authConfirm")
     public String authConfirm(@RequestParam String email, @RequestParam String authKey, Model model) {
         userService.authConfirm(email, authKey, model);
-        httpSession.removeAttribute("user");
         return "redirect:/logout";
     }
 

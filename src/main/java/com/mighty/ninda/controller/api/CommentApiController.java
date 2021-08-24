@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.dto.comment.SaveComment;
 import com.mighty.ninda.dto.comment.UpdateComment;
 import com.mighty.ninda.service.CommentService;
@@ -19,38 +19,38 @@ public class CommentApiController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/comments")
-    public void saveComment(@LoginUser SessionUser sessionUser,
+    public void saveComment(@LoginUser CurrentUser currentUser,
                                    @RequestBody SaveComment requestDto) {
 
-        commentService.saveComment(sessionUser, requestDto);
+        commentService.saveComment(currentUser, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/comments/{id}")
-    public void updateComment(@LoginUser SessionUser sessionUser,
+    public void updateComment(@LoginUser CurrentUser currentUser,
                                      @RequestBody UpdateComment requestDto,
                                      @PathVariable Long id) {
 
 
-        commentService.updateComment(sessionUser, id, requestDto);
+        commentService.updateComment(currentUser, id, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/api/comments/{id}")
-    public void deleteOneLineComment(@LoginUser SessionUser sessionUser,
+    public void deleteOneLineComment(@LoginUser CurrentUser currentUser,
                                      @PathVariable Long id) {
-        commentService.deleteComment(sessionUser, id);
+        commentService.deleteComment(currentUser, id);
     }
 
     @GetMapping("/api/comments/{id}/like")
-    public void reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        commentService.reLikeUp(sessionUser, id);
+        commentService.reLikeUp(currentUser, id);
     }
 
     @GetMapping("/api/comments/{id}/hate")
-    public void reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        commentService.reHateUp(sessionUser, id);
+        commentService.reHateUp(currentUser, id);
     }
 }

@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.dto.impression.SaveImpression;
 import com.mighty.ninda.dto.impression.UpdateImpression;
 import com.mighty.ninda.service.ImpressionService;
@@ -19,38 +19,38 @@ public class ImpressionApiController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/impressions")
-    public void saveImpression(@LoginUser SessionUser sessionUser,
+    public void saveImpression(@LoginUser CurrentUser currentUser,
                                @RequestBody SaveImpression requestDto) {
 
-        impressionService.save(sessionUser, requestDto);
+        impressionService.save(currentUser, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/impressions/{id}")
-    public void updateImpression(@LoginUser SessionUser sessionUser,
+    public void updateImpression(@LoginUser CurrentUser currentUser,
                                  @RequestBody UpdateImpression requestDto,
                                  @PathVariable Long id) {
 
 
-        impressionService.update(sessionUser, id, requestDto);
+        impressionService.update(currentUser, id, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/api/impressions/{id}")
-     public void deleteImpression(@LoginUser SessionUser sessionUser,
+     public void deleteImpression(@LoginUser CurrentUser currentUser,
                                   @PathVariable Long id) {
-        impressionService.deleteImpression(sessionUser, id);
+        impressionService.deleteImpression(currentUser, id);
     }
 
     @GetMapping("/api/impressions/{id}/like")
-    public void reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        impressionService.reLikeUp(sessionUser, id);
+        impressionService.reLikeUp(currentUser, id);
     }
 
     @GetMapping("/api/impressions/{id}/hate")
-    public void reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        impressionService.reHateUp(sessionUser, id);
+        impressionService.reHateUp(currentUser, id);
     }
 }

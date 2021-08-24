@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.service.PostService;
 import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
@@ -22,8 +22,8 @@ public class PostApiController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/posts")
     public void savePost(@RequestBody SavePost requestDto,
-                     @LoginUser SessionUser sessionUser) {
-        postService.save(requestDto, userService.findById(sessionUser.getId()));
+                     @LoginUser CurrentUser currentUser) {
+        postService.save(requestDto, userService.findById(currentUser.getId()));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -40,15 +40,15 @@ public class PostApiController {
 
 
     @GetMapping("/api/posts/{id}/like")
-    public void reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
 
-        postService.reLikeUp(sessionUser, id);
+        postService.reLikeUp(currentUser, id);
     }
 
     @GetMapping("/api/posts/{id}/hate")
-    public void reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        postService.reHateUp(sessionUser, id);
+        postService.reHateUp(currentUser, id);
     }
 }

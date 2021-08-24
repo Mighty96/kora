@@ -1,6 +1,6 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.file.Photo;
 import com.mighty.ninda.domain.file.PhotoRepository;
 import com.mighty.ninda.domain.post.Post;
@@ -12,8 +12,6 @@ import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
 import com.mighty.ninda.exception.EntityNotFoundException;
 import com.mighty.ninda.exception.common.HandleAccessDenied;
-import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
-import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import com.mighty.ninda.exception.post.PostAlreadyHateException;
 import com.mighty.ninda.exception.post.PostAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.rmi.AlreadyBoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -164,16 +161,16 @@ public class PostService {
     }
 
     @Transactional
-    public void reLikeUp(SessionUser sessionUser, Long postId) {
+    public void reLikeUp(CurrentUser currentUser, Long postId) {
         Post post = findById(postId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -186,17 +183,17 @@ public class PostService {
     }
 
     @Transactional
-    public void reHateUp(SessionUser sessionUser, Long postId) {
+    public void reHateUp(CurrentUser currentUser, Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + postId));
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 

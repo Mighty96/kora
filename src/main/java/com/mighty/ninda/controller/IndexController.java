@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.hot.HotRepository;
 import com.mighty.ninda.domain.post.Board;
@@ -34,7 +34,7 @@ public class IndexController {
     private final HotRepository hotRepository;
 
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
+    public String index(@LoginUser CurrentUser currentUser, Model model) {
 
         model.addAttribute("commentList", IndexOneLineCommentListResponse.of(oneLineCommentService.findTop5ByOrderByCreatedDateDesc()));
         model.addAttribute("newGameList", IndexNewGameListResponse.of(gameService.findNewGame()));

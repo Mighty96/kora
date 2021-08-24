@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.dto.user.*;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,41 +16,41 @@ public class UserApiController {
 
     private final UserService userService;
 
-
     @PostMapping("/api/users/signup/ninda")
     public void save(@RequestBody SaveUser requestDto) {
         userService.save(requestDto);
+        log.info("saved");
     }
 
     @PreAuthorize("hasRole('ROLE_GUEST')")
     @PostMapping("/api/users/signup/oauth")
-    public void save(@RequestBody SaveUserOauth requestDto, @LoginUser SessionUser sessionUser) {
+    public void save(@RequestBody SaveUserOauth requestDto, @LoginUser CurrentUser currentUser) {
 
-        userService.oauthUpdate(sessionUser, requestDto);
+        userService.oauthUpdate(currentUser, requestDto);
     }
 
     @PostMapping("/api/users/signup/emailChk")
-    public void emailDuplicateChk(@RequestBody UserEmail requestDto) {
-        userService.emailDuplicateChk(requestDto);
+    public String emailDuplicateChk(@RequestBody UserEmail requestDto) {
+        return userService.emailDuplicateChk(requestDto);
     }
 
     @PreAuthorize("hasRole('ROLE_GUEST')")
     @GetMapping("/api/users/resendAuthMail")
-    public void resendAuthMail(@LoginUser SessionUser sessionUser) {
-        userService.resendAuthMail(sessionUser);
+    public void resendAuthMail(@LoginUser CurrentUser currentUser) {
+        userService.resendAuthMail(currentUser);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @PutMapping("/api/users")
-    public void update(@LoginUser SessionUser sessionUser, @RequestBody UpdateUser requestDto) {
+    public void update(@LoginUser CurrentUser currentUser, @RequestBody UpdateUser requestDto) {
 
-        userService.update(sessionUser, requestDto);
+        userService.update(currentUser, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('GUEST', 'USER')")
     @PostMapping("/api/users/updatePassword")
-    public void updatePassword(@LoginUser SessionUser sessionUser, @RequestBody UpdateUserPassword requestDto) {
-        userService.changePassword(sessionUser, requestDto.getOldPassword(), requestDto.getNewPassword());
+    public void updatePassword(@LoginUser CurrentUser currentUser, @RequestBody UpdateUserPassword requestDto) {
+        userService.changePassword(currentUser, requestDto.getOldPassword(), requestDto.getNewPassword());
     }
 
     @PreAuthorize("hasAnyRole('GUEST', 'USER')")

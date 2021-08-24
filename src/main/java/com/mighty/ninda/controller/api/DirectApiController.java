@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.dto.direct.SaveDirect;
 import com.mighty.ninda.service.DirectService;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ public class DirectApiController {
     }
 
     @GetMapping("/api/directs/{id}/like")
-    public void reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        directService.reLikeUp(sessionUser, id);
+        directService.reLikeUp(currentUser, id);
     }
 
     @GetMapping("/api/directs/{id}/hate")
-    public void reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        directService.reHateUp(sessionUser, id);
+        directService.reHateUp(currentUser, id);
     }
 }

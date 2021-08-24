@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class S3ApiController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/upload")
-    public String upload(@LoginUser SessionUser user, MultipartHttpServletRequest multipartFile, HttpServletResponse response) throws IOException {
+    public String upload(@LoginUser CurrentUser user, MultipartHttpServletRequest multipartFile, HttpServletResponse response) throws IOException {
 
         MultipartFile file = multipartFile.getFile("upload");
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();

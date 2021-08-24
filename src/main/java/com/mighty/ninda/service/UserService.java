@@ -1,7 +1,7 @@
 package com.mighty.ninda.service;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
@@ -26,7 +26,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final HttpSession httpSession;
     private final PasswordEncoder passwordEncoder;
     private final MailSendService mailSendService;
 
@@ -64,20 +63,18 @@ public class UserService {
     }
 
     @Transactional
-    public void update(SessionUser sessionUser, UpdateUser requestDto) {
-        User user = findById(sessionUser.getId());
+    public void update(@LoginUser CurrentUser currentUser, UpdateUser requestDto) {
+        User user = findById(currentUser.getId());
 
         user.update(requestDto.getNickname(), requestDto.getIntroduction());
-        httpSession.setAttribute("user", new SessionUser(user));
     }
 
     @Transactional
-    public void oauthUpdate(SessionUser sessionUser, SaveUserOauth requestDto) {
-        User user = findByEmail(sessionUser.getEmail());
+    public void oauthUpdate(@LoginUser CurrentUser currentUser, SaveUserOauth requestDto) {
+        User user = findByEmail(currentUser.getEmail());
 
         user.update(requestDto.getNickname(), user.getIntroduction());
         user.updateRoleToUser();
-        httpSession.setAttribute("user", new SessionUser(user));
     }
 
     public User findById(Long userId) {
@@ -111,9 +108,9 @@ public class UserService {
     }
 
     @Transactional
-    public void resendAuthMail(SessionUser sessionUser) {
+    public void resendAuthMail(@LoginUser CurrentUser currentUser) {
 
-        User user = findByEmail(sessionUser.getEmail());
+        User user = findByEmail(currentUser.getEmail());
 
         String newAuthKey = mailSendService.sendAuthMail(user.getEmail());
         user.updateAuthKey(newAuthKey);
@@ -133,14 +130,13 @@ public class UserService {
     }
 
     @Transactional
-    public void changePassword(SessionUser sessionUser, String oldPassword, String newPassword) {
-        User user = findById(sessionUser.getId());
+    public void changePassword(@LoginUser CurrentUser currentUser, String oldPassword, String newPassword) {
+        User user = findById(currentUser.getId());
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new InvalidValueException("비밀번호가 올바르지 않습니다.");
         } else {
             user.updatePassword(passwordEncoder.encode(newPassword));
-            httpSession.removeAttribute("user");
         }
     }
 }

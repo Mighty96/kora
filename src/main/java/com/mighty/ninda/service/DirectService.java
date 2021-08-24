@@ -1,6 +1,6 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.direct.Direct;
 import com.mighty.ninda.domain.direct.DirectRepository;
 import com.mighty.ninda.domain.user.Role;
@@ -54,16 +54,16 @@ public class DirectService {
     }
 
     @Transactional
-    public void reLikeUp(SessionUser sessionUser, Long directId) {
+    public void reLikeUp(CurrentUser currentUser, Long directId) {
         Direct direct = findById(directId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -76,16 +76,16 @@ public class DirectService {
     }
 
     @Transactional
-    public void reHateUp(SessionUser sessionUser, Long directId) {
+    public void reHateUp(CurrentUser currentUser, Long directId) {
         Direct direct = findById(directId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 

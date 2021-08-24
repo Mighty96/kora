@@ -1,6 +1,6 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.comment.Impression;
 import com.mighty.ninda.domain.comment.ImpressionRepository;
 import com.mighty.ninda.domain.direct.Direct;
@@ -29,9 +29,9 @@ public class ImpressionService {
     private final DirectRepository directRepository;
 
     @Transactional
-    public void save(SessionUser sessionUser, SaveImpression requestDto) {
+    public void save(CurrentUser currentUser, SaveImpression requestDto) {
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User가 존재하지 않습니다. id = " + userId));
@@ -63,12 +63,12 @@ public class ImpressionService {
     }
 
     @Transactional
-    public void update(SessionUser sessionUser, Long impressionId, UpdateImpression requestDto) {
+    public void update(CurrentUser currentUser, Long impressionId, UpdateImpression requestDto) {
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
         Impression impression = findById(impressionId);
 
-        if (!userId.equals(impression.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+        if (!userId.equals(impression.getUser().getId()) && currentUser.getRole() != Role.ADMIN) {
             throw new IllegalArgumentException("작성자만 변경할 수 있습니다.");
         }
 
@@ -76,11 +76,11 @@ public class ImpressionService {
     }
 
     @Transactional
-    public void deleteImpression(SessionUser sessionUser, Long ImpressionId) {
-        Long userId = sessionUser.getId();
+    public void deleteImpression(CurrentUser currentUser, Long ImpressionId) {
+        Long userId = currentUser.getId();
         Impression impression = findById(ImpressionId);
 
-        if (!sessionUser.getId().equals(impression.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+        if (!currentUser.getId().equals(impression.getUser().getId()) && currentUser.getRole() != Role.ADMIN) {
             throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
         }
 
@@ -88,16 +88,16 @@ public class ImpressionService {
     }
 
     @Transactional
-    public void reLikeUp(SessionUser sessionUser, Long impressionId) {
+    public void reLikeUp(CurrentUser currentUser, Long impressionId) {
         Impression impression = findById(impressionId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
         String _userId = "[" + userId.toString() + "]";
 
         if (impression.getLikeList().contains(_userId)) {
@@ -109,16 +109,16 @@ public class ImpressionService {
     }
 
     @Transactional
-    public void reHateUp(SessionUser sessionUser, Long impressionId) {
+    public void reHateUp(CurrentUser currentUser, Long impressionId) {
         Impression impression = findById(impressionId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
         String _userId = "[" + userId.toString() + "]";
 
         if (impression.getHateList().contains(_userId)) {

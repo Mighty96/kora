@@ -1,9 +1,10 @@
 package com.mighty.ninda.config.auth;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.user.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.servlet.ServletException;
@@ -17,14 +18,14 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        SessionUser sessionUser = (SessionUser) request.getSession().getAttribute("user");
+        CurrentUser currentUser = CurrentUser.of(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             response.sendRedirect("/signin");
             return;
         }
 
-        if (sessionUser.getRole() == Role.GUEST) {
+        if (currentUser.getRole() == Role.GUEST) {
             response.sendRedirect("/signup_auth");
             return;
         }

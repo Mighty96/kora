@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller.api;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.service.GameService;
 import com.mighty.ninda.utils.Crawler;
 import com.mighty.ninda.utils.DBScheduled;
@@ -38,14 +38,14 @@ public class GameApiController {
     }
 
     @GetMapping("/api/games/{id}/like")
-    public void reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        gameService.reLikeUp(sessionUser, id);
+        gameService.reLikeUp(currentUser, id);
     }
 
     @GetMapping("/api/games/{id}/hate")
-    public void reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
-        gameService.reHateUp(sessionUser, id);
+        gameService.reHateUp(currentUser, id);
     }
 }

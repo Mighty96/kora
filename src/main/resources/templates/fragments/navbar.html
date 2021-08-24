@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="navbarFragment">
     <nav class="navbar navbar-expand-sm sticky-top">
         <ul class="navbar-nav main-container">
@@ -20,16 +21,16 @@
                     <a class="dropdown-item" href="/board/friendCode?page=0">친구코드교환</a>
                 </div>
             </li>
-            <li th:if = "${session.user == null}" class="nav-item right-tap">
+            <li sec:authorize="isAnonymous()" class="nav-item right-tap">
                 <a class="nav-link" href="/signin">로그인</a>
             </li>
-            <li th:if = "${session.user != null}" class="nav-item right-tap">
+            <li sec:authorize="isAuthenticated()" class="nav-item right-tap">
                 <a class="nav-link" href="/logout">로그아웃</a>
             </li>
-            <li th:if = "${session.user != null && !session.user.role.toString().equals('ADMIN')}" class="nav-item right-tap">
-                <a class="nav-link" href="/user/profile" th:text = "${session.user.nickname}"></a>
+            <li sec:authorize="hasAnyRole('ROLE_GUEST', 'ROLE_USER')" class="nav-item right-tap">
+                <a class="nav-link" href="/user/profile" th:text = "${currentUser}"></a>
             </li>
-            <li th:if = "${session.user != null && session.user.role.toString().equals('ADMIN')}" class="nav-item right-tap">
+            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item right-tap">
                 <a class="nav-link" href="/admin/main">어드민페이지</a>
             </li>
         </ul>

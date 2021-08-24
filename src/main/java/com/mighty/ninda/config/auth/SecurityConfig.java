@@ -3,6 +3,7 @@ package com.mighty.ninda.config.auth;
 import com.mighty.ninda.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                         .antMatchers("/user/**").authenticated()
                         .antMatchers("/admin/**").hasRole("ADMIN")
-                        .antMatchers("/api/users/**", "/api/gameCrawl", "/api/saleCrawl", "/api/offSale", "/authConfirm").permitAll()
                         .antMatchers("/**").permitAll()
                 .and()
                     .logout()
@@ -56,21 +57,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("admin1234")).roles("ADMIN")
-                .and()
-                .withUser("user").password(passwordEncoder().encode("user1234")).roles("USER")
-                .and()
-                .withUser("guest").password(passwordEncoder().encode("guest1234")).roles("GUEST");
-
-    }
-
-    @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/font/**", "/h2-console/**");
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                    .withUser("admin").password(passwordEncoder().encode("admin123")).roles("ADMIN")
+                .and()
+                    .withUser("user").password(passwordEncoder().encode("user123")).roles("USER");
+
+        auth
+                .authenticationProvider(authenticationProvider());
+    }
+
+    @Bean
+    DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+
+        return daoAuthenticationProvider;
     }
 
     // 비밀번호 암호화

@@ -1,6 +1,6 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
 import com.mighty.ninda.domain.game.GameSpecs;
@@ -11,7 +11,6 @@ import com.mighty.ninda.exception.EntityNotFoundException;
 import com.mighty.ninda.exception.common.HandleAccessDenied;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
-import com.mighty.ninda.utils.Crawler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -59,16 +58,16 @@ public class GameService {
     }
 
     @Transactional
-    public void reLikeUp(SessionUser sessionUser, Long gameId) {
+    public void reLikeUp(CurrentUser currentUser, Long gameId) {
         Game game = findById(gameId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -81,16 +80,16 @@ public class GameService {
     }
 
     @Transactional
-    public void reHateUp(SessionUser sessionUser, Long gameId) {
+    public void reHateUp(CurrentUser currentUser, Long gameId) {
         Game game = findById(gameId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 

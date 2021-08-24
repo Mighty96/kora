@@ -1,6 +1,6 @@
 package com.mighty.ninda.service;
 
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.comment.OneLineCommentRepository;
 import com.mighty.ninda.domain.game.Game;
@@ -33,9 +33,9 @@ public class OneLineCommentService {
     private final GameRepository gameRepository;
 
     @Transactional
-    public void save(SessionUser sessionUser, SaveOneLineComment requestDto) {
+    public void save(CurrentUser currentUser, SaveOneLineComment requestDto) {
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User가 존재하지 않습니다. id = " + userId));
@@ -79,12 +79,12 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public void update(SessionUser sessionUser, Long oneLineCommentId, UpdateOneLineComment requestDto) {
+    public void update(CurrentUser currentUser, Long oneLineCommentId, UpdateOneLineComment requestDto) {
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
         OneLineComment oneLineComment = findById(oneLineCommentId);
 
-        if (!userId.equals(oneLineComment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+        if (!userId.equals(oneLineComment.getUser().getId()) && currentUser.getRole() != Role.ADMIN) {
             throw new HandleAccessDenied("작성자만 변경할 수 있습니다.");
         }
 
@@ -92,12 +92,12 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public void deleteOneLineComment(SessionUser sessionUser, Long oneLineCommentId) {
+    public void deleteOneLineComment(CurrentUser currentUser, Long oneLineCommentId) {
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
         OneLineComment oneLineComment = findById(oneLineCommentId);
 
-        if (!userId.equals(oneLineComment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+        if (!userId.equals(oneLineComment.getUser().getId()) && currentUser.getRole() != Role.ADMIN) {
             throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
         }
 
@@ -105,16 +105,16 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public void reLikeUp(SessionUser sessionUser, Long oneLineCommentId) {
+    public void reLikeUp(CurrentUser currentUser, Long oneLineCommentId) {
         OneLineComment comment = findById(oneLineCommentId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -127,16 +127,16 @@ public class OneLineCommentService {
     }
 
     @Transactional
-    public void reHateUp(SessionUser sessionUser, Long oneLineCommentId) {
+    public void reHateUp(CurrentUser currentUser, Long oneLineCommentId) {
         OneLineComment comment = findById(oneLineCommentId);
 
-        if (sessionUser == null) {
+        if (currentUser == null) {
             throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (sessionUser.getRole() == Role.GUEST) {
+        } else if (currentUser.getRole() == Role.GUEST) {
             throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
         }
 
-        Long userId = sessionUser.getId();
+        Long userId = currentUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 

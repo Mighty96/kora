@@ -1,7 +1,7 @@
 package com.mighty.ninda.controller;
 
 import com.mighty.ninda.config.auth.LoginUser;
-import com.mighty.ninda.config.auth.dto.SessionUser;
+import com.mighty.ninda.config.auth.dto.CurrentUser;
 import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.dto.page.PageResponse;
@@ -37,20 +37,20 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/profile")
-    public String profile(@LoginUser SessionUser sessionUser, Model model) {
-        model.addAttribute("user", UserResponse.of(userService.findById(sessionUser.getId())));
+    public String profile(@LoginUser CurrentUser currentUser, Model model) {
+        model.addAttribute("user", UserResponse.of(userService.findById(currentUser.getId())));
         return "user/profile";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/post")
-    public String post(@LoginUser SessionUser sessionUser,
+    public String post(@LoginUser CurrentUser currentUser,
                        Model model,
                        @PageableDefault(size=20) Pageable pageable,
                        @RequestParam(required = false) Map<String, Object> searchKeyword) {
 
 
-        searchKeyword.put("userId", sessionUser.getId());
+        searchKeyword.put("userId", currentUser.getId());
 
         Page<Post> pagePostList = postService.findAll(searchKeyword, pageable);
 
@@ -64,11 +64,11 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/oneLineComment")
-    public String oneLineComment(@LoginUser SessionUser sessionUser,
+    public String oneLineComment(@LoginUser CurrentUser currentUser,
                                  Model model,
                                  @PageableDefault(size=20) Pageable pageable) {
 
-        Page<OneLineComment> pageOneLineCommentList = oneLineCommentService.findOneLineCommentByUserIdDesc(sessionUser.getId(), pageable);
+        Page<OneLineComment> pageOneLineCommentList = oneLineCommentService.findOneLineCommentByUserIdDesc(currentUser.getId(), pageable);
 
         List<UserOneLineCommentListResponse> oneLineCommentList = pageOneLineCommentList.stream().map(UserOneLineCommentListResponse::of).collect(Collectors.toList());
         PageResponse<UserOneLineCommentListResponse> info = PageResponse.of(pageOneLineCommentList, oneLineCommentList);
