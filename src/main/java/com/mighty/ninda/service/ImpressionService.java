@@ -1,15 +1,19 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.comment.Impression;
 import com.mighty.ninda.domain.comment.ImpressionRepository;
 import com.mighty.ninda.domain.direct.Direct;
 import com.mighty.ninda.domain.direct.DirectRepository;
+import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
 import com.mighty.ninda.dto.impression.SaveImpression;
 import com.mighty.ninda.dto.impression.UpdateImpression;
+import com.mighty.ninda.exception.EntityNotFoundException;
 import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
+import com.mighty.ninda.exception.common.HandleAccessDenied;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +29,15 @@ public class ImpressionService {
     private final DirectRepository directRepository;
 
     @Transactional
-    public Long save(Long userId, SaveImpression requestDto) {
+    public void save(SessionUser sessionUser, SaveImpression requestDto) {
+
+        Long userId = sessionUser.getId();
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + userId));
+                .orElseThrow(() -> new IllegalArgumentException("User가 존재하지 않습니다. id = " + userId));
 
         Direct direct = directRepository.findById(requestDto.getDirectId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + requestDto.getDirectId()));
+                .orElseThrow(() -> new IllegalArgumentException("Direct가 존재하지 않습니다. id = " + requestDto.getDirectId()));
 
         Impression impression = Impression.builder()
                 .user(user)
@@ -44,8 +50,11 @@ public class ImpressionService {
                 .build();
 
         impressionRepository.save(impression);
+    }
 
-        return impression.getId();
+    @Transactional
+    public Impression findById(Long impressionId) {
+        return impressionRepository.findById(impressionId).orElseThrow(() -> new EntityNotFoundException("Impression가 존재하지 않습니다. id = " + impressionId));
     }
 
     @Transactional
@@ -54,34 +63,41 @@ public class ImpressionService {
     }
 
     @Transactional
-    public Long update(Long userId, Long impressionId, UpdateImpression requestDto) {
-        Impression impression = impressionRepository.findById(impressionId)
-                .orElseThrow(() -> new IllegalArgumentException("소감이 존재하지 않습니다. id = " + impressionId));
+    public void update(SessionUser sessionUser, Long impressionId, UpdateImpression requestDto) {
 
-        if (!userId.equals(impression.getUser().getId())) {
+        Long userId = sessionUser.getId();
+        Impression impression = findById(impressionId);
+
+        if (!userId.equals(impression.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
             throw new IllegalArgumentException("작성자만 변경할 수 있습니다.");
         }
 
         impression.update(requestDto.getContext());
-
-        return impressionId;
     }
 
     @Transactional
-    public Long deleteImpression(Long id) {
-        Impression impression = impressionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("소감이 존재하지 않습니다. id = " + id));
+    public void deleteImpression(SessionUser sessionUser, Long ImpressionId) {
+        Long userId = sessionUser.getId();
+        Impression impression = findById(ImpressionId);
+
+        if (!sessionUser.getId().equals(impression.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+            throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
+        }
 
         impressionRepository.delete(impression);
-
-        return id;
     }
 
     @Transactional
-    public Long reLikeUp(Long userId, Long impressionId) {
-        Impression impression = impressionRepository.findById(impressionId)
-                .orElseThrow(() -> new IllegalArgumentException("소감이 존재하지 않습니다. id = " + impressionId));
+    public void reLikeUp(SessionUser sessionUser, Long impressionId) {
+        Impression impression = findById(impressionId);
 
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
         String _userId = "[" + userId.toString() + "]";
 
         if (impression.getLikeList().contains(_userId)) {
@@ -90,15 +106,19 @@ public class ImpressionService {
             impression.reLikeUp();
             impression.updateLikeList(_userId);
         }
-
-        return impression.getId();
     }
 
     @Transactional
-    public Long reHateUp(Long userId, Long impressionId) {
-        Impression impression = impressionRepository.findById(impressionId)
-                .orElseThrow(() -> new IllegalArgumentException("소감이 존재하지 않습니다. id = " + impressionId));
+    public void reHateUp(SessionUser sessionUser, Long impressionId) {
+        Impression impression = findById(impressionId);
 
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
         String _userId = "[" + userId.toString() + "]";
 
         if (impression.getHateList().contains(_userId)) {
@@ -107,7 +127,5 @@ public class ImpressionService {
             impression.reHateUp();
             impression.updateHateList(_userId);
         }
-
-        return impression.getId();
     }
 }

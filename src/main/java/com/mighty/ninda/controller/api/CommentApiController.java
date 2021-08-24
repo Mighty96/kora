@@ -7,6 +7,7 @@ import com.mighty.ninda.dto.comment.UpdateComment;
 import com.mighty.ninda.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -16,37 +17,40 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/comments")
-    public Long saveComment(@LoginUser SessionUser sessionUser,
+    public void saveComment(@LoginUser SessionUser sessionUser,
                                    @RequestBody SaveComment requestDto) {
 
-        return commentService.saveComment(sessionUser.getId(), requestDto);
+        commentService.saveComment(sessionUser, requestDto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/comments/{id}")
-    public Long updateComment(@LoginUser SessionUser sessionUser,
+    public void updateComment(@LoginUser SessionUser sessionUser,
                                      @RequestBody UpdateComment requestDto,
                                      @PathVariable Long id) {
 
 
-        return commentService.updateComment(sessionUser.getId(), id, requestDto);
+        commentService.updateComment(sessionUser, id, requestDto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/api/comments/{id}")
-    public Long deleteOneLineComment(@LoginUser SessionUser sessionUser,
+    public void deleteOneLineComment(@LoginUser SessionUser sessionUser,
                                      @PathVariable Long id) {
-        return commentService.deleteComment(id);
+        commentService.deleteComment(sessionUser, id);
     }
 
     @GetMapping("/api/comments/{id}/like")
-    public Long reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        return commentService.reLikeUp(sessionUser.getId(), id);
+        commentService.reLikeUp(sessionUser, id);
     }
 
     @GetMapping("/api/comments/{id}/hate")
-    public Long reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        return commentService.reHateUp(sessionUser.getId(), id);
+        commentService.reHateUp(sessionUser, id);
     }
 }

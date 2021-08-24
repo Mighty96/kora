@@ -3,6 +3,7 @@ package com.mighty.ninda.config.auth;
 import com.mighty.ninda.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -37,7 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/user/**").authenticated()
                         .antMatchers("/admin/**").hasRole("ADMIN")
                         .antMatchers("/api/users/**", "/api/gameCrawl", "/api/saleCrawl", "/api/offSale", "/authConfirm").permitAll()
-                        .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers("/**").permitAll()
                 .and()
                     .logout()
@@ -52,6 +52,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .exceptionHandling()
                         .accessDeniedHandler(new CustomAccessDeniedHandler())
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("admin").password(passwordEncoder().encode("admin1234")).roles("ADMIN")
+                .and()
+                .withUser("user").password(passwordEncoder().encode("user1234")).roles("USER")
+                .and()
+                .withUser("guest").password(passwordEncoder().encode("guest1234")).roles("GUEST");
 
     }
 

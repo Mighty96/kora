@@ -5,6 +5,7 @@ import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ public class S3ApiController {
 
     private final S3Service s3Service;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/upload")
     public String upload(@LoginUser SessionUser user, MultipartHttpServletRequest multipartFile, HttpServletResponse response) throws IOException {
 

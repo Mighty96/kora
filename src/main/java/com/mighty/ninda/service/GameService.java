@@ -1,10 +1,14 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
 import com.mighty.ninda.domain.game.GameSpecs;
 import com.mighty.ninda.domain.hot.Hot;
 import com.mighty.ninda.domain.hot.HotRepository;
+import com.mighty.ninda.domain.user.Role;
+import com.mighty.ninda.exception.EntityNotFoundException;
+import com.mighty.ninda.exception.common.HandleAccessDenied;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import com.mighty.ninda.utils.Crawler;
@@ -26,12 +30,11 @@ public class GameService {
 
     private final GameRepository gameRepository;
     private final HotRepository hotRepository;
-    private final Crawler crawler;
 
     @Transactional
     public Game findById(Long id) {
         Game game = gameRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Game이 존재하지 않습니다. id = " + id));
 
         return game;
     }
@@ -56,9 +59,16 @@ public class GameService {
     }
 
     @Transactional
-    public Long reLikeUp(Long userId, Long gameId) {
-        Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + gameId));
+    public void reLikeUp(SessionUser sessionUser, Long gameId) {
+        Game game = findById(gameId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -68,14 +78,19 @@ public class GameService {
             game.reLikeUp();
             game.updateLikeList(_userId);
         }
-
-        return game.getId();
     }
 
     @Transactional
-    public Long reHateUp(Long userId, Long gameId) {
-        Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + gameId));
+    public void reHateUp(SessionUser sessionUser, Long gameId) {
+        Game game = findById(gameId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -85,8 +100,5 @@ public class GameService {
             game.reHateUp();
             game.updateHateList(_userId);
         }
-
-
-        return game.getId();
     }
 }

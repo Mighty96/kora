@@ -23,7 +23,7 @@ public class Crawler {
 
     private final GameRepository gameRepository;
 
-    @Scheduled(cron = "0 0 2 * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     public void crawl() {
         try {
             log.info ("<< start game crawl >>");
@@ -59,7 +59,7 @@ public class Crawler {
         }
     }
 
-    @Scheduled(cron = "0 0 1 * * *")
+    @Scheduled(cron = "0 0 2 * * *")
     public void crawlSaleGame() {
         try {
             log.info ("<< start sale game crawl >>");

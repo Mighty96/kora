@@ -8,6 +8,7 @@ import com.mighty.ninda.dto.post.UpdatePost;
 import com.mighty.ninda.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -18,36 +19,36 @@ public class PostApiController {
     private final PostService postService;
     private final UserService userService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/posts")
-    public Long savePost(@RequestBody SavePost requestDto,
+    public void savePost(@RequestBody SavePost requestDto,
                      @LoginUser SessionUser sessionUser) {
-        return postService.save(requestDto, userService.findById(sessionUser.getId()));
+        postService.save(requestDto, userService.findById(sessionUser.getId()));
     }
 
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/posts/{id}")
-    public Long updatePost(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
-        return postService.update(id, requestDto);
+    public void updatePost(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
+        postService.update(id, requestDto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/api/posts/{id}")
-    public Long deletePost(@PathVariable Long id) {
-        return postService.delete(id);
+    public void deletePost(@PathVariable Long id) {
+        postService.delete(id);
     }
+
 
     @GetMapping("/api/posts/{id}/like")
-    public Long reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        postService.reLikeUp(sessionUser.getId(), id);
 
-        return id;
+        postService.reLikeUp(sessionUser, id);
     }
 
     @GetMapping("/api/posts/{id}/hate")
-    public Long reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        postService.reHateUp(sessionUser.getId(), id);
-
-        return id;
+        postService.reHateUp(sessionUser, id);
     }
 }

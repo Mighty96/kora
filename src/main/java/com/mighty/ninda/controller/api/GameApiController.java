@@ -6,6 +6,7 @@ import com.mighty.ninda.service.GameService;
 import com.mighty.ninda.utils.Crawler;
 import com.mighty.ninda.utils.DBScheduled;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,34 +19,33 @@ public class GameApiController {
     private final Crawler crawler;
     private final DBScheduled dbScheduled;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/api/gameCrawl")
     public void gameCrawl() {
         crawler.crawl();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/api/saleCrawl")
     public void saleCrawl() {
         crawler.crawlSaleGame();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/api/offSale")
     public void offSale() {
         dbScheduled.offSale();
     }
 
     @GetMapping("/api/games/{id}/like")
-    public Long reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        gameService.reLikeUp(sessionUser.getId(), id);
-
-        return id;
+        gameService.reLikeUp(sessionUser, id);
     }
 
     @GetMapping("/api/games/{id}/hate")
-    public Long reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        gameService.reHateUp(sessionUser.getId(), id);
-
-        return id;
+        gameService.reHateUp(sessionUser, id);
     }
 }

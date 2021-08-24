@@ -24,7 +24,7 @@ public class AuthController {
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/signin")
-    public String login(@LoginUser SessionUser user) {
+    public String login() {
 
         return "auth/login";
     }
@@ -52,6 +52,7 @@ public class AuthController {
         return "redirect:/logout";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/newPassword")
     public String newPassword() {
         return "auth/newPassword";

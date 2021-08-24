@@ -1,8 +1,12 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.direct.Direct;
 import com.mighty.ninda.domain.direct.DirectRepository;
+import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.dto.direct.SaveDirect;
+import com.mighty.ninda.exception.EntityNotFoundException;
+import com.mighty.ninda.exception.common.HandleAccessDenied;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +24,9 @@ public class DirectService {
     private final DirectRepository directRepository;
 
     @Transactional
-    public Direct findById(Long id) {
-        Direct direct = directRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 다이렉트가 없습니다. id = " + id));
+    public Direct findById(Long directId) {
+        Direct direct = directRepository.findById(directId)
+                .orElseThrow(() -> new EntityNotFoundException("Direct가 존재하지 않습니다. id = " + directId));
 
         return direct;
     }
@@ -32,7 +36,7 @@ public class DirectService {
     }
 
     @Transactional
-    public Long save(SaveDirect requestDto) {
+    public void save(SaveDirect requestDto) {
         Direct direct = Direct.builder()
                 .title(requestDto.getTitle())
                 .releasedDate(LocalDate.parse(requestDto.getReleasedDate(), DateTimeFormatter.ofPattern("yyyyMMdd")))
@@ -47,14 +51,19 @@ public class DirectService {
                 .build();
 
         directRepository.save(direct);
-
-        return direct.getId();
     }
 
     @Transactional
-    public Long reLikeUp(Long userId, Long directId) {
-        Direct direct = directRepository.findById(directId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 다이렉트가 없습니다. id = " + directId));
+    public void reLikeUp(SessionUser sessionUser, Long directId) {
+        Direct direct = findById(directId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -64,14 +73,19 @@ public class DirectService {
             direct.reLikeUp();
             direct.updateLikeList(_userId);
         }
-
-        return direct.getId();
     }
 
     @Transactional
-    public Long reHateUp(Long userId, Long directId) {
-        Direct direct = directRepository.findById(directId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 다이렉트가 없습니다. id = " + directId));
+    public void reHateUp(SessionUser sessionUser, Long directId) {
+        Direct direct = findById(directId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -81,16 +95,11 @@ public class DirectService {
             direct.reHateUp();
             direct.updateHateList(_userId);
         }
-
-
-        return direct.getId();
     }
 
     @Transactional
     public void viewCountUp(Long directId) {
-        Direct direct = directRepository.findById(directId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 다이렉트가 없습니다. id = " + directId));
-
+        Direct direct = findById(directId);
         direct.viewCountUp();
     }
 }

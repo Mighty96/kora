@@ -5,6 +5,7 @@ import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.dto.direct.SaveDirect;
 import com.mighty.ninda.service.DirectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -13,25 +14,22 @@ public class DirectApiController {
 
     private final DirectService directService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/api/directs")
-    public Long saveDirect(@RequestBody SaveDirect requestDto) {
+    public void saveDirect(@RequestBody SaveDirect requestDto) {
 
-        return directService.save(requestDto);
+        directService.save(requestDto);
     }
 
     @GetMapping("/api/directs/{id}/like")
-    public Long reLikeUp(@LoginUser SessionUser sessionUser,
+    public void reLikeUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        directService.reLikeUp(sessionUser.getId(), id);
-
-        return id;
+        directService.reLikeUp(sessionUser, id);
     }
 
     @GetMapping("/api/directs/{id}/hate")
-    public Long reHateUp(@LoginUser SessionUser sessionUser,
+    public void reHateUp(@LoginUser SessionUser sessionUser,
                          @PathVariable Long id) {
-        directService.reHateUp(sessionUser.getId(), id);
-
-        return id;
+        directService.reHateUp(sessionUser, id);
     }
 }

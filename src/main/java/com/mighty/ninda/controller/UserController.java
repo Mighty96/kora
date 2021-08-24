@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +35,14 @@ public class UserController {
     private final OneLineCommentService oneLineCommentService;
     private final PostService postService;
 
+    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/profile")
     public String profile(@LoginUser SessionUser sessionUser, Model model) {
         model.addAttribute("user", UserResponse.of(userService.findById(sessionUser.getId())));
         return "user/profile";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/post")
     public String post(@LoginUser SessionUser sessionUser,
                        Model model,
@@ -59,6 +62,7 @@ public class UserController {
         return "user/post";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/oneLineComment")
     public String oneLineComment(@LoginUser SessionUser sessionUser,
                                  Model model,
@@ -74,8 +78,9 @@ public class UserController {
         return "user/oneLineComment";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @GetMapping("/user/password")
-    public String password(@LoginUser SessionUser sessionUser) {
+    public String password() {
 
         return "user/password";
     }

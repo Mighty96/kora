@@ -16,46 +16,47 @@ public class UserApiController {
 
     private final UserService userService;
 
+
     @PostMapping("/api/users/signup/ninda")
-    public Long save(@RequestBody SaveUser requestDto) {
-        return userService.save(requestDto);
+    public void save(@RequestBody SaveUser requestDto) {
+        userService.save(requestDto);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+    @PreAuthorize("hasRole('ROLE_GUEST')")
     @PostMapping("/api/users/signup/oauth")
-    public Long save(@RequestBody SaveUserOauth requestDto, @LoginUser SessionUser user) {
+    public void save(@RequestBody SaveUserOauth requestDto, @LoginUser SessionUser sessionUser) {
 
-        return userService.oauthUpdate(user.getEmail(), requestDto);
+        userService.oauthUpdate(sessionUser, requestDto);
     }
 
     @PostMapping("/api/users/signup/emailChk")
-    public String emailDuplicateChk(@RequestBody UserEmail requestDto) {
-        return userService.emailDuplicateChk(requestDto);
+    public void emailDuplicateChk(@RequestBody UserEmail requestDto) {
+        userService.emailDuplicateChk(requestDto);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+    @PreAuthorize("hasRole('ROLE_GUEST')")
     @GetMapping("/api/users/resendAuthMail")
-    public Long resendAuthMail(@LoginUser SessionUser user) {
-        return userService.resendAuthMail(user);
+    public void resendAuthMail(@LoginUser SessionUser sessionUser) {
+        userService.resendAuthMail(sessionUser);
     }
 
-    @PreAuthorize("hasAnyRole('GUEST', 'USER')")
+    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
     @PutMapping("/api/users")
-    public Long update(@LoginUser SessionUser user, @RequestBody UpdateUser requestDto) {
+    public void update(@LoginUser SessionUser sessionUser, @RequestBody UpdateUser requestDto) {
 
-        return userService.update(user.getId(), requestDto);
+        userService.update(sessionUser, requestDto);
     }
 
     @PreAuthorize("hasAnyRole('GUEST', 'USER')")
     @PostMapping("/api/users/updatePassword")
-    public Long updatePassword(@LoginUser SessionUser sessionUser, @RequestBody UpdateUserPassword requestDto) {
-        return userService.changePassword(sessionUser.getId(), requestDto.getOldPassword(), requestDto.getNewPassword());
+    public void updatePassword(@LoginUser SessionUser sessionUser, @RequestBody UpdateUserPassword requestDto) {
+        userService.changePassword(sessionUser, requestDto.getOldPassword(), requestDto.getNewPassword());
     }
 
     @PreAuthorize("hasAnyRole('GUEST', 'USER')")
     @PostMapping("/api/users/newPassword")
-    public Long sendNewPassword(@RequestBody UserEmail requestDto) {
-        return userService.sendNewPassword(requestDto.getEmail());
+    public void sendNewPassword(@RequestBody UserEmail requestDto) {
+        userService.sendNewPassword(requestDto.getEmail());
     }
 
 

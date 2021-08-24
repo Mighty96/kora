@@ -39,10 +39,14 @@ var main = {
                         window.location.href='/logout';
                     });
                 },
-                error: function(e) {
+                error: function(request) {
                     $('#btn-signup').prop('disabled', false);
                     $('#btn-signup').prop('value', "수정");
-                    alert(JSON.stringify(error));
+                    var outputMessage = JSON.parse(request.responseText).outputMessage;
+                    Swal.fire({
+                        title: outputMessage,
+                        icon: "error"
+                    });
                 }
             });
         } else {

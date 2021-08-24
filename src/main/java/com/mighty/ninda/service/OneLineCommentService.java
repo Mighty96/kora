@@ -1,15 +1,19 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.comment.OneLineCommentRepository;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
+import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
 import com.mighty.ninda.dto.oneLineComment.SaveOneLineComment;
 import com.mighty.ninda.dto.oneLineComment.UpdateOneLineComment;
+import com.mighty.ninda.exception.EntityNotFoundException;
 import com.mighty.ninda.exception.comment.CommentAlreadyHateException;
 import com.mighty.ninda.exception.comment.CommentAlreadyLikeException;
+import com.mighty.ninda.exception.common.HandleAccessDenied;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,13 +33,15 @@ public class OneLineCommentService {
     private final GameRepository gameRepository;
 
     @Transactional
-    public Long save(Long userId, SaveOneLineComment requestDto) {
+    public void save(SessionUser sessionUser, SaveOneLineComment requestDto) {
+
+        Long userId = sessionUser.getId();
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + userId));
+                .orElseThrow(() -> new EntityNotFoundException("User가 존재하지 않습니다. id = " + userId));
 
         Game game = gameRepository.findById(requestDto.getGameId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 id입니다. id = " + requestDto.getGameId()));
+                .orElseThrow(() -> new EntityNotFoundException("Game이 존재하지 않습니다. id = " + requestDto.getGameId()));
 
         OneLineComment oneLineComment = OneLineComment.builder()
                 .user(user)
@@ -48,8 +54,12 @@ public class OneLineCommentService {
                 .build();
 
         oneLineCommentRepository.save(oneLineComment);
+    }
 
-        return oneLineComment.getId();
+    @Transactional
+    public OneLineComment findById(Long oneLineCommentId) {
+        return oneLineCommentRepository.findById(oneLineCommentId)
+                .orElseThrow(() -> new EntityNotFoundException("OneLineComment가 존재하지 않습니다. id = " + oneLineCommentId));
     }
 
     @Transactional
@@ -63,40 +73,48 @@ public class OneLineCommentService {
         return oneLineCommentRepository.findByUserIdOrderByIdDesc(userId, pageable);
     }
 
-
     @Transactional
     public List<OneLineComment> findTop5ByOrderByCreatedDateDesc() {
         return oneLineCommentRepository.findTop5ByOrderByCreatedDateDesc();
     }
 
     @Transactional
-    public Long update(Long userId, Long commentId, UpdateOneLineComment requestDto) {
-        OneLineComment comment = oneLineCommentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
+    public void update(SessionUser sessionUser, Long oneLineCommentId, UpdateOneLineComment requestDto) {
 
-        if (!userId.equals(comment.getUser().getId())) {
-            throw new IllegalArgumentException("작성자만 변경할 수 있습니다.");
+        Long userId = sessionUser.getId();
+        OneLineComment oneLineComment = findById(oneLineCommentId);
+
+        if (!userId.equals(oneLineComment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+            throw new HandleAccessDenied("작성자만 변경할 수 있습니다.");
         }
 
-        comment.update(requestDto.getContext());
-
-        return commentId;
+        oneLineComment.update(requestDto.getContext());
     }
 
     @Transactional
-    public Long deleteOneLineComment(Long id) {
-        OneLineComment comment = oneLineCommentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + id));
+    public void deleteOneLineComment(SessionUser sessionUser, Long oneLineCommentId) {
 
-        oneLineCommentRepository.delete(comment);
+        Long userId = sessionUser.getId();
+        OneLineComment oneLineComment = findById(oneLineCommentId);
 
-        return id;
+        if (!userId.equals(oneLineComment.getUser().getId()) && sessionUser.getRole() != Role.ADMIN) {
+            throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
+        }
+
+        oneLineCommentRepository.delete(oneLineComment);
     }
 
     @Transactional
-    public Long reLikeUp(Long userId, Long commentId) {
-        OneLineComment comment = oneLineCommentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
+    public void reLikeUp(SessionUser sessionUser, Long oneLineCommentId) {
+        OneLineComment comment = findById(oneLineCommentId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -106,14 +124,19 @@ public class OneLineCommentService {
             comment.reLikeUp();
             comment.updateLikeList(_userId);
         }
-
-        return comment.getId();
     }
 
     @Transactional
-    public Long reHateUp(Long userId, Long commentId) {
-        OneLineComment comment = oneLineCommentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("한줄평이 존재하지 않습니다. id = " + commentId));
+    public void reHateUp(SessionUser sessionUser, Long oneLineCommentId) {
+        OneLineComment comment = findById(oneLineCommentId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
@@ -123,7 +146,5 @@ public class OneLineCommentService {
             comment.reHateUp();
             comment.updateHateList(_userId);
         }
-
-        return comment.getId();
     }
 }

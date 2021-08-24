@@ -15,8 +15,9 @@ public enum ErrorCode {
     INVALID_TYPE_VALUE(400, "C005", " Invalid Type Value"),
     HANDLE_ACCESS_DENIED(403, "C006", "Access is Denied"),
 
-    // Game
-    GAME_NOT_FOUND(400, "G01", "Game not found"),
+    // Post
+    POST_ALREADY_LIKE(400, "P01", "Post is already liked"),
+    POST_ALREADY_HATE(400, "P02", "Post is already hated"),
 
     // OneLineComment
     ONE_LINE_COMMENT_ALREADY_LIKE(400, "O01", "OneLineComment is already liked"),

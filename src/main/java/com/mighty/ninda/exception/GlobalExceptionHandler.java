@@ -10,9 +10,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public String handleEntityNotFoundException(EntityNotFoundException e) {
+        log.error("error");
+        log.error(e.getMessage());
+        log.error(e.getErrorCode().getMessage());
+        return "error/404";
+    }
+
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-        log.debug(e.getMessage(), e);
+        log.error("error");
+        log.error(e.getMessage());
+        log.error(e.getErrorCode().getMessage());
+
         ErrorResponse response = new ErrorResponse(e.getErrorCode(), e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }

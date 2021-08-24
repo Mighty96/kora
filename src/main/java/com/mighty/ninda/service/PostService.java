@@ -1,15 +1,21 @@
 package com.mighty.ninda.service;
 
+import com.mighty.ninda.config.auth.dto.SessionUser;
 import com.mighty.ninda.domain.file.Photo;
 import com.mighty.ninda.domain.file.PhotoRepository;
 import com.mighty.ninda.domain.post.Post;
 import com.mighty.ninda.domain.post.PostRepository;
 import com.mighty.ninda.domain.post.PostSpecs;
+import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.dto.post.SavePost;
 import com.mighty.ninda.dto.post.UpdatePost;
+import com.mighty.ninda.exception.EntityNotFoundException;
+import com.mighty.ninda.exception.common.HandleAccessDenied;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyHateException;
 import com.mighty.ninda.exception.onelinecomment.OneLineCommentAlreadyLikeException;
+import com.mighty.ninda.exception.post.PostAlreadyHateException;
+import com.mighty.ninda.exception.post.PostAlreadyLikeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -23,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.rmi.AlreadyBoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,12 +45,12 @@ public class PostService {
     private final S3Service s3Service;
 
     @Transactional
-    public Long save(SavePost requestDto, User user) {
+    public void save(SavePost requestDto, User user) {
 
 
         Post post = requestDto.toEntity(user);
         post = parseContextAndMoveImages(post);
-        return postRepository.save(post).getId();
+        postRepository.save(post).getId();
     }
 
     public Post parseContextAndMoveImages(Post post) {
@@ -88,23 +95,16 @@ public class PostService {
 
 
     @Transactional
-    public Long update(Long id, UpdatePost requestDto) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-
+    public void update(Long postId, UpdatePost requestDto) {
+        Post post = findById(postId);
         post.update(requestDto.getTitle(), requestDto.getContext());
-
         parseContextAndMoveImages(post);
-
-        return id;
     }
 
     @Transactional
-    public Long delete(Long id) {
-        parseContextAndDeleteImages(postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(id + "찾을 수 없습니다.")));
-        postRepository.deleteById(id);
-
-        return id;
+    public void delete(Long postId) {
+        parseContextAndDeleteImages(findById(postId));
+        postRepository.deleteById(postId);
     }
 
     public void parseContextAndDeleteImages(Post post) {
@@ -126,11 +126,10 @@ public class PostService {
     }
 
     @Transactional
-    public Post findById (Long id) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+    public Post findById(Long id) {
 
-        return post;
+        return postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post가 존재하지 않습니다. id = " + id));
     }
 
     @Transactional
@@ -159,43 +158,53 @@ public class PostService {
     }
 
     @Transactional
-    public void viewCountUp(Long id) {
-        Post post = findById(id);
+    public void viewCountUp(Long postId) {
+        Post post = findById(postId);
         post.viewCountUp();
     }
 
     @Transactional
-    public Long reLikeUp(Long userId, Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + postId));
+    public void reLikeUp(SessionUser sessionUser, Long postId) {
+        Post post = findById(postId);
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
         if (post.getLikeList().contains(_userId)) {
-            throw new OneLineCommentAlreadyLikeException("이미 추천했습니다.");
+            throw new PostAlreadyLikeException("이미 추천했습니다.");
         } else {
             post.reLikeUp();
             post.updateLikeList(_userId);
         }
-
-        return post.getId();
     }
 
     @Transactional
-    public Long reHateUp(Long userId, Long postId) {
+    public void reHateUp(SessionUser sessionUser, Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게임이 없습니다. id = " + postId));
+
+        if (sessionUser == null) {
+            throw new HandleAccessDenied("로그인이 필요합니다.");
+        } else if (sessionUser.getRole() == Role.GUEST) {
+            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
+        }
+
+        Long userId = sessionUser.getId();
 
         String _userId = "[" + userId.toString() + "]";
 
         if (post.getHateList().contains(_userId)) {
-            throw new OneLineCommentAlreadyHateException("이미 비추천했습니다.");
+            throw new PostAlreadyHateException("이미 비추천했습니다.");
         } else {
             post.reHateUp();
             post.updateHateList(_userId);
         }
-
-
-        return post.getId();
     }
 }
