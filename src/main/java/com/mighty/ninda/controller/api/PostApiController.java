@@ -21,9 +21,9 @@ public class PostApiController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/posts")
-    public void savePost(@RequestBody SavePost requestDto,
+    public Long savePost(@RequestBody SavePost requestDto,
                      @LoginUser CurrentUser currentUser) {
-        postService.save(requestDto, userService.findById(currentUser.getId()));
+        return postService.save(requestDto, userService.findById(currentUser.getId()));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")

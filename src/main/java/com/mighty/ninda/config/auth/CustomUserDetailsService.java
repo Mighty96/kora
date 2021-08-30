@@ -23,23 +23,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final HttpSession httpSession;
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Email이 존재하지 않습니다. email = " + email));
-
-
-        if (!user.getRegistrationId().equals(RegistrationId.NINDA)) {
-            throw new IllegalArgumentException("Ninda의 계정이 아님");
-        }
+                .orElseThrow(() -> new UsernameNotFoundException("Email이 존재하지 않습니다. email = " + email));
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().getKey()));
-
-        httpSession.setAttribute("name", user.getNickname());
 
         return CustomUserDetails.builder()
                 .id(user.getId())

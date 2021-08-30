@@ -4,21 +4,23 @@ import com.mighty.ninda.config.auth.LoginUser;
 import com.mighty.ninda.config.auth.dto.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @Slf4j
-public class TestController {
+public class MessageController {
 
-    @GetMapping("/test")
-    public String test(@LoginUser CurrentUser user) {
+    @PostMapping("/message")
+    public String postMessage() {
+        return "error/message";
+    }
 
-        log.info(user.getEmail());
-        log.info(user.getNickname());
-        log.info(user.getRegistrationId().name());
-        log.info(user.getRole().getKey());
-        return null;
+    @GetMapping("/message")
+    public String getMessage() {
+        return "error/message";
     }
 }

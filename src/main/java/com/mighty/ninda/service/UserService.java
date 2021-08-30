@@ -27,7 +27,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final HttpSession httpSession;
     private final MailSendService mailSendService;
 
     @Transactional
@@ -68,7 +67,6 @@ public class UserService {
         User user = findById(currentUser.getId());
 
         user.update(requestDto.getNickname(), requestDto.getIntroduction());
-        httpSession.setAttribute("name", user.getNickname());
     }
 
     @Transactional

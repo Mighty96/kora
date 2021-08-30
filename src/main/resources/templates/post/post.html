@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 <head>
@@ -19,7 +20,7 @@
         <div class="post-container p-4 my-2 border">
             <div class="post-head">
                 <span class="post-title" th:text="${post.title}"></span>
-                <div th:if="${session.user != null && post.userId.toString().equals(session.user.id.toString())}" class="post-button">
+                <div sec:authorize="isAuthenticated()" th:if="${post.userId == #authentication.principal.attributes.id}" class="post-button">
                     <a th:href="@{'/board/' + ${board} + '/' + ${post.id} + '/modify'}">수정</a>
                     <input type="hidden" th:value="${board}" id="board">
                     <span style="cursor: pointer;" th:onclick="post_del() ">삭제</span>
@@ -51,8 +52,8 @@
                     </div>
                     <div class="comment-button-container" style="display: inline-block;">
                         <div class="comment-update-button">
-                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">수정</span>
-                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">삭제</span>
+                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">수정</span>
+                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">삭제</span>
                         </div>
 
                         <div th:if="${board.toString().equals('free')}" class="comment-button-container">
@@ -70,8 +71,8 @@
                     </div>
                     <div class="comment-button-container" style="display: inline-block;">
                         <div class="comment-update-button">
-                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">수정</span>
-                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${session.user != null} and ${comment.userId} == ${session.user.id}">삭제</span>
+                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">수정</span>
+                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">삭제</span>
                         </div>
 
                         <div th:if="${board.toString().equals('free')}" class="comment-button-container">
@@ -89,10 +90,10 @@
                     <input type="button" class="comment-input-button" id="btn-re-comment" value="댓글 남기기">
                 </div>
             </div>
-            <div th:if="${session.user != null}" class="comment-mini-container p-2" style="border-bottom: none!important;">
+            <div th:if="${#authentication.principal != null}" class="comment-mini-container p-2" style="border-bottom: none!important;">
                 <textarea class="comment-context" id="context" placeholder="댓글"></textarea>
             </div>
-            <div th:if="${session.user != null}" style="display: inline-block; width: 100%;">
+            <div th:if="${#authentication.principal != null}" style="display: inline-block; width: 100%;">
                 <input type="button" class="comment-input-button" id="btn-comment" value="댓글 남기기">
             </div>
         </div>

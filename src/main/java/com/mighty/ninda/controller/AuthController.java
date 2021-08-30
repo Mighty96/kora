@@ -47,7 +47,7 @@ public class AuthController {
     @GetMapping("/authConfirm")
     public String authConfirm(@RequestParam String email, @RequestParam String authKey, Model model) {
         userService.authConfirm(email, authKey, model);
-        return "redirect:/logout";
+        return "auth/authConfirm";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")

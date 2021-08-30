@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/default">
+<head>
+</head>
+<th:block layout:fragment="content">
+    <input id="message" type="hidden" th:value="${message}">
+    <input id="url" type="hidden" th:value="${url}">
+    <input id="status" type="hidden" th:value="${status}">
+    <script src="/js/message.js"></script>
+</th:block>
+</html>

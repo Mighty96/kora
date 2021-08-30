@@ -14,7 +14,7 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/api/comments',
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
@@ -42,7 +42,7 @@ function re_save(commentId) {
     $.ajax({
         type: 'POST',
         url: '/api/comments',
-        dataType: 'json',
+        dataType: 'text',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {
@@ -110,7 +110,7 @@ function update(_rid) {
     $.ajax({
         type: 'POST',
         url: '/api/comments/' + _rid,
-        dataType: 'json',
+        dataType: 'text',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {

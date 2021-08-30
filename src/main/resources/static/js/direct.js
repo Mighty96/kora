@@ -13,7 +13,7 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/api/impressions',
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
@@ -48,7 +48,7 @@ function update(_rid) {
     $.ajax({
         type: 'POST',
         url: '/api/impressions/' + _rid,
-        dataType: 'json',
+        dataType: 'text',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {

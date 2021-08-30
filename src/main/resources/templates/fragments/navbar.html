@@ -28,7 +28,7 @@
                 <a class="nav-link" href="/logout">로그아웃</a>
             </li>
             <li sec:authorize="hasAnyRole('ROLE_GUEST', 'ROLE_USER')" class="nav-item right-tap">
-                <a class="nav-link" href="/user/profile" th:text = "${session.name}"></a>
+                <a class="nav-link" href="/user/profile" th:text = "${#authentication.principal.attributes.nickname}"></a>
             </li>
             <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item right-tap">
                 <a class="nav-link" href="/admin/main">어드민페이지</a>

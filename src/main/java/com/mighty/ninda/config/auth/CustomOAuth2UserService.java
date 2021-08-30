@@ -27,7 +27,6 @@ import java.util.Optional;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserRepository userRepository;
-    private final HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -51,7 +50,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         newAttributes.put("registrationId", user.getRegistrationId());
         newAttributes.put("nickname", user.getNickname());
 
-        httpSession.setAttribute("name", user.getNickname());
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
                 newAttributes,

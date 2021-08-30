@@ -27,12 +27,13 @@ var main = {
             $.ajax({
                 type: 'POST',
                 url: '/api/users/updatePassword',
-                dataType: 'json',
+                dataType: 'text',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data),
                 success: function() {
                     Swal.fire({
                         title: "비밀번호가 변경되었습니다.",
+                        text: "다시 로그인해주세요.",
                         icon: "success"
                     })
                     .then(() =>{
@@ -50,7 +51,11 @@ var main = {
                 }
             });
         } else {
-            alert('양식에 맞지 않습니다. 다시 작성해주세요.');
+            Swal.fire({
+                title: "양식에 맞지 않습니다.",
+                text: "다시 작성해주세요.",
+                icon: "error"
+            });
         }
     },
     pwd1Chk : function () {

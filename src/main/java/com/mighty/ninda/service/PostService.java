@@ -42,12 +42,12 @@ public class PostService {
     private final S3Service s3Service;
 
     @Transactional
-    public void save(SavePost requestDto, User user) {
+    public Long save(SavePost requestDto, User user) {
 
 
         Post post = requestDto.toEntity(user);
         post = parseContextAndMoveImages(post);
-        postRepository.save(post).getId();
+        return postRepository.save(post).getId();
     }
 
     public Post parseContextAndMoveImages(Post post) {

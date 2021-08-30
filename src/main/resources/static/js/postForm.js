@@ -41,11 +41,20 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/api/posts',
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function(data) {
-                window.location.href='/board/' + $('#board-id').val() + '/' + data + '?page=0';
+                Swal.fire({
+                    title: "게시글을 등록했어요!",
+                    icon: "success"
+                })
+                .then(() =>{
+                    window.location.href='/board/' + $('#board-id').val() + '/' + data + '?page=0';
+                });
+            },
+            error: function(e) {
+                alert('몰라');
             }
         });
     },
@@ -57,7 +66,7 @@ var main = {
         $.ajax({
             type: 'POST',
             url: '/api/posts/' + $('#id').val(),
-            dataType: 'json',
+            dataType: 'text',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
