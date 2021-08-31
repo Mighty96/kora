@@ -6,6 +6,7 @@ import com.mighty.ninda.domain.game.GameRepository;
 import com.mighty.ninda.domain.game.GameSpecs;
 import com.mighty.ninda.domain.hot.Hot;
 import com.mighty.ninda.domain.hot.HotRepository;
+import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.exception.EntityNotFoundException;
 import com.mighty.ninda.exception.common.HandleAccessDenied;
@@ -61,11 +62,7 @@ public class GameService {
     public void reLikeUp(CurrentUser currentUser, Long gameId) {
         Game game = findById(gameId);
 
-        if (currentUser == null) {
-            throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (currentUser.getRole() == Role.GUEST) {
-            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
-        }
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
 
@@ -83,11 +80,7 @@ public class GameService {
     public void reHateUp(CurrentUser currentUser, Long gameId) {
         Game game = findById(gameId);
 
-        if (currentUser == null) {
-            throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (currentUser.getRole() == Role.GUEST) {
-            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
-        }
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
 
@@ -98,6 +91,18 @@ public class GameService {
         } else {
             game.reHateUp();
             game.updateHateList(_userId);
+        }
+    }
+
+    public void checkAuth(CurrentUser currentUser) {
+        if (currentUser == null) {
+            throw new HandleAccessDenied("로그인이 필요한 서비스에요.");
+        } else if (currentUser.getRole() == Role.GUEST) {
+            if (currentUser.getRegistrationId() == RegistrationId.NINDA) {
+                throw new HandleAccessDenied("메일인증을 완료해주세요.");
+            } else {
+                throw new HandleAccessDenied("닉네임을 설정해주세요.");
+            }
         }
     }
 }

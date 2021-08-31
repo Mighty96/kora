@@ -35,7 +35,10 @@ var main = {
                 }
             });
         } else {
-            alert('양식에 맞지 않습니다. 다시 작성해주세요.');
+            Swal.fire({
+                title: '양식에 맞지 않습니다. 다시 작성해주세요.',
+                icon: "error"
+            });
         }
     },
     nicknameChk : function () {

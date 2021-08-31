@@ -26,8 +26,12 @@ var main = {
                     window.location.reload();
                 });
             },
-            error: function(e) {
-                alert('몰라');
+            error: function(request) {
+                var outputMessage = JSON.parse(request.responseText).outputMessage;
+                Swal.fire({
+                    title: outputMessage,
+                    icon: "error"
+                 });
             }
         });
     }
@@ -54,8 +58,12 @@ function re_save(commentId) {
                 window.location.reload();
             });
         },
-        error: function(e) {
-            alert('몰라');
+        error: function(request) {
+            var outputMessage = JSON.parse(request.responseText).outputMessage;
+            Swal.fire({
+                title: outputMessage,
+                icon: "error"
+             });
         }
     });
 }
@@ -85,8 +93,12 @@ function post_del() {
                          window.location.href= '/board/' + board + '?page=0';
                      });
                  },
-                 error: function(e) {
-                     alert('몰라');
+                 error: function(request) {
+                     var outputMessage = JSON.parse(request.responseText).outputMessage;
+                     Swal.fire({
+                         title: outputMessage,
+                         icon: "error"
+                      });
                  }
             });
         }
@@ -122,8 +134,12 @@ function update(_rid) {
                 window.location.reload();
             });
         },
-        error: function(e) {
-            alert('몰라');
+        error: function(request) {
+            var outputMessage = JSON.parse(request.responseText).outputMessage;
+            Swal.fire({
+                title: outputMessage,
+                icon: "error"
+             });
         }
     });
 }
@@ -141,8 +157,12 @@ function del(_rid) {
                 window.location.reload();
             });
         },
-        error: function(e) {
-            alert('몰라');
+        error: function(request) {
+            var outputMessage = JSON.parse(request.responseText).outputMessage;
+            Swal.fire({
+                title: outputMessage,
+                icon: "error"
+             });
         }
     });
 }

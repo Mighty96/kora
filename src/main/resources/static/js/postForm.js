@@ -53,8 +53,12 @@ var main = {
                     window.location.href='/board/' + $('#board-id').val() + '/' + data + '?page=0';
                 });
             },
-            error: function(e) {
-                alert('몰라');
+            error: function(request) {
+                var outputMessage = JSON.parse(request.responseText).outputMessage;
+                Swal.fire({
+                    title: outputMessage,
+                    icon: "error"
+                 });
             }
         });
     },
@@ -78,8 +82,12 @@ var main = {
                     window.location.href= '/board/' + $('#board').val() + '/' + $('#id').val() + '?page=0';
                 });
             },
-            error: function(e) {
-                alert('몰라');
+            error: function(request) {
+                var outputMessage = JSON.parse(request.responseText).outputMessage;
+                Swal.fire({
+                    title: outputMessage,
+                    icon: "error"
+                 });
             }
         });
     }

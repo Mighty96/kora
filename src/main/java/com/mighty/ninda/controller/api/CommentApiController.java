@@ -17,7 +17,6 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/comments")
     public void saveComment(@LoginUser CurrentUser currentUser,
                                    @RequestBody SaveComment requestDto) {
@@ -42,14 +41,12 @@ public class CommentApiController {
         commentService.deleteComment(currentUser, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/comments/{id}/like")
     public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
         commentService.reLikeUp(currentUser, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/comments/{id}/hate")
     public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {

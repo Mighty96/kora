@@ -60,8 +60,12 @@ function update(_rid) {
                 window.location.reload();
             });
         },
-        error: function(e) {
-            alert('몰라');
+        error: function(request) {
+            var outputMessage = JSON.parse(request.responseText).outputMessage;
+            Swal.fire({
+                title: outputMessage,
+                icon: "error"
+            });
         }
     });
 }
@@ -79,8 +83,12 @@ function del(_rid) {
                 window.location.reload();
             });
         },
-        error: function(e) {
-            alert('몰라');
+        error: function(request) {
+            var outputMessage = JSON.parse(request.responseText).outputMessage;
+            Swal.fire({
+                title: outputMessage,
+                icon: "error"
+            });
         }
     });
 }

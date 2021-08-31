@@ -42,14 +42,12 @@ public class ImpressionApiController {
         impressionService.deleteImpression(currentUser, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/impressions/{id}/like")
     public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
         impressionService.reLikeUp(currentUser, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/impressions/{id}/hate")
     public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {

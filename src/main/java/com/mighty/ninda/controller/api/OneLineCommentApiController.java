@@ -42,14 +42,12 @@ public class OneLineCommentApiController {
         oneLineCommentService.deleteOneLineComment(currentUser, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/oneLineComments/{id}/like")
     public void reLikeUp(@LoginUser CurrentUser currentUser,
                              @PathVariable Long id) {
         oneLineCommentService.reLikeUp(currentUser, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/oneLineComments/{id}/hate")
     public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {

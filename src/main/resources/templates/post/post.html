@@ -52,8 +52,8 @@
                     </div>
                     <div class="comment-button-container" style="display: inline-block;">
                         <div class="comment-update-button">
-                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">수정</span>
-                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">삭제</span>
+                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" sec:authorize="isAuthenticated()" th:if="${comment.userId == #authentication.principal.attributes.id}">수정</span>
+                            <span th:onclick="'del(' + ${comment.id} + ')'" sec:authorize="isAuthenticated()" th:if="${comment.userId == #authentication.principal.attributes.id}">삭제</span>
                         </div>
 
                         <div th:if="${board.toString().equals('free')}" class="comment-button-container">
@@ -71,8 +71,8 @@
                     </div>
                     <div class="comment-button-container" style="display: inline-block;">
                         <div class="comment-update-button">
-                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">수정</span>
-                            <span th:onclick="'del(' + ${comment.id} + ')'" th:if="${#authentication.principal.attributes != null && comment.userId == #authentication.principal.attributes.id}">삭제</span>
+                            <span th:onclick="'update_mode(' + ${comment.id} + ')'" sec:authorize="isAuthenticated()" th:if="${comment.userId == #authentication.principal.attributes.id}">수정</span>
+                            <span th:onclick="'del(' + ${comment.id} + ')'" sec:authorize="isAuthenticated()" th:if="${comment.userId == #authentication.principal.attributes.id}">삭제</span>
                         </div>
 
                         <div th:if="${board.toString().equals('free')}" class="comment-button-container">
@@ -90,10 +90,10 @@
                     <input type="button" class="comment-input-button" id="btn-re-comment" value="댓글 남기기">
                 </div>
             </div>
-            <div th:if="${#authentication.principal != null}" class="comment-mini-container p-2" style="border-bottom: none!important;">
+            <div class="comment-mini-container p-2" style="border-bottom: none!important;">
                 <textarea class="comment-context" id="context" placeholder="댓글"></textarea>
             </div>
-            <div th:if="${#authentication.principal != null}" style="display: inline-block; width: 100%;">
+            <div style="display: inline-block; width: 100%;">
                 <input type="button" class="comment-input-button" id="btn-comment" value="댓글 남기기">
             </div>
         </div>

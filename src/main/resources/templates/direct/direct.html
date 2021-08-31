@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 <head>
@@ -62,10 +63,10 @@
                             <p th:text="@{'작성자 ' + ${impression.userName}}"></p>
                         </div>
                         <div class="col-md-4">
-                            <a style="cursor: pointer;" th:onclick="'update_mode(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.userId} == ${session.user.id}" id="btn-update-mode">
+                            <a style="cursor: pointer;" th:onclick="'update_mode(' + ${impression.id} + ')'" sec:authorize="isAuthenticated()" th:if="${comment.userId == #authentication.principal.attributes.id}" id="btn-update-mode">
                                 수정
                             </a>
-                            <a style="cursor: pointer;" th:onclick="'del(' + ${impression.id} + ')'" th:if="${session.user != null} and ${impression.userId} == ${session.user.id}">
+                            <a style="cursor: pointer;" th:onclick="'del(' + ${impression.id} + ')'" sec:authorize="isAuthenticated()" th:if="${comment.userId == #authentication.principal.attributes.id}">
                                 삭제
                             </a>
                         </div>

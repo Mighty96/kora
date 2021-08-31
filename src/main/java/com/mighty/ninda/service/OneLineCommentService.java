@@ -5,6 +5,7 @@ import com.mighty.ninda.domain.comment.OneLineComment;
 import com.mighty.ninda.domain.comment.OneLineCommentRepository;
 import com.mighty.ninda.domain.game.Game;
 import com.mighty.ninda.domain.game.GameRepository;
+import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
@@ -34,6 +35,8 @@ public class OneLineCommentService {
 
     @Transactional
     public void save(CurrentUser currentUser, SaveOneLineComment requestDto) {
+
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
 
@@ -81,6 +84,8 @@ public class OneLineCommentService {
     @Transactional
     public void update(CurrentUser currentUser, Long oneLineCommentId, UpdateOneLineComment requestDto) {
 
+        checkAuth(currentUser);
+
         Long userId = currentUser.getId();
         OneLineComment oneLineComment = findById(oneLineCommentId);
 
@@ -93,6 +98,8 @@ public class OneLineCommentService {
 
     @Transactional
     public void deleteOneLineComment(CurrentUser currentUser, Long oneLineCommentId) {
+
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
         OneLineComment oneLineComment = findById(oneLineCommentId);
@@ -108,11 +115,7 @@ public class OneLineCommentService {
     public void reLikeUp(CurrentUser currentUser, Long oneLineCommentId) {
         OneLineComment comment = findById(oneLineCommentId);
 
-        if (currentUser == null) {
-            throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (currentUser.getRole() == Role.GUEST) {
-            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
-        }
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
 
@@ -130,11 +133,7 @@ public class OneLineCommentService {
     public void reHateUp(CurrentUser currentUser, Long oneLineCommentId) {
         OneLineComment comment = findById(oneLineCommentId);
 
-        if (currentUser == null) {
-            throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (currentUser.getRole() == Role.GUEST) {
-            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
-        }
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
 
@@ -145,6 +144,18 @@ public class OneLineCommentService {
         } else {
             comment.reHateUp();
             comment.updateHateList(_userId);
+        }
+    }
+
+    public void checkAuth(CurrentUser currentUser) {
+        if (currentUser == null) {
+            throw new HandleAccessDenied("로그인이 필요한 서비스에요.");
+        } else if (currentUser.getRole() == Role.GUEST) {
+            if (currentUser.getRegistrationId() == RegistrationId.NINDA) {
+                throw new HandleAccessDenied("메일인증을 완료해주세요.");
+            } else {
+                throw new HandleAccessDenied("닉네임을 설정해주세요.");
+            }
         }
     }
 }

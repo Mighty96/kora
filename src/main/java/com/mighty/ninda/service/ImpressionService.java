@@ -5,6 +5,7 @@ import com.mighty.ninda.domain.comment.Impression;
 import com.mighty.ninda.domain.comment.ImpressionRepository;
 import com.mighty.ninda.domain.direct.Direct;
 import com.mighty.ninda.domain.direct.DirectRepository;
+import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
 import com.mighty.ninda.domain.user.UserRepository;
@@ -31,6 +32,7 @@ public class ImpressionService {
     @Transactional
     public void save(CurrentUser currentUser, SaveImpression requestDto) {
 
+        checkAuth(currentUser);
         Long userId = currentUser.getId();
 
         User user = userRepository.findById(userId)
@@ -65,6 +67,7 @@ public class ImpressionService {
     @Transactional
     public void update(CurrentUser currentUser, Long impressionId, UpdateImpression requestDto) {
 
+        checkAuth(currentUser);
         Long userId = currentUser.getId();
         Impression impression = findById(impressionId);
 
@@ -77,10 +80,12 @@ public class ImpressionService {
 
     @Transactional
     public void deleteImpression(CurrentUser currentUser, Long ImpressionId) {
+
+        checkAuth(currentUser);
         Long userId = currentUser.getId();
         Impression impression = findById(ImpressionId);
 
-        if (!currentUser.getId().equals(impression.getUser().getId()) && currentUser.getRole() != Role.ADMIN) {
+        if (!userId.equals(impression.getUser().getId()) && currentUser.getRole() != Role.ADMIN) {
             throw new HandleAccessDenied("작성자만 삭제할 수 있습니다.");
         }
 
@@ -91,11 +96,7 @@ public class ImpressionService {
     public void reLikeUp(CurrentUser currentUser, Long impressionId) {
         Impression impression = findById(impressionId);
 
-        if (currentUser == null) {
-            throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (currentUser.getRole() == Role.GUEST) {
-            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
-        }
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
         String _userId = "[" + userId.toString() + "]";
@@ -112,11 +113,7 @@ public class ImpressionService {
     public void reHateUp(CurrentUser currentUser, Long impressionId) {
         Impression impression = findById(impressionId);
 
-        if (currentUser == null) {
-            throw new HandleAccessDenied("로그인이 필요합니다.");
-        } else if (currentUser.getRole() == Role.GUEST) {
-            throw new HandleAccessDenied("아직 인증이 완료되지 않았습니다.");
-        }
+        checkAuth(currentUser);
 
         Long userId = currentUser.getId();
         String _userId = "[" + userId.toString() + "]";
@@ -126,6 +123,18 @@ public class ImpressionService {
         } else {
             impression.reHateUp();
             impression.updateHateList(_userId);
+        }
+    }
+
+    public void checkAuth(CurrentUser currentUser) {
+        if (currentUser == null) {
+            throw new HandleAccessDenied("로그인이 필요한 서비스에요.");
+        } else if (currentUser.getRole() == Role.GUEST) {
+            if (currentUser.getRegistrationId() == RegistrationId.NINDA) {
+                throw new HandleAccessDenied("메일인증을 완료해주세요.");
+            } else {
+                throw new HandleAccessDenied("닉네임을 설정해주세요.");
+            }
         }
     }
 }
