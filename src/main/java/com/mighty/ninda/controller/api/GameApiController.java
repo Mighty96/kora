@@ -37,12 +37,14 @@ public class GameApiController {
         dbScheduled.offSale();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/games/{id}/like")
     public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
         gameService.reLikeUp(currentUser, id);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/games/{id}/hate")
     public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {

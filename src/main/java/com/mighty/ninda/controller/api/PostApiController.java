@@ -38,7 +38,7 @@ public class PostApiController {
         postService.delete(id);
     }
 
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/posts/{id}/like")
     public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
@@ -46,6 +46,7 @@ public class PostApiController {
         postService.reLikeUp(currentUser, id);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/posts/{id}/hate")
     public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {

@@ -42,12 +42,14 @@ public class CommentApiController {
         commentService.deleteComment(currentUser, id);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/comments/{id}/like")
     public void reLikeUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
         commentService.reLikeUp(currentUser, id);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/api/comments/{id}/hate")
     public void reHateUp(@LoginUser CurrentUser currentUser,
                          @PathVariable Long id) {
