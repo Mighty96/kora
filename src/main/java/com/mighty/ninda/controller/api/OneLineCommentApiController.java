@@ -17,7 +17,6 @@ public class OneLineCommentApiController {
 
     private final OneLineCommentService oneLineCommentService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/oneLineComments")
     public void saveOneLineComment(@LoginUser CurrentUser currentUser,
                                    @RequestBody SaveOneLineComment requestDto) {

@@ -17,7 +17,6 @@ public class ImpressionApiController {
 
     private final ImpressionService impressionService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/impressions")
     public void saveImpression(@LoginUser CurrentUser currentUser,
                                @RequestBody SaveImpression requestDto) {
