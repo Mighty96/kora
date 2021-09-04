@@ -97,7 +97,14 @@ public class Crawler {
 
     @Transactional
     private void getSales(Element g, Elements title) throws IOException {
-        Game game = gameRepository.findByTitle(title.text()).orElseThrow();
+        Optional<Game> temp_game = gameRepository.findByTitle(title.text());
+
+        Game game;
+        if (temp_game.isPresent()) {
+            game = temp_game.get();
+        } else {
+            return;
+        }
 
         String gameUrl = g.select("a[href]").attr("href");
 
@@ -109,7 +116,7 @@ public class Crawler {
         String saleDate = gameDoc.getElementsByClass("special-period").get(0).text();
 
         game.onSale(saleDate, price);
-        gameRepository.flush();
+        gameRepository.save(game);
         log.info ("Add game sale info: " + game.getTitle());
     }
 
