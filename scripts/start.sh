@@ -8,7 +8,7 @@ REPOSITORY=/home/ec2-user/app/step3
 PROJECT_NAME=ninda
 
 echo "> 기존 JAR파일 이동"
-cp $REPOSITORY/*.jar $REPOSITORY/old/
+mv $REPOSITORY/*.jar $REPOSITORY/old/
 
 echo "> Build 파일 복사"
 echo "> cp $REPOSITORY/zip/*.jar $REPOSITORY/"

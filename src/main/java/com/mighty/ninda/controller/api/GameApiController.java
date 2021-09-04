@@ -19,19 +19,19 @@ public class GameApiController {
     private final Crawler crawler;
     private final DBScheduled dbScheduled;
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/api/gameCrawl")
     public void gameCrawl() {
         crawler.crawl();
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/api/saleCrawl")
     public void saleCrawl() {
         crawler.crawlSaleGame();
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/api/offSale")
     public void offSale() {
         dbScheduled.offSale();
