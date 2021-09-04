@@ -27,7 +27,7 @@ public class Crawler {
     public void crawl() {
         try {
             log.info ("<< start game crawl >>");
-            String connUrl = "https://store.nintendo.co.kr/games/sale";
+            String connUrl = "https://store.nintendo.co.kr/games";
             Document doc = Jsoup.connect(connUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
 
             Elements gameList = doc.getElementsByClass("category-product-item");
@@ -37,6 +37,7 @@ public class Crawler {
 //                    break;
 //                }
                 Elements title = g.getElementsByClass("category-product-item-title");
+
                 if (isGame(title.text())) {
                     updateGame(g, title);
                     continue;
@@ -143,16 +144,19 @@ public class Crawler {
         Elements descriptions = gameDoc.getElementsByClass("value").select("p");
 
         StringBuilder des = new StringBuilder();
-        for (Element description : descriptions) {
-            if (description.html().contains("닌텐도 온라인 스토어에서의 판매는 후일 실시 예정입니다.") ||
-            description.html().contains("예약구입 상품입니다.")) {
-                continue;
+        if (descriptions.isEmpty()) {
+            des.append(gameDoc.getElementsByClass("value").html());
+        } else {
+            for (Element description : descriptions) {
+                if (description.html().contains("닌텐도 온라인 스토어에서의 판매는 후일 실시 예정입니다.") ||
+                        description.html().contains("예약구입 상품입니다.")) {
+                    continue;
+                }
+                if (description.html().contains("<strong>알림</strong>")) {
+                    break;
+                }
+                des.append(description.html()).append("<br><br>");
             }
-            if (description.html().contains("<strong>알림</strong>")) {
-                break;
-            }
-            des.append(description.html()).append("<br><br>");
-
         }
 
         Elements supported_languages = gameDoc.getElementsByClass("supported_languages").select(".product-attribute-val");
@@ -191,16 +195,20 @@ public class Crawler {
         Elements descriptions = gameDoc.getElementsByClass("value").select("p");
 
         StringBuilder des = new StringBuilder();
-        for (Element description : descriptions) {
-            if (description.html().contains("닌텐도 온라인 스토어에서의 판매는 후일 실시 예정입니다.") ||
-                    description.html().contains("예약구입 상품입니다.")) {
-                continue;
-            }
-            if (description.html().contains("<strong>알림</strong>")) {
-                break;
-            }
-            des.append(description.html()).append("<br><br>");
 
+        if (descriptions.isEmpty()) {
+             des.append(gameDoc.getElementsByClass("value").html());
+        } else {
+            for (Element description : descriptions) {
+                if (description.html().contains("닌텐도 온라인 스토어에서의 판매는 후일 실시 예정입니다.") ||
+                        description.html().contains("예약구입 상품입니다.")) {
+                    continue;
+                }
+                if (description.html().contains("<strong>알림</strong>")) {
+                    break;
+                }
+                des.append(description.html()).append("<br><br>");
+            }
         }
 
         Elements supported_languages = gameDoc.getElementsByClass("supported_languages").select(".product-attribute-val");
