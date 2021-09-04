@@ -38,6 +38,7 @@ public class Crawler {
 //                }
                 Elements title = g.getElementsByClass("category-product-item-title");
                 if (isGame(title.text())) {
+                    updateGame(g, title);
                     continue;
                 }
                 crawlGame(g, title);
@@ -167,6 +168,46 @@ public class Crawler {
 
         gameRepository.save(game);
         log.info ("Add game info: " + game.getTitle());
+    }
+
+    @Transactional
+    private void updateGame(Element g, Elements title) throws IOException {
+        Game game = gameRepository.findByTitle(title.text())
+                .orElseThrow();
+
+        Element price;
+
+        if (g.getElementsByClass("price").size() > 1) {
+            price = g.getElementsByClass("price").get(1);
+        } else {
+            price = g.getElementsByClass("price").get(0);
+        }
+
+        String imageUrl = g.select(".product-image-photo").attr("data-src");
+
+        String gameUrl = g.select("a[href]").attr("href");
+
+        Document gameDoc = Jsoup.connect(gameUrl).timeout(30000).userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36").get();
+        Elements descriptions = gameDoc.getElementsByClass("value").select("p");
+
+        StringBuilder des = new StringBuilder();
+        for (Element description : descriptions) {
+            if (description.html().contains("닌텐도 온라인 스토어에서의 판매는 후일 실시 예정입니다.") ||
+                    description.html().contains("예약구입 상품입니다.")) {
+                continue;
+            }
+            if (description.html().contains("<strong>알림</strong>")) {
+                break;
+            }
+            des.append(description.html()).append("<br><br>");
+
+        }
+
+        Elements supported_languages = gameDoc.getElementsByClass("supported_languages").select(".product-attribute-val");
+        game.updateGame(des.toString(), imageUrl, price.text(), supported_languages.text());
+
+        gameRepository.save(game);
+        log.info ("Update game info: " + game.getTitle());
     }
 
     private boolean isGame(String title) {

@@ -71,6 +71,13 @@ public class Game {
         this.endSale = null;
     }
 
+    public void updateGame(String description, String imgUrl, String price, String language) {
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.price = price;
+        this.language = language;
+    }
+
     public void viewCountUp() {
         this.viewCount++;
     }
