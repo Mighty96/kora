@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -19,7 +21,7 @@ public class OneLineCommentApiController {
 
     @PostMapping("/api/oneLineComments")
     public void saveOneLineComment(@LoginUser CurrentUser currentUser,
-                                   @RequestBody SaveOneLineComment requestDto) {
+                                   @RequestBody @Valid SaveOneLineComment requestDto) {
 
         oneLineCommentService.save(currentUser, requestDto);
     }
@@ -27,7 +29,7 @@ public class OneLineCommentApiController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/oneLineComments/{id}")
     public void updateOneLineComment(@LoginUser CurrentUser currentUser,
-                                     @RequestBody UpdateOneLineComment requestDto,
+                                     @RequestBody @Valid UpdateOneLineComment requestDto,
                                      @PathVariable Long id) {
 
 

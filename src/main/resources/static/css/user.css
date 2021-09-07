@@ -49,6 +49,12 @@ input {
     display: none;
 }
 
+/* 닉네임 중복존재 O*/
+.nickname_check_duplicated{
+    color: #FFBEB0;
+    display: none;
+}
+
 .pwd1_blank{
 }
 

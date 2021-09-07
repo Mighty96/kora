@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,10 @@ public class Direct {
     @Column(name = "direct_id")
     private Long id;
 
+    @NotNull
     private String title;
 
+    @NotNull
     private LocalDate releasedDate;
 
     private String koreaUrl;

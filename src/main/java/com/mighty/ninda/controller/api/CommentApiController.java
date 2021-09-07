@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -19,7 +21,7 @@ public class CommentApiController {
 
     @PostMapping("/api/comments")
     public void saveComment(@LoginUser CurrentUser currentUser,
-                                   @RequestBody SaveComment requestDto) {
+                                   @RequestBody @Valid SaveComment requestDto) {
 
         commentService.saveComment(currentUser, requestDto);
     }
@@ -27,7 +29,7 @@ public class CommentApiController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/comments/{id}")
     public void updateComment(@LoginUser CurrentUser currentUser,
-                                     @RequestBody UpdateComment requestDto,
+                                     @RequestBody @Valid UpdateComment requestDto,
                                      @PathVariable Long id) {
 
 

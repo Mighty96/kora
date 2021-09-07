@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -20,10 +21,13 @@ public class Photo {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @NotNull
     private String UUID;
 
+    @NotNull
     private String fileName;
 
+    @NotNull
     private String filePath;
 
     @Builder

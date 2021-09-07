@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -23,9 +24,11 @@ public class Game {
     @Column(name = "game_id")
     private Long id;
 
+    @NotNull
     @Column(unique = true)
     private String title;
 
+    @NotNull
     @Column(columnDefinition = "TEXT")
     private String description;
 

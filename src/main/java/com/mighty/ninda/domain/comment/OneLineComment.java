@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @Getter
@@ -24,6 +25,7 @@ public class OneLineComment extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @Column(length = 200, nullable = false)
     private String context;
 

@@ -11,6 +11,7 @@ import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +25,18 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
+    @NotNull
     private String board;
 
+    @NotNull
     @Column(length = 100, nullable = false)
     private String title;
 
+    @NotNull
     @Column(columnDefinition = "TEXT")
     private String context;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;

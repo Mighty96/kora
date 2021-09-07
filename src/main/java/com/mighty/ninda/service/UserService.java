@@ -62,6 +62,16 @@ public class UserService {
         }
     }
 
+    public String nicknameDuplicateChk(UserNickname requestDto) {
+        Optional<User> user = userRepository.findByNickname(requestDto.getNickname());
+
+        if (user.isPresent()) {
+            return "fail";
+        } else {
+            return "success";
+        }
+    }
+
     @Transactional
     public void update(@LoginUser CurrentUser currentUser, UpdateUser requestDto) {
         User user = findById(currentUser.getId());

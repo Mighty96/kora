@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 public class DirectApiController {
@@ -16,7 +18,7 @@ public class DirectApiController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/api/directs")
-    public void saveDirect(@RequestBody SaveDirect requestDto) {
+    public void saveDirect(@RequestBody @Valid SaveDirect requestDto) {
 
         directService.save(requestDto);
     }

@@ -6,6 +6,10 @@ import com.mighty.ninda.domain.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,10 +25,18 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @NotNull
+    @Email
     private String email;
+
     private String password;
+
+    @Column(unique = true)
     private String nickname;
+
     private String picture;
+
+    @Size(max = 200)
     private String introduction;
     private LocalDate registrationDate;
 

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -19,7 +21,7 @@ public class ImpressionApiController {
 
     @PostMapping("/api/impressions")
     public void saveImpression(@LoginUser CurrentUser currentUser,
-                               @RequestBody SaveImpression requestDto) {
+                               @RequestBody @Valid SaveImpression requestDto) {
 
         impressionService.save(currentUser, requestDto);
     }
@@ -27,7 +29,7 @@ public class ImpressionApiController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/impressions/{id}")
     public void updateImpression(@LoginUser CurrentUser currentUser,
-                                 @RequestBody UpdateImpression requestDto,
+                                 @RequestBody @Valid UpdateImpression requestDto,
                                  @PathVariable Long id) {
 
 

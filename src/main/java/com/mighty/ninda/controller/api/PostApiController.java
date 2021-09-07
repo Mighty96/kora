@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -21,14 +23,14 @@ public class PostApiController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/posts")
-    public Long savePost(@RequestBody SavePost requestDto,
+    public Long savePost(@RequestBody @Valid SavePost requestDto,
                      @LoginUser CurrentUser currentUser) {
         return postService.save(requestDto, userService.findById(currentUser.getId()));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping("/api/posts/{id}")
-    public void updatePost(@PathVariable Long id, @RequestBody UpdatePost requestDto) {
+    public void updatePost(@PathVariable Long id, @RequestBody @Valid UpdatePost requestDto) {
         postService.update(id, requestDto);
     }
 
