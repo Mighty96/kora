@@ -12,7 +12,7 @@
                 <div class="p-2 my-2">
                     <div class="btn-group-vertical">
                         <button type="button" onclick="location.href='/user/profile'" class="btn btn-dark">내정보 수정</button>
-                        <button th:if="${#authentication.principal.attributes.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='http://localhost:8080/user/password'" class="btn btn-dark">비밀번호 변경</button>
+                        <button th:if="${#authentication.principal.attributes.registrationId.toString().equals('NINDA')}" type="button" onclick="location.href='/user/password'" class="btn btn-dark">비밀번호 변경</button>
                         <button type="button" onclick="location.href='/user/post?page=0'" class="btn btn-dark">내가 작성한 글</button>
                         <button type="button" onclick="location.href='/user/oneLineComment?page=0'" class="btn btn-dark active">내가 작성한 한줄평</button>
                         <button type="button" onclick="location.href='/user/favorite'" class="btn btn-dark">내가 관심있는 게임</button>

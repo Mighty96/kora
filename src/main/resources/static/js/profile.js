@@ -9,6 +9,7 @@ var main = {
         });
     },
     update : function () {
+        var _this = this;
         if (_this.nicknameChk() )
         {
             var data = {
