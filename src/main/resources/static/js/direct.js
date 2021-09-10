@@ -17,7 +17,7 @@ var main = {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data),
             success: function() {
-                Swal({
+                Swal.fire({
                     title: "소감을 등록했어요!",
                     icon: "success"
                 })
@@ -25,8 +25,12 @@ var main = {
                     window.location.reload();
                 });
             },
-            error: function(e) {
-                alert('몰라');
+            error: function(request) {
+                var outputMessage = JSON.parse(request.responseText).outputMessage;
+                Swal.fire({
+                    title: outputMessage,
+                    icon: "error"
+                });
             }
         });
     }
@@ -52,7 +56,7 @@ function update(_rid) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "소감을 수정했어요!",
                 icon: "success"
             })
@@ -75,7 +79,7 @@ function del(_rid) {
         type: 'DELETE',
         url: '/api/impressions/' + _rid,
         success: function() {
-            Swal({
+            Swal.fire({
                 title: "소감을 삭제했어요!",
                 icon: "success"
             })
