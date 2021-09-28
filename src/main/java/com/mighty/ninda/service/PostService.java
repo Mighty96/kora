@@ -44,8 +44,6 @@ public class PostService {
 
     @Transactional
     public Long save(SavePost requestDto, User user) {
-
-
         Post post = requestDto.toEntity(user);
         post = parseContextAndMoveImages(post);
         return postRepository.save(post).getId();

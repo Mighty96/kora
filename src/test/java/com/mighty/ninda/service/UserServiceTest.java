@@ -51,12 +51,10 @@ public class UserServiceTest {
     private final String NICKNAME = "nickname";
     private final String INTRODUCTION = "안녕하세요.";
     private final String PASSWORD = "password1234";
-    private final Role ROLE_ADMIN = Role.ADMIN;
     private final Role ROLE_GUEST = Role.GUEST;
     private final Role ROLE_USER = Role.USER;
     private final RegistrationId REGISTRATION_ID_NINDA = RegistrationId.NINDA;
     private final RegistrationId REGISTRATION_ID_GOOGLE = RegistrationId.GOOGLE;
-    private final RegistrationId REGISTRATION_ID_KAKAO = RegistrationId.KAKAO;
     private final String AUTH_KEY = "asdf1234";
     private final LocalDate REGISTRATION_DATE = LocalDate.now();
 

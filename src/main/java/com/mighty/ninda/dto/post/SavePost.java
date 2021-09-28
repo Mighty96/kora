@@ -25,6 +25,7 @@ public class SavePost {
     @NotNull
     private String board;
 
+    @Builder
     public SavePost(String title, String context, String board) {
         this.title = title;
         this.context = context;
