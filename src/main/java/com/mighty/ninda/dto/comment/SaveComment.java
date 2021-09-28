@@ -22,4 +22,10 @@ public class SaveComment {
 
     @NotNull
     private Long commentId;
+
+    public SaveComment(String context, Long postId, Long commentId) {
+        this.context = context;
+        this.postId = postId;
+        this.commentId = commentId;
+    }
 }

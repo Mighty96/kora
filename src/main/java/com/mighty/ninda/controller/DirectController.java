@@ -27,7 +27,7 @@ public class DirectController {
 
     @GetMapping("/directs")
     public String directList(Model model) {
-        model.addAttribute("directList", DirectListResponse.of(directService.findAllOrderByReleasedDateDesc()));
+        model.addAttribute("directList", DirectListResponse.of(directService.findAllByOrderByReleasedDateDescAndDirectId()));
         return "direct/directList";
     }
 

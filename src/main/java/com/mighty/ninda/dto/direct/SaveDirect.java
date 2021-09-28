@@ -20,4 +20,12 @@ public class SaveDirect {
     private String japanUrl;
     private String americaUrl;
 
+    public SaveDirect(String title, String releasedDate, String koreaUrl, String japanUrl, String americaUrl) {
+        this.title = title;
+        this.releasedDate = releasedDate;
+        this.koreaUrl = koreaUrl;
+        this.japanUrl = japanUrl;
+        this.americaUrl = americaUrl;
+    }
+
 }

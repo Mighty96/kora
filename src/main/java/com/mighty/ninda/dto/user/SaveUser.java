@@ -1,6 +1,5 @@
 package com.mighty.ninda.dto.user;
 
-import com.mighty.ninda.domain.user.RegistrationId;
 import com.mighty.ninda.domain.user.Role;
 import com.mighty.ninda.domain.user.User;
 import lombok.AccessLevel;
@@ -26,23 +25,18 @@ public class SaveUser {
     @Size(min=2, max=12)
     private String nickname;
 
-    @NotNull
-    private Role role;
-
-    @NotNull
-    private RegistrationId registrationId;
-
-    @NotNull
-    private String authKey;
+    @Builder
+    public SaveUser(String email, String password, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+    }
 
     public User toEntity() {
         return User.builder()
                 .email(email)
                 .password(password)
                 .nickname(nickname)
-                .role(role)
-                .registrationId(registrationId)
-                .authKey(authKey)
                 .build();
 
     }

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DirectRepository extends JpaRepository<Direct, Long> {
 
-    List<Direct> findAllByOrderByReleasedDateDesc();
+    List<Direct> findAllByOrderByReleasedDateDescAndDirectId();
 }

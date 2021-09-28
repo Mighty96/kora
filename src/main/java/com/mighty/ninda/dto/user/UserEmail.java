@@ -13,4 +13,9 @@ public class UserEmail {
 
     @Email
     private String email;
+
+    @Builder
+    public UserEmail(String email) {
+        this.email = email;
+    }
 }

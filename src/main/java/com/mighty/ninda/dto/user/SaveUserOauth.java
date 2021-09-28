@@ -15,6 +15,10 @@ public class SaveUserOauth {
     @Size(min = 2, max = 12)
     private String nickname;
 
+    public SaveUserOauth(String nickname) {
+        this.nickname = nickname;
+    }
+
     public User toEntity() {
         return User.builder()
                 .nickname(nickname)

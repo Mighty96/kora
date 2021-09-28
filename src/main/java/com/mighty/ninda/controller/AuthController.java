@@ -46,7 +46,7 @@ public class AuthController {
 
     @GetMapping("/authConfirm")
     public String authConfirm(@RequestParam String email, @RequestParam String authKey, Model model) {
-        userService.authConfirm(email, authKey, model);
+        model.addAttribute("message", userService.authConfirm(email, authKey));
         return "auth/authConfirm";
     }
 

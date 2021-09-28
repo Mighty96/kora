@@ -45,11 +45,12 @@ public class UserService {
                 .role(Role.GUEST)
                 .authKey(null)
                 .build();
-        userRepository.save(user);
 
         //인증메일발송
         String authKey = mailSendService.sendAuthMail(user.getEmail());
         user.updateAuthKey(authKey);
+
+        userRepository.save(user);
     }
 
     public String emailDuplicateChk(UserEmail requestDto) {
@@ -100,21 +101,17 @@ public class UserService {
     }
 
     @Transactional
-    public void authConfirm(String email, String authKey, Model model) {
+    public String authConfirm(String email, String authKey) {
         User user = findByEmail(email);
 
         if (!user.getAuthKey().equals(authKey)) {
-            model.addAttribute("message", "유효하지 않은 주소입니다.");
-            return;
+            return "유효하지 않은 주소입니다.";
         } else if (user.getRole() == Role.USER) {
-            model.addAttribute("message", "이미 인증이 완료된 계정입니다.");
-            return;
+            return "이미 인증이 완료된 계정입니다.";
         }
-
         user.updateRoleToUser();
 
-        model.addAttribute("title", "인증 성공!");
-        model.addAttribute("message", "이제 모든 서비스를 이용하실 수 있습니다. 다시 로그인해주세요.");
+        return "이제 모든 서비스를 이용하실 수 있습니다. 다시 로그인해주세요.";
     }
 
     @Transactional

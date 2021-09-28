@@ -25,6 +25,12 @@ public class SavePost {
     @NotNull
     private String board;
 
+    public SavePost(String title, String context, String board) {
+        this.title = title;
+        this.context = context;
+        this.board = board;
+    }
+
     public Post toEntity(User user) {
         return Post.builder()
                 .board(board)

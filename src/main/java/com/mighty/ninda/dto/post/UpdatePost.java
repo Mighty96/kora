@@ -17,4 +17,9 @@ public class UpdatePost {
 
     @NotBlank(message = "내용을 입력하세요.")
     private String context;
+
+    public UpdatePost(String title, String context) {
+        this.title = title;
+        this.context = context;
+    }
 }

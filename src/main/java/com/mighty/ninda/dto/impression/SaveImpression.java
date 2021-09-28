@@ -20,4 +20,8 @@ public class SaveImpression {
     @NotNull
     private Long directId;
 
+    public SaveImpression(String context, Long directId) {
+        this.context = context;
+        this.directId = directId;
+    }
 }

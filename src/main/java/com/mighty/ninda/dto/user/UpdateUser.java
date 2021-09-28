@@ -11,10 +11,14 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UpdateUser {
 
-
     @Size(min = 2, max = 12)
     private String nickname;
 
     @Size(max = 200)
     private String introduction;
+
+    public UpdateUser(String nickname, String introduction) {
+        this.nickname = nickname;
+        this.introduction = introduction;
+    }
 }

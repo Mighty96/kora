@@ -20,4 +20,9 @@ public class SaveOneLineComment {
 
     @NotNull
     private Long gameId;
+
+    public SaveOneLineComment(String context, Long gameId) {
+        this.context = context;
+        this.gameId = gameId;
+    }
 }
