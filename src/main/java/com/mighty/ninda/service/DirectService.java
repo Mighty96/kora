@@ -32,8 +32,8 @@ public class DirectService {
         return direct;
     }
 
-    public List<Direct> findAllByOrderByReleasedDateDescAndDirectId() {
-        return directRepository.findAllByOrderByReleasedDateDescAndDirectId();
+    public List<Direct> findAllByOrderByReleasedDateDescIdDesc() {
+        return directRepository.findAllByOrderByReleasedDateDescIdDesc();
     }
 
     @Transactional
