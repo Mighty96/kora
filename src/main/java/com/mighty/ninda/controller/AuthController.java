@@ -50,7 +50,7 @@ public class AuthController {
         return "auth/authConfirm";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_GUEST', 'ROLE_USER')")
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/newPassword")
     public String newPassword() {
         return "auth/newPassword";
