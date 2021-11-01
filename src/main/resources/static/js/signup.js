@@ -135,7 +135,7 @@ var main = {
         return true;
     },
     isPassword : function (pwd) {
-        var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
+        var regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
         return regExp.test(pwd);
     },
     nicknameChk : function () {
