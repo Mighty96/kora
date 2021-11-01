@@ -136,20 +136,49 @@ var main = {
         return regExp.test(pwd);
     },
     nicknameChk : function () {
-        var nickname = $('#nickname').val();
+            var data = {
+                nickname: $('#nickname').val()
+            };
 
-        $('.nickname_blank').css("display", "none");
-        if(nickname.length >=2 && nickname.length<=12) {
-          $('.nickname_check_success').css("display", "inline-block");
-          $('.nickname_check_fail').css("display", "none");
-          return true;
-        } else {
-          $('.nickname_check_success').css("display", "none");
-          $('.nickname_check_fail').css("display", "inline-block");
-          return false;
+            if (data.nickname == $('#pre_nickname').val()) {
+                $('.nickname_blank').css("display", "inline-block");
+                $('.nickname_check_success').css("display", "none");
+                $('.nickname_check_duplicated').css("display", "none");
+                $('.nickname_check_fail').css("display", "none");
+                return true;
+            }
+
+            if (data.nickname.length < 2 || data.nickname.length > 12) {
+                $('.nickname_blank').css("display", "none");
+                $('.nickname_check_success').css("display", "none");
+                $('.nickname_check_duplicated').css("display", "none");
+                $('.nickname_check_fail').css("display", "inline-block");
+                return false;
+            }
+            $.ajax({
+                type : 'POST',
+                url : '/api/users/nicknameChk',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function(result) {
+
+                    $('.nickname_blank').css("display", "none");
+
+                    if(result == 'success') {
+                        $('.nickname_check_success').css("display", "inline-block");
+                        $('.nickname_check_duplicated').css("display", "none");
+                        $('.nickname_check_fail').css("display", "none");
+                        return true;
+                    } else {
+                        $('.nickname_check_duplicated').css("display", "inline-block");
+                        $('.nickname_check_success').css("display", "none");
+                        $('.nickname_check_fail').css("display", "none");
+                        return false;
+                    }
+                }
+            });
+            return true;
         }
-        return true;
-    }
 };
 
 main.init();
